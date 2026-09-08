@@ -3,882 +3,1219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PINNACLE 420 - 英単語学習アプリ</title>
+  <title>英単語マスター 420</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #0a2540;
-      --accent: #2563eb;
-      --bg: #f8fafc;
+      --bg-color: #f4f6f8;
       --card-bg: #ffffff;
-      --text: #1e293b;
-      --text-muted: #64748b;
-      --correct: #10b981;
-      --wrong: #ef4444;
-      --border: #e2e8f0;
+      --primary-color: #3b82f6;
+      --primary-hover: #2563eb;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --text-main: #1f2937;
+      --text-sub: #6b7280;
+      --border-color: #e5e7eb;
+      --radius: 12px;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     body {
-      background-color: var(--bg);
-      color: var(--text);
+      font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 16px;
+      padding: 20px;
     }
 
-    .app-container {
+    .container {
       width: 100%;
-      max-width: 480px;
+      max-width: 650px;
       background: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 600px;
-    }
-
-    /* Header Design */
-    header {
-      background-color: var(--primary);
-      color: white;
-      padding: 24px;
-      text-align: center;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
       position: relative;
-      border-bottom: 4px solid var(--accent);
-    }
-
-    header h1 {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
-
-    header p {
-      font-size: 12px;
-      opacity: 0.8;
-      margin-top: 4px;
-      letter-spacing: 1px;
-    }
-
-    /* Common Layouts */
-    .screen {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      justify-content: space-between;
     }
 
     .hidden {
       display: none !important;
     }
 
-    /* Button Styles */
-    .btn {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 14px 20px;
+    h1, h2 {
+      text-align: center;
+      color: var(--text-main);
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    /* Menu Screen */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      background-color: #fafafa;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
-      width: 100%;
-      text-align: center;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      margin-top: 10px;
     }
 
     .btn:hover {
-      opacity: 0.9;
+      background-color: var(--primary-hover);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
     }
 
     .btn-secondary {
-      background-color: transparent;
-      color: var(--primary);
-      border: 2px solid var(--primary);
+      background-color: #6b7280;
+    }
+    .btn-secondary:hover {
+      background-color: #4b5563;
     }
 
-    .btn-group {
+    .btn-danger {
+      background-color: var(--danger-color);
+    }
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+
+    /* Top Bar in Quiz */
+    .quiz-header {
       display: flex;
-      gap: 12px;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      color: var(--text-sub);
     }
 
-    /* Home Screen */
-    .stats-card {
-      background: #f1f5f9;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
-    .stats-number {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--primary);
-    }
-
-    /* Quiz Screen */
     .progress-bar {
       width: 100%;
-      height: 6px;
-      background: #e2e8f0;
-      border-radius: 3px;
-      margin-bottom: 16px;
+      height: 8px;
+      background-color: #e5e7eb;
+      border-radius: 4px;
       overflow: hidden;
+      margin-bottom: 20px;
     }
 
     .progress-fill {
       height: 100%;
-      background: var(--accent);
+      background-color: var(--primary-color);
       width: 0%;
-      transition: width 0.3s;
+      transition: width 0.3s ease;
     }
 
+    /* Word Display Area */
     .word-card {
+      background-color: #f9fafb;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 24px;
       text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .word-title {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--primary);
-    }
-
-    .phonetic {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .audio-btn {
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      margin-left: 8px;
-    }
-
-    .options-grid {
+      margin-bottom: 20px;
+      position: relative;
+      min-height: 220px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .word-number {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .streak-badge {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background-color: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .word-english {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .word-phonetic {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      margin-top: 4px;
+      font-family: serif;
+    }
+
+    .word-japanese {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-top: 12px;
+    }
+
+    .word-example {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-color);
+      font-size: 0.9rem;
+      color: #374151;
+      text-align: left;
+      width: 100%;
+    }
+
+    .word-example-en {
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+
+    .word-example-ja {
+      color: var(--text-sub);
+      font-size: 0.85rem;
+    }
+
+    /* 4-Choice Options */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
       margin-bottom: 20px;
     }
 
     .option-btn {
-      background: #f8fafc;
-      border: 2px solid var(--border);
       padding: 14px;
-      border-radius: 10px;
-      font-size: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: white;
       text-align: left;
+      font-size: 0.95rem;
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .option-btn:hover {
+      background-color: #f3f4f6;
+      border-color: #d1d5db;
     }
 
     .option-btn.correct {
-      background-color: #d1fae5;
-      border-color: var(--correct);
+      background-color: #d1fae5 !important;
+      border-color: var(--success-color) !important;
       color: #065f46;
     }
 
     .option-btn.wrong {
-      background-color: #fee2e2;
-      border-color: var(--wrong);
+      background-color: #fee2e2 !important;
+      border-color: var(--danger-color) !important;
       color: #991b1b;
     }
 
-    /* Detail / Sentence Display */
-    .example-box {
-      background: #f1f5f9;
-      border-left: 4px solid var(--accent);
+    /* Flashcard Controls */
+    .flashcard-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* Stats Banner */
+    .stats-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background: #f8fafc;
       padding: 12px;
-      border-radius: 4px;
-      margin-top: 12px;
-      font-size: 14px;
-      text-align: left;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
     }
 
-    .example-en {
+    .stats-val {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* List Screen */
+    .list-container {
+      max-height: 450px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .list-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+
+    .list-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .list-info {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .list-num {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      width: 42px;
       font-weight: 600;
-      color: var(--text);
     }
 
-    .example-ja {
-      color: var(--text-muted);
-      font-size: 13px;
-      margin-top: 4px;
+    .list-word {
+      font-weight: 700;
+      font-size: 1.05rem;
     }
+
+    .list-phonetic {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-left: 6px;
+      font-weight: normal;
+    }
+
+    .list-meaning {
+      font-size: 0.9rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-left: 52px;
+      margin-bottom: 4px;
+    }
+
+    .list-ex {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-left: 52px;
+      background: #fafafa;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+
+    .status-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .tag-unlearned { background: #f3f4f6; color: #4b5563; }
+    .tag-learning { background: #fef3c7; color: #b45309; }
+    .tag-remembered { background: #dbeafe; color: #1d4ed8; }
+    .tag-perfect { background: #d1fae5; color: #047857; }
   </style>
 </head>
 <body>
 
-  <div class="app-container">
-    <header>
-      <h1>PINNACLE 420</h1>
-      <p>UNIVERSITY ENTRANCE EXAM VOCABULARY</p>
-    </header>
+  <div class="container">
+    
+    <!-- メニュー画面 -->
+    <div id="menu-screen">
+      <h1>英単語マスター (1〜420)</h1>
+      
+      <div class="form-group">
+        <label for="mode-select">学習モード</label>
+        <select id="mode-select">
+          <option value="choice">4択クイズ</option>
+          <option value="flashcard">フラッシュカード</option>
+        </select>
+      </div>
 
-    <!-- HOME SCREEN -->
-    <div id="screen-home" class="screen">
-      <div>
-        <div class="stats-card">
-          <p style="font-size: 12px; color: var(--text-muted);">習得率</p>
-          <div class="stats-number" id="mastery-rate">0%</div>
-          <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;" id="stats-detail">0 / 222 単語完了</p>
+      <div class="form-group">
+        <label for="count-select">出題数</label>
+        <select id="count-select">
+          <option value="5">5問</option>
+          <option value="10" selected>10問</option>
+          <option value="20">20問</option>
+          <option value="50">50問</option>
+          <option value="all">全問 (420問)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="timer-select">制限時間（1問あたり）</label>
+        <select id="timer-select">
+          <option value="0">なし</option>
+          <option value="3">3秒</option>
+          <option value="5" selected>5秒</option>
+          <option value="10">10秒</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="filter-select">出題対象</label>
+        <select id="filter-select">
+          <option value="all">すべての単語 (1〜420)</option>
+          <option value="unlearned">未マスターのみ (正解数5未満)</option>
+          <option value="weak">苦手な単語 (ミスあり)</option>
+        </select>
+      </div>
+
+      <button class="btn" id="start-btn">学習を開始する</button>
+      <button class="btn btn-secondary" id="view-list-btn">単語一覧を見る</button>
+    </div>
+
+    <!-- クイズ・学習画面 -->
+    <div id="quiz-screen" class="hidden">
+      <div class="quiz-header">
+        <span id="quiz-progress-text">1 / 10</span>
+        <span id="timer-display" style="font-weight: 700; color: var(--danger-color);"></span>
+        <button id="abort-btn" class="btn-danger" style="padding: 4px 10px; font-size: 0.8rem; border: none; border-radius: 4px; cursor: pointer;">中断</button>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+
+      <div class="word-card" id="word-card">
+        <span class="word-number" id="card-word-num">No. 1</span>
+        <span class="streak-badge" id="card-streak-badge">連続正解: 0</span>
+        <div class="word-english" id="card-english">corroborate</div>
+        <div class="word-phonetic" id="card-phonetic">/kəˈrɑːbəreɪt/</div>
+        
+        <!-- 正解時またはフラッシュカードめくり時に表示 -->
+        <div class="word-japanese hidden" id="card-japanese">確証する</div>
+        <div class="word-example hidden" id="card-example">
+          <div class="word-example-en" id="card-ex-en">The evidence corroborates his story.</div>
+          <div class="word-example-ja" id="card-ex-ja">その証拠が彼の説明を確証している。</div>
         </div>
       </div>
-      <div class="btn-group">
-        <button class="btn" onclick="startQuiz('all')">全単語からテスト (10問)</button>
-        <button class="btn btn-secondary" onclick="startQuiz('weak')">苦手・未習得単語からテスト</button>
+
+      <!-- 4択モードの選択肢 -->
+      <div id="choice-container" class="options-grid">
+        <button class="option-btn" data-idx="0"></button>
+        <button class="option-btn" data-idx="1"></button>
+        <button class="option-btn" data-idx="2"></button>
+        <button class="option-btn" data-idx="3"></button>
+      </div>
+
+      <!-- フラッシュカードモードの操作ボタン -->
+      <div id="flashcard-container" class="flashcard-controls hidden">
+        <button class="btn btn-danger" id="fc-wrong-btn">わからなかった (間違えた)</button>
+        <button class="btn" id="fc-correct-btn" style="background-color: var(--success-color);">覚えている (正解)</button>
       </div>
     </div>
 
-    <!-- QUIZ SCREEN -->
-    <div id="screen-quiz" class="screen hidden">
-      <div>
-        <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
-        <div class="word-card">
-          <div style="display: flex; justify-content: center; align-items: center;">
-            <span id="quiz-word" class="word-title">word</span>
-            <button class="audio-btn" onclick="speakCurrentWord()">🔊</button>
-          </div>
-          <div id="quiz-phonetic" class="phonetic">/ ... /</div>
+    <!-- 結果画面 -->
+    <div id="result-screen" class="hidden">
+      <h2>学習結果</h2>
+      
+      <div class="stats-summary">
+        <div>
+          <div>回答数</div>
+          <div class="stats-val" id="res-total">0</div>
         </div>
-        <div id="options" class="options-grid"></div>
-        <div id="example-container" class="example-box hidden">
-          <div id="example-en" class="example-en"></div>
-          <div id="example-ja" class="example-ja"></div>
+        <div>
+          <div>正解</div>
+          <div class="stats-val" id="res-correct" style="color: var(--success-color);">0</div>
+        </div>
+        <div>
+          <div>不正解</div>
+          <div class="stats-val" id="res-wrong" style="color: var(--danger-color);">0</div>
         </div>
       </div>
-      <button id="next-btn" class="btn hidden" onclick="nextQuestion()">次へ</button>
+
+      <button class="btn" id="retry-btn">もう一度挑戦</button>
+      <button class="btn btn-secondary" id="back-menu-btn">メニューに戻る</button>
     </div>
 
-    <!-- RESULT SCREEN -->
-    <div id="screen-result" class="screen hidden">
-      <div style="text-align: center; margin-top: 40px;">
-        <h2 style="font-size: 24px; color: var(--primary);">テスト完了！</h2>
-        <div style="font-size: 48px; font-weight: 800; color: var(--accent); margin: 20px 0;" id="result-score">0 / 10</div>
-        <p id="result-msg" style="color: var(--text-muted);"></p>
+    <!-- 一覧画面 -->
+    <div id="list-screen" class="hidden">
+      <h2>単語一覧 (1〜420)</h2>
+      <div class="list-container" id="list-container">
+        <!-- JSで一覧生成 -->
       </div>
-      <button class="btn" onclick="showHome()">ホームに戻る</button>
+      <button class="btn btn-secondary" id="list-back-btn">メニューに戻る</button>
     </div>
+
   </div>
 
   <script>
-    // 単語データベース (222語)
-    const rawWords = [
-      ["corroborate", "確証する", "/kəˈrɑːbəreɪt/", "Recent evidence serves to corroborate his story.", "最近の証拠が彼の証言を確証している。"],
-      ["substantiate", "立証する", "/səbˈstænʃieɪt/", "You must provide evidence to substantiate your claim.", "主張を立証するための証拠を提出しなければならない。"],
-      ["hype", "誇大宣伝", "/haɪp/", "The movie didn't live up to the hype.", "その映画は誇大宣伝ほどのものではなかった。"],
-      ["unwavering", "揺るぎない", "/ʌnˈweɪvərɪŋ/", "Her faith in her team remained unwavering.", "チームに対する彼女の信頼は揺るぎないものだった。"],
-      ["fervent", "熱心な、熱烈な", "/ˈfɜːrvənt/", "He made a fervent appeal for peace.", "彼は平和を求める熱烈な訴えを行った。"],
-      ["avid", "熱心な", "/ˈævɪd/", "She is an avid reader of classic literature.", "彼女は古典文学の熱心な読者だ。"],
-      ["frenzy", "激高、狂乱", "/ˈfrenzi/", "The crowd was in a frenzy during the concert.", "コンサート中、観客は狂乱状態にあった。"],
-      ["ardent", "熱心な", "/ˈɑːrdnt/", "He is an ardent supporter of the movement.", "彼はその運動の熱心な支持者だ。"],
-      ["ephemeral", "つかの間の", "/ɪˈfemərəl/", "Fame in the digital age is often ephemeral.", "デジタル時代の名声は往々にしてつかの間のものだ。"],
-      ["fleeting", "つかの間の", "/ˈfliːtɪŋ/", "Catching a fleeting glimpse of the rare bird was exciting.", "その珍しい鳥を一瞬でも見られたのは興奮するものだった。"],
-      ["upheaval", "大変動", "/ʌpˈhiːvl/", "The political upheaval changed the country's future.", "その政治的大変動が国の未来を変えた。"],
-      ["prowess", "優れた能力", "/ˈpraʊəs/", "He demonstrated his athletic prowess on the field.", "彼はグラウンドで優れた運動能力を発揮した。"],
-      ["savvy", "実際的知識のある", "/ˈsævi/", "She is a tech-savvy entrepreneur.", "彼女はテクノロジーに精通した起業家だ。"],
-      ["dire", "恐ろしいほどの", "/ˈdaɪər/", "The situation is in dire need of immediate action.", "状況は至急の対応を深刻に必要としている。"],
-      ["wane", "衰える", "/weɪn/", "Interest in the project began to wane.", "そのプロジェクトへの関心が衰え始めた。"],
-      ["underscore", "強調する", "/ˌʌndərˈskɔːr/", "The report underscores the importance of education.", "報告書は教育の重要性を強調している。"],
-      ["downright", "完全に", "/ˈdaʊnraɪt/", "His behavior was downright rude.", "彼の態度は完全に失礼だった。"],
-      ["meticulous", "綿密な、細心な", "/məˈtɪkjələs/", "She did meticulous care to prepare the presentation.", "彼女は細心の注意を払ってプレゼンを準備した。"],
-      ["unscrupulous", "不誠実な", "/ʌnˈskruːpjələs/", "Unscrupulous dealers preyed on unsuspecting buyers.", "不誠実な業者が疑いを持たない買主を食い物にした。"],
-      ["frivolous", "軽薄な", "/ˈfrɪvələs/", "Do not spend money on frivolous things.", "軽薄なものにお金を使ってはいけない。"],
-      ["flimsy", "見え透いた", "/ˈflɪmzi/", "He made a flimsy excuse for being late.", "彼は遅刻に対して見え透いた言い訳をした。"],
-      ["remorse", "深い悔恨", "/rɪˈmɔːrs/", "He felt deep remorse for his foolish actions.", "彼は愚かな行いに対して深い悔恨を感じた。"],
-      ["mitigate", "和らげる", "/ˈmɪtɪɡeɪt/", "Measures were taken to mitigate the risk.", "リスクを和らげるための対策が取られた。"],
-      ["palliative", "一時的に緩和する", "/ˈpæliətɪv/", "The treatment provided only a palliative effect.", "その治療は一時的な緩和効果しか与えなかった。"],
-      ["quell", "鎮圧する", "/kwel/", "Police arrived to quell the riot.", "警察が暴動を鎮圧するために到着した。"],
-      ["laudable", "称賛に値する", "/ˈlɔːdəbl/", "His dedication to charity work is laudable.", "慈善事業への彼の献身は称賛に値する。"],
-      ["crystallize", "結晶化する", "/ˈkrɪstəlaɪz/", "Our plans began to crystallize after the meeting.", "会議の後、私たちの計画が具体化し（結晶化し）始めた。"],
-      ["vehement", "熱烈な", "/ˈviːəmənt/", "There was vehement opposition to the new law.", "新法に対して熱烈な反対があった。"],
-      ["construe", "解釈する", "/kənˈstruː/", "His silence was construed as agreement.", "彼の沈黙は同意と解釈された。"],
-      ["exacerbate", "悪化させる", "/ɪɡˈzæsərbeɪt/", "The bad weather will exacerbate the traffic problems.", "悪天候は交通問題をさらに悪化させるだろう。"],
-      ["superfluous", "余分な", "/suːˈpɜːrfluəs/", "Avoid adding superfluous details to your essay.", "小論文に余分な詳細を加えるのは避けなさい。"],
-      ["redundant", "余分な", "/rɪˈdʌndənt/", "The company made several positions redundant.", "会社はいくつかの余分な役職を整理した。"],
-      ["antidote", "解毒剤", "/ˈæntidoʊt/", "Laughter is said to be the best antidote to stress.", "笑いはストレスの最良の解毒剤と言われている。"],
-      ["panacea", "万能薬", "/ˌpænəˈsiːə/", "Technology is not a panacea for all problems.", "テクノロジーはすべての問題に対する万能薬ではない。"],
-      ["posit", "仮定する", "/ˈpɑːzɪt/", "Scientists posit that liquid water once existed on Mars.", "科学者たちはかつて火星に液体が存在したと仮定している。"],
-      ["cripple", "身体を不自由にする", "/ˈkrɪpl/", "The strike threatened to cripple the transportation system.", "ストライキは交通機関の機能を麻痺させる（身体を不自由にさせる）おそれがあった。"],
-      ["torment", "ひどく苦しめる", "/ˈtɔːrment/", "He was tormented by painful memories.", "彼は辛い記憶にひどく苦しめられた。"],
-      ["afflict", "悩ます、苦しめる", "/əˈflɪkt/", "Severe drought continues to afflict the region.", "深刻な干ばつがその地域を悩ませ続けている。"],
-      ["brink", "縁、きわ", "/brɪnk/", "The company was on the brink of bankruptcy.", "その会社は倒産のきわにあった。"],
-      ["culprit", "犯人", "/ˈkʌlprɪt/", "Stress is often the main culprit behind insomnia.", "ストレスは不眠症の主な犯人であることが多い。"],
-      ["haphazard", "でたらめの", "/hæpˈhæzərd/", "The books were placed on the shelf in a haphazard manner.", "本は棚の上に無計画に置かれていた。"],
-      ["impromptu", "即興の", "/ɪmˈprɑːmptuː/", "She gave an impromptu speech at the party.", "彼女はパーティーで即興のスピーチをした。"],
-      ["pivotal", "中心となる", "/ˈpɪvətl/", "He played a pivotal role in negotiating the treaty.", "彼は条約交渉で中心的な役割を果たした。"],
-      ["elicit", "引き出す", "/ɪˈlɪsɪt/", "The teacher tried to elicit responses from the students.", "先生は生徒から回答を引き出そうとした。"],
-      ["propensity", "傾向、性向", "/prəˈpensəti/", "He has a propensity to exaggerate the truth.", "彼には真実を誇張する傾向がある。"],
-      ["hallmark", "特徴", "/ˈhɔːlmɑːrk/", "Attention to detail is the hallmark of great design.", "細部へのこだわりは素晴らしいデザインの特徴だ。"],
-      ["deadlock", "行き詰まり", "/ˈdedlɑːk/", "Negotiations ended in a complete deadlock.", "交渉は完全に行き詰まりに終わった。"],
-      ["grindlock", "全面交通渋滞", "/ˈɡraɪndlɑːk/", "Gridlock on the highway delayed commuters for hours.", "高速道路の全面交通渋滞により通勤客は数時間遅れた。"],
-      ["covet", "むやみに欲しいと思う", "/ˈkʌvət/", "She coveted the prestigious award.", "彼女はその名誉ある賞をむやみに欲しいと思った。"],
-      ["elusive", "理解しにくい", "/ɪˈluːsɪv/", "Success remained elusive for the young artist.", "成功は若い芸術家にとって理解しにくく、手に届かないものだった。"],
-      ["entrenched", "確立した", "/ɪnˈtrentʃt/", "These entrenched beliefs are hard to change.", "これらの確立した信念を変えるのは難しい。"],
-      ["far-fetched", "信じがたい", "/ˌfɑːr ˈfetʃt/", "His explanation sounds a bit far-fetched.", "彼の説明は少し信じがたく思える。"],
-      ["meddle", "干渉する", "/ˈmedl/", "Don't meddle in other people's private affairs.", "他人の私生活に干渉してはならない。"],
-      ["exasperate", "怒らせる", "/ɪɡˈzæspəreɪt/", "His constant interruptions exasperate the teacher.", "彼が絶えず割り込むことが先生を怒らせる。"],
-      ["vexing", "いらだたせる", "/ˈveksɪŋ/", "This is a vexing problem with no clear solution.", "これは明確な解決策がないいらだたしい問題だ。"],
-      ["baffle", "困惑させる", "/ˈbæfl/", "The mysterious puzzle completely baffled the detective.", "その謎めいたパズルは探偵を完全に困惑させた。"],
-      ["evict", "立ち退かせる", "/ɪˈvɪkt/", "They were evicted for failing to pay the rent.", "彼らは家賃の不払いにより立ち退かされた。"],
-      ["homage", "敬意", "/ˈhɑːmɪdʒ/", "The film pays homage to classic cinema.", "その映画は古典映画への敬意を表している。"],
-      ["revere", "崇拝する", "/rɪˈvɪr/", "The professor is revered by all his students.", "その教授はすべての生徒から崇拝されている。"],
-      ["suffrage", "選挙権", "/ˈsʌfrɪdʒ/", "Women fought hard for universal suffrage.", "女性たちは普遍的な選挙権を求めて激しく戦った。"],
-      ["arduous", "骨の折れる", "/ˈɑːrdʒuəs/", "Climbing the mountain was an arduous journey.", "その山を登ることは骨の折れる道のりだった。"],
-      ["strenuous", "激しい", "/ˈstrenjuəs/", "Avoid strenuous exercise after eating a heavy meal.", "重い食事の後は激しい運動を避けなさい。"],
-      ["excruciating", "耐えがたい", "/ɪkˈskruːʃieɪtɪŋ/", "She suffered excruciating pain from the injury.", "彼女はその怪我で耐えがたい痛みに苦しんだ。"],
-      ["daunting", "人の気力をくじく", "/ˈdɔːntɪŋ/", "Starting a new business can be a daunting task.", "新しいビジネスを始めることは気力をくじく仕事になり得る。"],
-      ["intractable", "手に負えない", "/ɪnˈtræktəbl/", "Poverty is one of society's most intractable issues.", "貧困は社会の最も手に負えない問題の一つだ。"],
-      ["insurmountable", "克服できない", "/ˌɪnsərˈmaʊntəbl/", "They faced insurmountable difficulties during the trek.", "彼らはトレッキング中に克服できない困難に直面した。"],
-      ["condescending", "人を見下すような", "/ˌkɑːndɪˈsendɪŋ/", "His condescending tone alienated his colleagues.", "彼の見下すようなトーンは同僚たちを遠ざけた。"],
-      ["blatant", "露骨な", "/ˈbleɪtnt/", "It was a blatant lie.", "それは露骨な嘘だった。"],
-      ["audacious", "大胆な", "/ɔːˈdeɪʃəs/", "The team presented an audacious new strategy.", "チームは大胆な新戦略を提示した。"],
-      ["complacent", "自己満足の", "/kəmˈpleɪsnt/", "We cannot afford to become complacent about safety.", "安全に関して自己満足に陥る余裕はない。"],
-      ["erratic", "不規則な", "/ɪˈrætɪk/", "The stock market showed erratic behavior this week.", "今週の株式市場は不規則な動きを見せた。"],
-      ["fickle", "気まぐれな", "/ˈfɪkl/", "The weather in spring can be very fickle.", "春の天気は非常に気まぐれになり得る。"],
-      ["precarious", "不安定な", "/prɪˈkeriəs/", "The ladder looked precarious.", "その梯子は不安定に見えた。"],
-      ["treacherous", "危険な", "/ˈtretʃərəs/", "Road conditions were treacherous due to the ice.", "氷のために道路の状況は危険だった。"],
-      ["capricious", "気まぐれな", "/kəˈprɪʃəs/", "A capricious decision led to unexpected consequences.", "気まぐれな決定が予期せぬ結果を引き起こした。"],
-      ["quirk", "変な癖", "/kwɜːrk/", "Everyone has their own little quirks.", "誰にでもちょっとした変な癖がある。"],
-      ["whim", "気まぐれ", "/wɪm/", "She bought the dress on a whim.", "彼女は気まぐれでそのドレスを買った。"],
-      ["hunch", "直感、予感", "/hʌntʃ/", "I have a hunch that it will rain today.", "今日は雨が降るという直感がある。"],
-      ["shrewd", "賢い、抜け目のない", "/ʃruːd/", "He made a shrewd business investment.", "彼は抜け目のないビジネス投資を行った。"],
-      ["peruse", "熟読する", "/pəˈruːz/", "Please peruse the document before signing it.", "署名する前に書類を熟読してください。"],
-      ["delve", "調査する", "/delv/", "The report delves into the causes of the crisis.", "その報告書は危機の原因を深く調査している。"],
-      ["grandeur", "壮大", "/ˈɡrændʒər/", "We were awed by the grandeur of the palace.", "私たちは宮殿の壮大さに圧倒された。"],
-      ["fraught", "伴う", "/frɔːt/", "The mission was fraught with danger.", "その任務は危険を伴うものだった。"],
-      ["rife", "満ちて", "/raɪf/", "Rumors were rife in the office.", "オフィス内は噂で満ちていた。"],
-      ["rampant", "蔓延した", "/ˈræmpənt/", "Inflation became rampant across the country.", "全国でインフレが蔓延した。"],
-      ["clutter", "散らかす", "/ˈklʌtər/", "Don't clutter your desk with useless papers.", "役に立たない書類でデスクを散らかしてはいけない。"],
-      ["antagonism", "対立、敵対心", "/ænˈtæɡənɪzəm/", "There was growing antagonism between the rivals.", "ライバル間の対立が高まっていた。"],
-      ["animosity", "憎悪、敵意", "/ˌænɪˈmɑːsəti/", "He expressed no animosity toward his former opponent.", "彼は元対戦相手に対して敵意を示さなかった。"],
-      ["loathe", "ひどく嫌う", "/loʊð/", "I loathe getting up early on cold mornings.", "寒い朝に早起きするのはひどく嫌いだ。"],
-      ["xenophobia", "外国人嫌い", "/ˌzenəˈfoʊbiə/", "Education is key to fighting xenophobia.", "教育は外国人嫌いと戦うための鍵だ。"],
-      ["calamity", "災難、災害", "/kəˈlæməti/", "The flood was a disaster that caused great calamity.", "洪水は大災害を引き起こした災難だった。"],
-      ["havoc", "大混乱", "/ˈhævək/", "The storm wreaked havoc on the coast.", "嵐は沿岸部に大混乱を引き起こした。"],
-      ["influx", "流入、殺到", "/ˈɪnflʌks/", "The city saw a sudden influx of tourists.", "その都市は突然の観光客の殺到を経験した。"],
-      ["insidious", "陰険な", "/ɪnˈsɪdiəs/", "High cholesterol is an insidious danger to health.", "悪玉コレステロールは健康にとって陰険な危険だ。"],
-      ["tacit", "暗黙の", "/ˈtæsɪt/", "They had a tacit agreement not to talk about the incident.", "彼らはその事件について話さないという暗黙の合意をしていた。"],
-      ["unwittingly", "知らずに", "/ʌnˈwɪtɪŋli/", "He unwittingly revealed the secret plan.", "彼は知らずに秘密の計画を漏らしてしまった。"],
-      ["anecdote", "逸話", "/ˈænɪkdoʊt/", "The speaker shared a funny anecdote during the lecture.", "講師は講義中に面白い逸話を披露した。"],
-      ["demeanor", "態度", "/dɪˈmiːnər/", "Her calm demeanor reassured everyone.", "彼女の冷静な態度は皆を安心させた。"],
-      ["backdrop", "背景", "/ˈbækdrɑːp/", "The mountains provided a beautiful backdrop for the village.", "山々が村に美しい背景を提供していた。"],
-      ["cumulative", "累積する", "/ˈkjuːmjəleɪtɪv/", "The cumulative effect of daily practice is huge.", "毎日の練習の累積的効果は絶大だ。"],
-      ["incremental", "ますます増加する", "/ˌɪŋkrəˈmentl/", "Small, incremental improvements lead to big results.", "小さく段階的に増加する改善が大きい結果につながる。"],
-      ["exponentially", "加速度的に", "/ˌekspəˈnenʃəli/", "Data processing power grew exponentially.", "データ処理能力は加速度的に成長した。"],
-      ["augment", "増加させる", "/ɔːɡˈment/", "He took a second job to augment his income.", "彼は収入を増加させるために副業を始めた。"],
-      ["bolster", "強化する", "/ˈboʊlstər/", "Extra training will bolster our confidence.", "追加のトレーニングが私たちの自信を強化するだろう。"],
-      ["galvanize", "活気づける", "/ˈɡælvənaɪz/", "The speech helped galvanize the audience into action.", "そのスピーチは聴衆を活気づけ、行動へ駆り立てるのに役立った。"],
-      ["invigorate", "元気づける", "/ɪnˈvɪɡəreɪt/", "A morning walk can invigorate both body and mind.", "朝の散歩は身体と心の両方を元気づけることができる。"],
-      ["buoy", "勇気づける", "/ˈbuːi/", "The good news served to buoy their spirits.", "その良いニュースは彼らの精神を勇気づけるのに役立った。"],
-      ["exalt", "ほめる、高める", "/ɪɡˈzɔːlt/", "The nation exalted the heroic soldiers.", "国家はその英雄的な兵士たちをほめたたえた。"],
-      ["dwarf", "小さく見せる", "/dwɔːrf/", "The skyscraper dwarfs the nearby buildings.", "その超高層ビルは近くの建物を小さく見せる。"],
-      ["voracious", "貪欲な", "/vəˈreɪʃəs/", "He has a voracious appetite for learning.", "彼には学習に対する貪欲な意欲がある。"],
-      ["insatiable", "飽くことのない", "/ɪnˈseɪʃəbl/", "Her curiosity about outer space is insatiable.", "宇宙に対する彼女の好奇心は飽くことのないものだ。"],
-      ["gluttony", "大食い", "/ˈɡlʌtəni/", "Gluttony is considered one of the seven deadly sins.", "大食いは七つの大罪の一つと考えられている。"],
-      ["devour", "むさぼり食う", "/dɪˈvaʊər/", "The hungry lions proceeded to devour their prey.", "お腹を空かせたライオンたちは獲物をむさぼり食い始めた。"],
-      ["destitution", "貧困", "/ˌdestɪˈtuːʃn/", "The war left thousands in extreme destitution.", "戦争は何千人もの人々を極度の貧困状態に残した。"],
-      ["impoverished", "貧しい", "/ɪmˈpɑːvərɪʃt/", "Programs were designed to help impoverished families.", "貧しい家庭を支援するためのプログラムが設計された。"],
-      ["bombard", "～に浴びせる", "/bɑːmˈbɑːrd/", "Reporters began to bombard the president with questions.", "記者たちは大統領に質問を浴びせ始めた。"],
-      ["cascade", "小滝", "/kæˈskeɪd/", "Water fell in a gentle cascade down the rocks.", "水が岩を優しく小滝のように流れ落ちた。"],
-      ["torrent", "急流", "/ˈtɔːrənt/", "Heavy rains turned the stream into a raging torrent.", "大雨が川を激しい急流に変えた。"],
-      ["lucid", "明解な", "/ˈluːsɪd/", "She gave a lucid explanation of a complex topic.", "彼女は複雑なテーマについて明解な説明を行った。"],
-      ["elucidate", "説明する", "/ɪˈluːsɪdeɪt/", "The study aims to elucidate the mechanisms of the disease.", "その研究はその病気のメカニズムを解明（説明）することを目指している。"],
-      ["backfire", "裏目に出る", "/ˈbækfaɪər/", "His attempt to solve the issue on his own backfired.", "自分だけで問題を解決しようとした彼の試みは裏目に出た。"],
-      ["blunder", "大失敗", "/ˈblʌndər/", "A careless blunder cost the company millions.", "不注意な大失敗が会社に数百万の損害を与えた。"],
-      ["anomaly", "例外", "/əˈnɑːməli/", "Scientists noticed an anomaly in the data.", "科学者たちはデータ内の例外的な数値（異常）に気づいた。"],
-      ["enunciate", "発表する", "/ɪˈnʌnsieɪt/", "Please enunciate your words clearly during the speech.", "スピーチ中は言葉を明確に発音（発表）してください。"],
-      ["exemplify", "例証する", "/ɪɡˈzemplɪfaɪ/", "This case exemplifies the problems we face.", "この事例は私たちが直面している問題を例証している。"],
-      ["epitomize", "集約する", "/ɪˈpɪtəmaɪz/", "Her lifestyle seems to epitomize modern elegance.", "彼女のライフスタイルは現代のエレガンスを集約しているように見受けられる。"],
-      ["nascent", "初期の", "/ˈnæsnt/", "The nascent startup company shows great promise.", "その初期のスタートアップ企業は大きな有望性を示している。"],
-      ["burgeoning", "急成長する", "/ˈbɜːrdʒənɪŋ/", "The burgeoning market offers many new opportunities.", "その急成長する市場は多くの新しい機会を提供している。"],
-      ["fledgling", "ひな鳥、新出しの", "/ˈfledʒlɪŋ/", "The fledgling company is struggling to make a profit.", "その駆け出しの（ひな鳥のような）会社は利益を上げるのに苦戦している。"],
-      ["inception", "初め", "/ɪnˈsepʃn/", "The project has been successful since its inception.", "そのプロジェクトは開始当初から成功している。"],
-      ["inauguration", "就任（式）", "/ɪˌnɔːɡjəˈreɪʃn/", "Thousands attended the presidential inauguration.", "大統領就任式には数千人が出席した。"],
-      ["vandalize", "破壊する", "/ˈvændəlaɪz/", "Public property was vandalized over the weekend.", "週末に公共物が破壊された。"],
-      ["obliterate", "完全に破壊する", "/əˈblɪtəreɪt/", "The tornado managed to obliterate the entire town.", "竜巻は町全体を完全に破壊してしまった。"],
-      ["annihilation", "絶滅", "/əˌnaɪəˈleɪʃn/", "Nuclear war could lead to the total annihilation of humanity.", "核戦争は人類の完全な絶滅を引き起こす可能性がある。"],
-      ["engulf", "飲み込む", "/ɪnˈɡʌlf/", "Flames quickly began to engulf the building.", "炎が急速に建物を飲み込み始めた。"],
-      ["penchant", "傾向、好み", "/ˈpentʃənt/", "He has a penchant for collecting rare stamps.", "彼には珍しい切手を集める好みがある。"],
-      ["affinity", "親近感", "/əˈfɪnəti/", "She felt a strong affinity with the local culture.", "彼女は現地の文化に強い親近感を感じた。"],
-      ["muster", "を集める", "/ˈmʌstər/", "He tried to muster the courage to speak up.", "彼は発言する勇気を奮い起こそう（集めよう）とした。"],
-      ["garner", "得る", "/ˈɡɑːrnər/", "The campaign managed to garner widespread support.", "そのキャンペーンは広範な支持を得ることができた。"],
-      ["procure", "獲得する", "/prəˈkjʊr/", "They managed to procure essential medical supplies.", "彼らは不可欠な医療用品を獲得することに成功した。"],
-      ["jostle", "押しのける", "/ˈdʒɑːsl/", "Commuters had to jostle through the crowded station.", "通勤客は混雑した駅をかき分けて（押しのけて）進まねばならなかった。"],
-      ["poised", "落ち着きがある", "/pɔɪzd/", "She remained calm and poised under pressure.", "彼女はプレッシャーの下でも冷静で落ち着きを保っていた。"],
-      ["placid", "穏やかな", "/ˈplæsɪd/", "The lake was placid and still in the morning.", "朝の湖は穏やかで静まり返っていた。"],
-      ["discrepancy", "相違", "/dɪˈskrepənsi/", "There was a discrepancy between the two financial reports.", "二つの財務報告書の間に相違があった。"],
-      ["discrete", "別々の", "/dɪˈskriːt/", "The training module is divided into discrete sections.", "研修モジュールは別々のセクションに分けられている。"],
-      ["demarcation", "境界", "/ˌdiːmɑːrˈkeɪʃn/", "There is a clear line of demarcation between the duties.", "職務の間には明確な境界線がある。"],
-      ["dichotomy", "二分すること", "/daɪˈkɑːtəmi/", "The dichotomy between theory and practice is wide.", "理論と実践の二分化（ギャップ）は大きい。"],
-      ["squander", "浪費する", "/ˈskwɑːndər/", "Do not squander your talent on trivial things.", "些細なことに才能を浪費してはならない。"],
-      ["exorbitant", "法外な", "/ɪɡˈzɔːrbɪtənt/", "The hotel charged an exorbitant price for a room.", "そのホテルは部屋代に法外な価格を請求した。"],
-      ["ostentatious", "これ見よがしの", "/ˌɑːstenˈteɪʃəs/", "He wore an ostentatious gold watch.", "彼はこれ見よがしの金の腕時計を身につけていた。"],
-      ["staunch", "忠実な", "/stɔːntʃ/", "He is a staunch supporter of the local football team.", "彼は地元サッカーチームの忠実なサポーターだ。"],
-      ["allegiance", "忠誠", "/əˈliːdʒəns/", "Citizens pledged allegiance to their country.", "市民たちは国家に忠誠を誓った。"],
-      ["rapport", "信頼関係", "/ræˈpɔːr/", "The teacher built a good rapport with her students.", "その教師は生徒たちと良好な信頼関係を築いた。"],
-      ["acquiescence", "黙認", "/ˌækwiˈesns/", "His silence was interpreted as acquiescence.", "彼の沈黙は黙認と解釈された。"],
-      ["subjugate", "征服する", "/ˈsʌbdʒʊɡeɪt/", "The empire sought to subjugate neighbor nations.", "その帝国は隣国を征服しようとした。"],
-      ["aftermath", "余波", "/ˈæftərmæθ/", "Many challenges arose in the aftermath of the disaster.", "災害の余波で多くの課題が生じた。"],
-      ["tumultuous", "騒がしい", "/tuːˈmʌltʃuəs/", "The country experienced a tumultuous period of reform.", "その国は激しく動揺した（騒がしい）改革の時代を経験した。"],
-      ["clamor", "叫び声", "/ˈklæmər/", "There was a public clamor for lower taxes.", "減税を求める世論の強い叫び声があった。"],
-      ["roaring", "騒々しい", "/ˈrɔːrɪŋ/", "The campfire made a roaring sound.", "キャンプファイアーが轟々とした騒々しい音を立てていた。"],
-      ["crux", "最も重要な点", "/krʌks/", "That is the crux of the entire argument.", "それこそが議論全体の最も重要な点だ。"],
-      ["gist", "要点", "/dʒɪst/", "I didn't hear every word, but I got the gist of it.", "すべての単語は聞き取れなかったが、要点は理解した。"],
-      ["belated", "遅れた", "/bɪˈleɪtɪd/", "She sent him a belated birthday card.", "彼女は彼に遅れた誕生日カードを送った。"],
-      ["procrastinate", "先延ばしにする", "/prəˈkræstɪneɪt/", "It's easy to procrastinate when faced with a hard task.", "難題に直面すると、先延ばしにしがちである。"],
-      ["plagiarism", "盗用", "/ˈpleɪdʒərɪzəm/", "The student was accused of plagiarism in his essay.", "その学生は論文で盗用をしたと非難された。"],
-      ["plunder", "略奪する", "/ˈplʌndər/", "Soldiers were sent to plunder the village.", "兵士たちは村を略奪するために派遣された。"],
-      ["usurp", "強奪する", "/juːˈsɜːrp/", "He tried to usurp the power of the director.", "彼は権力を強奪しようとした。"],
-      ["confiscate", "没収する", "/ˈkɑːnfɪskeɪt/", "The teacher had to confiscate the student's phone.", "先生は生徒のスマホを没収しなければならなかった。"],
-      ["innocuous", "悪意のない", "/ɪˈnɑːkjuəs/", "It was just an innocuous remark, not an insult.", "それは単なる悪意のない発言であり、侮辱ではない。"],
-      ["neurotic", "神経症の", "/nʊˈrɑːtɪk/", "He has a neurotic fear of germs.", "彼には細菌に対する神経症的な恐怖がある。"],
-      ["paranoid", "偏執狂の", "/ˈpærənɔɪd/", "He felt paranoid that everyone was watching him.", "彼は皆が自分を見ているという偏執狂的な思いを抱いた。"],
-      ["gross", "総計の", "/ɡroʊs/", "The company's gross income increased this year.", "今年、会社の総収入は増加した。"],
-      ["holistic", "全体論的な", "/hoʊˈlɪstɪk/", "Medicine should take a holistic approach to patient care.", "医療は患者のケアに対して全体論的なアプローチをとるべきだ。"],
-      ["contentious", "議論を起こす", "/kənˈtenʃəs/", "Tax reform remains a highly contentious issue.", "税制改革は依然として非常に議論を起こすテーマだ。"],
-      ["dissent", "異議を唱える", "/dɪˈsent/", "Only two members chose to dissent from the decision.", "わずか2名のメンバーだけが決定に異議を唱えることを選んだ。"],
-      ["catapult", "勢いよく投げ出す", "/ˈkætəpʌlt/", "The success helped catapult her into stardom.", "その成功が彼女をスターダムへ一気に勢いよく投げ出した。"],
-      ["simmer", "ぐつぐつ煮える", "/ˈsɪmər/", "Let the soup simmer gently for twenty minutes.", "スープを20分間優しくぐつぐつ煮込ませてください。"],
-      ["scorching", "焼けつくような", "/ˈskɔːrtʃɪŋ/", "We walked under the scorching sun.", "私たちは焼けつくような太陽の下を歩いた。"],
-      ["watershed", "分岐点", "/ˈwɔːtərʃed/", "The event marked a watershed in modern history.", "その出来事は現代史における重要な分岐点となった。"],
-      ["seminal", "先駆的な", "/ˈsemɪnl/", "His seminal book reshaped economic theory.", "彼の先駆的な本は経済理論を再構築した。"],
-      ["seismic", "地震の", "/ˈsaɪzmɪk/", "The political decision caused a seismic shift.", "その政治的決定は大きな（地震のような）地殻変動を引き起こした。"],
-      ["emancipate", "を解放する", "/ɪˈmænsɪpeɪt/", "The decree helped emancipate enslaved people.", "その法令は奴隷化された人々を解放するのに役立った。"],
-      ["dismantle", "分解する", "/dɪsˈmæntl/", "Engineers had to dismantle the old machine.", "エンジニアたちは古い機械を分解しなければならなかった。"],
-      ["dissect", "解剖する", "/dɪˈsekt/", "Biologists will dissect the frog in class.", "生物学者たちは授業でカエルを解剖する予定だ。"],
-      ["ramification", "結果", "/ˌræmɪfɪˈkeɪʃn/", "We must consider the ramifications of this policy.", "私たちはこの政策がもたらす結果（影響）を考慮しなければならない。"],
-      ["wince", "顔をしかめる", "/wɪns/", "He couldn't help but wince in pain.", "彼は痛みに思わず顔をしかめざるを得なかった。"],
-      ["contort", "ねじ曲げる", "/kənˈtɔːrt/", "His face contorted in anger.", "彼の顔は怒りでねじ曲がった。"],
-      ["skew", "歪んだ", "/skjuː/", "The survey results were skewed by biased sampling.", "調査結果は偏ったサンプリングによって歪められた。"],
-      ["lofty", "崇高な", "/ˈlɔːfti/", "She set lofty goals for her academic career.", "彼女は学術的キャリアに対して崇高な目標を設定した。"],
-      ["ruminate", "思いめぐらす", "/ˈruːmɪneɪt/", "He sat alone to ruminate on his future.", "彼は自分の将来について深く思いめぐらすため一人座った。"],
-      ["reminisce", "思い出を語る", "/ˌremɪˈnɪs/", "Old friends met to reminisce about their school days.", "古い友人たちが集まり、学生時代の思い出を語り合った。"],
-      ["maneuver", "巧みな操縦", "/məˈnuːvər/", "Driving through narrow streets requires careful maneuver.", "狭い道を運転するには巧みな操縦が必要だ。"],
-      ["excrete", "排泄する", "/ɪkˈskriːt/", "Plants excrete excess moisture through their leaves.", "植物は葉を通して過剰な水分を排泄する。"],
-      ["thwart", "阻止する", "/θwɔːrt/", "Security forces managed to thwart the planned attack.", "警備隊は計画された攻撃を阻止することに成功した。"],
-      ["congenital", "先天性の", "/kənˈdʒenɪtl/", "The baby was born with a congenital heart defect.", "その赤ちゃんは先天性の心臓欠陥を持って生まれた。"],
-      ["orchestrate", "組織化する", "/ˈɔːrkɪstreɪt/", "She was hired to orchestrate the global campaign.", "彼女は世界的なキャンペーンを組織化するために雇われた。"],
-      ["reiterate", "繰り返す", "/riˈɪtəreɪt/", "Let me reiterate the main point of my talk.", "私の話の最も重要な点を繰り返させてください。"],
-      ["egalitarian", "平等主義者", "/iˌɡælɪˈteriən/", "They strived to build an egalitarian society.", "彼らは平等主義的な社会を築くために尽力した。"],
-      ["staggering", "びっくりさせる", "/ˈstæɡərɪŋ/", "The project cost a staggering amount of money.", "そのプロジェクトにはびっくりさせるほどの金額がかかった。"],
-      ["appalling", "ひどい", "/əˈpɔːlɪŋ/", "The living conditions in the camp were appalling.", "キャンプ内の生活環境はひどいものだった。"],
-      ["idiosyncratic", "独特な", "/ˌɪdioʊsɪnˈkrætɪk/", "His writing style is very idiosyncratic.", "彼の執筆スタイルは非常に独特だ。"],
-      ["incessantly", "ひっきりなしに", "/ɪnˈsesntli/", "It rained incessantly for three straight days.", "3日連続でひっきりなしに雨が降った。"],
-      ["entice", "誘惑する", "/ɪnˈtaɪs/", "Stores use sales discounts to entice customers.", "店舗は客を誘惑するために割引を実施する。"],
-      ["enthrall", "魅了する", "/ɪnˈθrɔːl/", "The magician's performance managed to enthrall the audience.", "奇術師のパフォーマンスは観客を大いに魅了した。"],
-      ["engrossed", "夢中になって", "/ɪnˈɡroʊst/", "She was completely engrossed in reading her book.", "彼女は本を読むことにすっかり夢中になっていた。"],
-      ["intoxicated", "熱狂した", "/ɪnˈtɑːksɪkeɪtɪd/", "He became intoxicated with his sudden success.", "彼は突然の成功にすっかり熱狂した（酔いしれた）。"],
-      ["hallucinate", "幻覚を感じる", "/həˈluːsɪneɪt/", "High fever can cause patients to hallucinate.", "高熱は患者に幻覚を感じさせることがある。"],
-      ["overt", "露骨な", "/oʊˈvɜːrt/", "There was no overt discrimination present.", "そこには露骨な差別は存在しなかった。"],
-      ["surreptitiously", "こっそりと", "/ˌsɜːrəpˈtɪʃəsli/", "He surreptitiously slipped a note into her bag.", "彼はこっそりと彼女のカバンにメモを滑り込ませた。"],
-      ["intertwine", "絡み合わせる", "/ˌɪntərˈtwaɪn/", "Fate brought their lives to intertwine.", "運命が彼らの人生を深く絡み合わせることとなった。"],
-      ["disentangle", "もつれを解く", "/ˌdɪsɪnˈtæŋɡl/", "It took hours to disentangle the messy cables.", "ごちゃごちゃしたケーブルのもつれを解くのに数時間かかった。"],
-      ["inadvertently", "うっかりして", "/ˌɪnədˈvɜːrtəntli/", "I inadvertently deleted the important document.", "誤って（うっかりして）重要な書類を削除してしまった。"],
-      ["purport", "主張する", "/pərˈpɔːrt/", "The document purports to show official findings.", "その書類は公式の調査結果を示すと主張している。"],
-      ["altruistic", "利他的な", "/ˌæltruˈɪstɪk/", "His actions were purely altruistic and selfless.", "彼の行動は完全に利他的で無欲なものだった。"],
-      ["infallible", "決して誤らない", "/ɪnˈfæləbl/", "No human judgment can be completely infallible.", "人間の判断で決して誤らないものなど存在しない。"],
-      ["disdain", "軽蔑", "/dɪsˈdeɪn/", "He looked at the cheap copy with disdain.", "彼はその安っぽい模造品を軽蔑の目で見つめた。"],
-      ["deride", "あざける", "/dɪˈraɪd/", "Critics continued to deride his new theory.", "批評家たちは彼の新しい理論をあざけり続けた。"],
-      ["resilient", "立ち直りの早い", "/rɪˈzɪliənt/", "Children are often remarkably resilient after illness.", "子供たちは病気の後、驚くほど立ち直りが早いことが多い。"],
-      ["inundate", "殺到する", "/ˈɪnʌndeɪt/", "Call centers were inundated with complaints.", "コールセンターには苦情が殺到した。"],
-      ["tenacious", "粘り強い", "/təˈneɪʃəs/", "She is a tenacious investigator who never gives up.", "彼女は決して諦めない粘り強い調査官だ。"],
-      ["unfold", "広げる、展開する", "/ʌnˈfoʊld/", "We watched the drama unfold on television.", "私たちはドラマがテレビで展開するのを見守った。"],
-      ["pernicious", "有害な", "/pərˈnɪʃəs/", "Lies can have a pernicious influence on relationships.", "嘘は人間関係に非常に有害な影響を与え得る。"],
-      ["detrimental", "有害な", "/ˌdetrɪˈmentl/", "Smoking is highly detrimental to your health.", "喫煙は健康にとって極めて有害である。"],
-      ["rationale", "理論的根拠", "/ˌræʃəˈnæl/", "What is the rationale behind this decision?", "この決定の裏にある理論的根拠は何ですか？"],
-      ["disseminate", "普及させる", "/dɪˈsemɪneɪt/", "The internet helps disseminate information rapidly.", "インターネットは情報を急速に普及させるのに役立つ。"],
-      ["permeate", "浸透する", "/ˈpɜːrmieɪt/", "The smell of coffee began to permeate the room.", "コーヒーの香りが部屋に浸透し（広がり）始めた。"],
-      ["proliferate", "急増する", "/prəˈlɪfəreɪt/", "Fast food chains continue to proliferate worldwide.", "ファーストフード店が世界中で急速に増加（急増）し続けている。"],
-      ["binge", "飲み騒ぎ", "/bɪndʒ/", "He went on a binge watching his favorite series.", "彼は大好きなシリーズ作品の連続視聴（ binge watch ）に興じた。"],
-      ["spike", "急上昇する", "/spaɪk/", "Oil prices began to spike due to short supply.", "供給不足により原油価格が急上昇し始めた。"],
-      ["skyrocket", "急上昇する", "/ˈskaɪrɑːkɪt/", "Housing costs skyrocket in major cities.", "大都市では住宅費が急上昇している。"],
-      ["plummet", "急落する", "/ˈplʌmɪt/", "Temperatures are predicted to plummet tonight.", "今夜、気温が急落すると予想されている。"],
-      ["dwindle", "だんだん減少する", "/ˈdwɪndl/", "Our food supplies began to dwindle rapidly.", "食料の蓄えがだんだんと減少し始めた。"],
-      ["solace", "慰め", "/ˈsɑːləs/", "She found solace in music during tough times.", "彼女は辛い時期に音楽の中に慰めを見出した。"],
-      ["underpin", "支える", "/ˌʌndərˈpɪn/", "Facts should underpin every scientific argument.", "全ての科学的議論は事実で支えられているべきだ。"],
-      ["chastise", "厳しく非難する", "/tʃæˈstaɪz/", "The manager had to chastise the staff for errors.", "マネージャーはミスについてスタッフを厳しく非難せざるを得なかった。"],
-      ["reproach", "非難", "/rɪˈproʊtʃ/", "His conduct was beyond reproach.", "彼の行いは非難の余地がないほど素晴らしいものだった。"],
-      ["denounce", "非難する", "/dɪˈnaʊns/", "Leaders gathered to denounce terrorism.", "指導者たちが集まりテロリズムを非難した。"],
-      ["gregarious", "社交的な", "/ɡrɪˈɡeriəs/", "He is a gregarious person who enjoys parties.", "彼はパーティーを楽しむ社交的な人だ。"],
-      ["concoct", "でっち上げる", "/kənˈkɑːkt/", "He had to concoct a believable story quickly.", "彼は素早く信憑性のある話をでっち上げねばならなかった。"],
-      ["phony", "偽の", "/ˈfoʊni/", "He gave a phony name to the police.", "彼は警察に偽の名前を伝えた。"],
-      ["scapegoat", "身代わり", "/ˈskeɪpɡoʊt/", "He was made a scapegoat for the team's failure.", "彼はチームの失敗の身代わり（生け贄）にされた。"],
-      ["sarcastic", "皮肉な", "/sɑːrˈkæstɪk/", "She made a sarcastic comment about his late arrival.", "彼女は彼の遅刻について皮肉なコメントをした。"],
-      ["instigate", "推進する、扇動する", "/ˈɪnstɪɡeɪt/", "He tried to instigate trouble among workers.", "彼は労働者たちの間で問題を扇動しようとした。"],
-      ["jolt", "揺さぶる", "/dʒoʊlt/", "The earthquake gave a sudden jolt to the building.", "地震が建物に突然の揺れ（衝撃）を与えた。"],
-      ["leeway", "余裕", "/ˈliːweɪ/", "We have some leeway in setting the project timeline.", "プロジェクトのタイムライン設定には多少の余裕がある。"],
-      ["protagonist", "主人公", "/prəˈtæɡənɪst/", "The protagonist of the novel overcomes many hardships.", "その小説の主人公は多くの苦難を乗り越える。"],
-      ["circumvent", "回避する", "/ˌsɜːrkəmˈvent/", "They found a clever way to circumvent the rules.", "彼らは規則を回避する賢い方法を見つけた。"],
-      ["eschew", "避ける", "/ɪsˈtʃuː/", "He chose to eschew violence completely.", "彼は暴力を完全に避けることを選んだ。"],
-      ["tenet", "教義", "/ˈtenɪt/", "Freedom of speech is a basic tenet of democracy.", "言論の自由は民主主義の基本教義だ。"],
-      ["axiom", "原理、公理", "/ˈæksiəm/", "It is an accepted axiom that honesty is the best policy.", "正直は最良の策であるというのは受け入れられた原理だ。"],
-      ["mantra", "スローガン", "/ˈmæntrə/", "'Keep moving forward' became her personal mantra.", "「前進し続けろ」が彼女の個人的なスローガンとなった。"],
-      ["caveat", "警告、注意条項", "/ˈkæviæt/", "There is one important caveat to this plan.", "この計画には一つ重要な警告（注意条項）がある。"],
-      ["premise", "前提", "/ˈpremɪs/", "The argument is based on a false premise.", "その議論は間違った前提に基づいている。"],
-      ["efficacy", "効き目", "/ˈefɪkəsi/", "Clinical trials tested the efficacy of the new medicine.", "臨床試験で新薬の効き目が試された。"],
-      ["amenable", "なじみやすい", "/əˈmiːnəbl/", "She was amenable to trying the new approach.", "彼女は新しいアプローチを試すことになじみやすかった（前向きだった）。"],
-      ["docile", "従順な", "/ˈdɑːsl/", "The dog was very docile and easy to train.", "その犬はとても従順で訓練しやすかった。"],
-      ["malleable", "素直な、柔軟な", "/ˈmæliəbl/", "Young minds are highly malleable and receptive.", "若い心は非常に素直（柔軟）で受け入れやすい。"],
-      ["defy", "反抗する", "/dɪˈfaɪ/", "His actions continue to defy public expectations.", "彼の行動は世間の予想に反抗し（逆らい）続けている。"],
-      ["rudimentary", "基本的な", "/ˌruːdɪˈmentri/", "He only has a rudimentary knowledge of physics.", "彼には物理学の基本的な知識しかない。"],
-      ["lurk", "潜む", "/lɜːrk/", "Dangers can lurk in unexpected places.", "危険は予期せぬ場所に潜み得る。"],
-      ["hoax", "作り話", "/hoʊks/", "The story turned out to be an elaborate hoax.", "その話は精巧な作り話（悪ふざけ）であることが判明した。"],
-      ["delude", "だます", "/dɪˈluːd/", "Don't delude yourself into thinking it will be easy.", "それが簡単だろうと思って自分自身を騙してはいけない。"],
-      ["coax", "説得して～させる", "/koʊks/", "She tried to coax the child into eating vegetables.", "彼女は子供を説得して野菜を食べさせようとした。"],
-      ["coerce", "強制する", "/koʊˈɜːrs/", "No one can coerce you into signing the contract.", "誰もあなたに契約書への署名を強制することはできない。"],
-      ["relish", "楽しむ", "/ˈrelɪʃ/", "I relish the challenge of learning new languages.", "私は新しい言語を学ぶチャレンジを楽しんでいる。"],
-      ["drudgery", "退屈なつらい仕事", "/ˈdrʌdʒəri/", "Cleaning the kitchen felt like pure drudgery.", "台所の掃除はまったくの退屈な苦痛仕事に感じられた。"],
-      ["unequivocal", "明白な", "/ˌʌnɪˈkwɪvəkl/", "The response was an unequivocal success.", "その応答（反応）は明白な成功であった。"],
-      ["backlash", "反発", "/ˈbæklæʃ/", "The decision caused a strong public backlash.", "その決定は世間の強い反発を引き起こした。"],
-      ["perverse", "道理から外れた", "/pərˈvɜːrs/", "He took a perverse pleasure in disagreeing with others.", "彼は他人に異議を唱えることに道理から外れた快感を覚えていた。"],
-      ["deviate", "逸脱する", "/ˈdiːvieɪt/", "Do not deviate from the original plan.", "元の計画から逸脱してはならない。"],
-      ["pertinent", "関連する", "/ˈpɜːrtnənt/", "Please keep your questions pertinent to the topic.", "質問はトピックに関連するものに留めてください。"],
-      ["duly", "適切に", "/ˈduːli/", "The document was duly signed and witnessed.", "その書類は適切に署名され、立ち会われた。"],
-      ["encapsulate", "要約する", "/ɪnˈkæpsuleɪt/", "The article manages to encapsulate the debate well.", "その記事は議論をうまく要約している。"],
-      ["hone", "磨く", "/hoʊn/", "Practice helps to hone your writing skills.", "練習は文章執筆の技術を磨くのに役立つ。"],
-      ["scour", "急いで捜し回る", "/ˈskaʊər/", "Detectives scoured the area for clues.", "刑事たちは手がかりを求めて周辺を急いで捜し回った。"],
-      ["distill", "蒸留する、抽出する", "/dɪˈstɪl/", "The study distills key insights from years of research.", "その研究は長年の研究から主要な洞察を抽出（蒸留）している。"],
-      ["hinge", "蝶番", "/hɪndʒ/", "The door turned smoothly on its hinge.", "ドアはその蝶番を中心に滑らかに回転した。"],
-      ["sporadic", "散発的な", "/spəˈrædɪk/", "There were sporadic outbreaks of rain throughout the day.", "一日を通して散発的な雨の降雨があった。"],
-      ["intermittently", "断続的に", "/ˌɪntərˈmɪtəntli/", "The siren sounded intermittently during the night.", "サイレンは夜間に断続的に鳴り響いた。"],
-      ["precipitate", "突然引き起こす", "/prɪˈsɪpɪteɪt/", "The sudden crisis could precipitate a war.", "突然の危機が戦争を招く（突然引き起こす）可能性がある。"],
-      ["congregate", "集まる", "/ˈkɑːŋɡrɪɡeɪt/", "People began to congregate in the main square.", "中央広場に人々が集まり始めた。"],
-      ["arsenal", "兵器庫", "/ˈɑːrsənl/", "The country built up a powerful military arsenal.", "その国は強力な軍事兵器庫を構築した。"],
-      ["configuration", "配置", "/kənˌfɪɡjəˈreɪʃn/", "You can change the router's settings configuration.", "ルーターの設定配置（構成）を変更できます。"],
-      ["predicament", "苦境", "/prɪˈdɪkəmənt/", "He found himself in a difficult financial predicament.", "彼は自分が難しい財政的苦境に立たされていることに気づいた。"],
-      ["mishap", "トラブル", "/ˈmɪshæp/", "The trip was completed without any major mishap.", "旅行は大きなトラブルもなく終了した。"],
-      ["wretched", "悲惨な", "/ˈretʃɪd/", "They lived in wretched poverty.", "彼らは悲惨な貧困の中で暮らしていた。"],
-      ["woe", "悲痛", "/woʊ/", "He listened to her stories of financial woe.", "彼は彼女の金銭的苦悩（悲痛）の物語に耳を傾けた。"],
-      ["unobtrusive", "控え目な", "/ˌʌnəbˈtruːsɪv/", "The service was efficient yet unobtrusive.", "サービスは効率的でありながら控え目だった。"],
-      ["retaliate", "報復する", "/rɪˈtælieɪt/", "They threatened to retaliate if attacked.", "彼らは攻撃された場合は報復すると脅した。"],
-      ["viable", "実行可能な", "/ˈvaɪəbl/", "We need to find a viable solution to the problem.", "問題に対して実行可能な解決策を見つける必要がある。"],
-      ["harbinger", "前触れ", "/ˈhɑːrbɪndʒər/", "Warm breezes are a harbinger of spring.", "暖かい微風は春の前触れだ。"],
-      ["precursor", "先駆者", "/prɪˈkɜːrsər/", "Biological research is a precursor to medical breakthroughs.", "生物学的研究は医学的飛躍の先駆者（前兆）である。"],
-      ["usher", "案内する", "/ˈʌʃər/", "The new policy will usher in an era of growth.", "新しい政策は成長の時代を案内する（導き入れる）だろう。"],
-      ["herald", "到来を告げる", "/ˈherəld/", "The singing birds herald the arrival of morning.", "さえずる鳥たちが朝の到来を告げる。"],
-      ["salient", "目立った", "/ˈseɪliənt/", "She highlighted the salient features of the proposal.", "彼女は提案の目立った特徴を強調した。"],
-      ["envisage", "心に描く", "/ɪnˈvɪzɪdʒ/", "It is difficult to envisage what the future hold.", "未来がどうなるかを心に描く（想像する）のは難しい。"],
-      ["faced", "一面", "/feɪst/", "They faced many complex challenges during the project.", "彼らはプロジェクト中に多くの困難な局面に直面した。"],
-      ["facade", "うわべ", "/fəˈsɑːd/", "Behind his polite facade lay a harsh personality.", "彼の丁寧なうわべの裏には厳しい性格が隠れていた。"],
-      ["ostensibly", "表面上は", "/ɑːˈstensəbli/", "He came ostensibly to help, but had hidden motives.", "彼は表面上は助けるために来たが、隠された動機があった。"],
-      ["tailor", "仕立てる", "/ˈteɪlər/", "We can tailor the program to meet your needs.", "ニーズに合わせてプログラムを仕立てる（調整する）ことができます。"],
-      ["banal", "ありふれた", "/bəˈnɑːl/", "The conversation was full of banal platitudes.", "その会話はありふれた決まり文句に満ちていた。"],
-      ["amalgam", "混合物", "/əˈmælɡəm/", "The city is a fascinating amalgam of old and new.", "その都市は新旧の魅惑的な混合物だ。"],
-      ["contraption", "からくり", "/kənˈtræpʃn/", "He invented a strange contraption for peeling apples.", "彼はリンゴの皮をむく変なからくり装置を発明した。"],
-      ["knack", "こつ", "/næk/", "She has a real knack for solving difficult problems.", "彼女には難しい問題を解決する本物のコツがある。"],
-      ["inscrutable", "謎めいた", "/ɪnˈskruːtəbl/", "His expression remained inscrutable throughout the trial.", "裁判中、彼の表情は謎めいた（解読不能な）ままだった。"],
-      ["uncanny", "不可思議な", "/ʌnˈkæni/", "She bears an uncanny resemblance to her grandmother.", "彼女は祖母に不可思議なほどよく似ている。"],
-      ["detain", "拘留する", "/dɪˈteɪn/", "Police decided to detain the suspect for questioning.", "警察は尋問のために容疑者を拘留することを決めた。"],
-      ["crackdown", "取り締まり", "/ˈkrækdaʊn/", "Authorities launched a severe crackdown on crime.", "当局は犯罪に対して厳しい取り締まりを開始した。"],
-      ["indictment", "悪い印", "/ɪnˈdaɪtmənt/", "The poor results are a damning indictment of the system.", "乏しい結果はシステム自体の悪い印（欠陥）である。"],
-      ["jurisdiction", "司法権", "/ˌdʒʊrɪsˈdɪkʃn/", "This matter falls under federal jurisdiction.", "この件は連邦の司法権の管轄下に該当する。"],
-      ["infringement", "侵害", "/ɪnˈfrɪndʒmənt/", "Copying the image without permission is a copyright infringement.", "許可なく画像を複製することは著作権の侵害にあたる。"],
-      ["transgression", "違反", "/trænzˈɡreʃn/", "He asked for forgiveness for his past transgressions.", "彼は過去の罪・違反に対する許しを乞うた。"],
-      ["stipulate", "規定する", "/ˈstɪpjuleɪt/", "The contract stipulations stipulate the deadline.", "契約の取り決めは締め切りを規定している。"],
-      ["enshrine", "明記する", "/ɪnˈʃraɪn/", "Human rights are enshrined in the national constitution.", "人権は国家の憲法に明記されている。"],
-      ["quaint", "古風で趣のある", "/kweɪnt/", "We stayed in a quaint little village in the mountains.", "私たちは山奥の古風で趣のある小さな村に滞在した。"],
-      ["anachronistic", "時代錯誤の", "/əˌnækrəˈnɪstɪk/", "His views on gender roles sound completely anachronistic.", "性役割に関する彼の見解は完全に時代錯誤に聞こえる。"],
-      ["pseudonym", "ペンネーム", "/ˈsuːdənɪm/", "The author wrote the book under a pseudonym.", "その著者はペンネームで本を書いた。"],
-      ["culminate", "頂点に達する", "/ˈkʌlmɪneɪt/", "Years of effort will culminate in this final performance.", "長年の努力がこの最後のパフォーマンスで頂点に達するだろう。"],
-      ["pinnacle", "頂点", "/ˈpɪnəkl/", "Winning the gold medal was the pinnacle of her career.", "金メダル獲得は彼女のキャリアの頂点だった。"],
-      ["stark", "あからさまな", "/stɑːrk/", "The photo presents a stark contrast between rich and poor.", "その写真は貧富のあからさまな対比を示している。"],
-      ["succinct", "簡潔な", "/səkˈsɪŋkt/", "Keep your answer as succinct as possible.", "回答はできる限り簡潔にしなさい。"],
-      ["quarantine", "隔離", "/ˈkwɔːrəntiːn/", "Travelers were placed in quarantine upon arrival.", "旅行者たちは到着時に隔離措置に置かれた。"],
-      ["seclude", "隔離する", "/sɪˈkluːd/", "He chose to seclude himself in a mountain cabin.", "彼は山小屋に自らを隔離することを選んだ。"],
-      ["untenable", "支持できない", "/ʌnˈtenəbl/", "His position on the matter became untenable.", "その件に関する彼の立場は支持できないものとなった。"],
-      ["depletion", "減少、枯渇", "/dɪˈpliːʃn/", "The rapid depletion of natural resources is concerning.", "天然資源の急速な枯渇（減少）が懸念されている。"],
-      ["scant", "乏しい", "/skænt/", "The report paid scant attention to detail.", "その報告書は細部に対して乏しい注意しか払わなかった。"],
-      ["infinitesimal", "微小の", "/ˌɪnfɪnɪˈtesɪml/", "The difference in size was purely infinitesimal.", "サイズの差は完全に微小なものだった。"],
-      ["copious", "多量の", "/ˈkoʊpiəs/", "She took copious notes during the long lecture.", "彼女は長い講義の間に多量のメモをとった。"],
-      ["accrue", "生じる", "/əˈkruː/", "Interest will accrue on the savings account over time.", "時間とともに預金口座に利息が生じる（増える）だろう。"],
-      ["anthem", "国歌", "/ˈænθəm/", "The crowd stood up to sing the national anthem.", "観客は立ち上がって国歌を歌った。"],
-      ["balk", "ためらう", "/bɔːk/", "Investors balked at the high cost of the project.", "投資家たちはプロジェクトの高額な費用にためらった。"],
-      ["unpalatable", "受け入れられない", "/ʌnˈpælətəbl/", "The committee had to face an unpalatable truth.", "委員会は受け入れがたい（不快な）真実に直面せざるを得なかった。"],
-      ["congenial", "気の合った", "/kənˈdʒiːniəl/", "We found ourselves in a congenial working environment.", "私たちは自分たちが気の合った作業環境にいることに気づいた。"],
-      ["perturb", "動揺させる", "/pərˈtɜːrb/", "Bad news did not seem to perturb him at all.", "悪いニュースも彼を少しも動揺させないようだった。"],
-      ["decipher", "解読する", "/dɪˈsaɪfər/", "Experts worked hard to decipher the ancient code.", "専門家たちは古代の暗号を解読するために懸命に働いた。"],
-      ["cryptic", "秘密の、謎の", "/ˈkrɪptɪk/", "He left a cryptic message on the whiteboard.", "彼はホワイトボードに謎めいたメッセージを残した。"],
-      ["enigma", "謎", "/ɪˈnɪɡmə/", "Her sudden departure remains an enigma to this day.", "彼女の突然の出発は今日に至るまで謎のままだ。"],
-      ["conundrum", "難問", "/kəˈnʌndrəm/", "How to balance growth and preservation is a major conundrum.", "成長と保全のバランスをとる方法は大きな難問だ。"],
-      ["latent", "潜在的な", "/ˈleɪtnt/", "The tests revealed his latent talent for painting.", "テストにより絵画に対する彼の潜在的な才能が明らかになった。"],
-      ["optimal", "最適な", "/ˈɑːptɪməl/", "The plant grows best in optimal light conditions.", "その植物は最適な光環境の下で最もよく育つ。"],
-      ["exhilarating", "爽快な", "/ɪɡˈzɪləreɪtɪŋ/", "Skiing down the steep slope was an exhilarating experience.", "急斜面をスキーで滑り降りるのは爽快な体験だった。"],
-      ["hilarious", "とても面白い", "/hɪˈleriəs/", "The comedian told a hilarious joke.", "そのコメディアンはとても面白いジョークを言った。"],
-      ["propriety", "礼儀正しさ", "/prəˈpraɪəti/", "She behaves with utter propriety in formal settings.", "彼女は正式な場では徹底した礼儀正しさをもって行動する。"],
-      ["traitor", "裏切り者", "/ˈtreɪtər/", "He was branded as a traitor to his country.", "彼は自国の裏切り者という烙印を押された。"],
-      ["refute", "誤りを証明する", "/rɪˈfjuːt/", "The scientist managed to refute the old hypothesis.", "その科学者は古い仮説の誤りを証明（論破）した。"],
-      ["debunk", "暴露する", "/diːˈbʌŋk/", "The journalist sought to debunk the myth.", "ジャーナリストはその神話（誤信）を暴露しようと試みた。"],
-      ["allude", "ほのめかす", "/əˈluːd/", "The speaker alluded to recent political scandals.", "スピーチ者は最近の政治的スキャンダルをほのめかした。"],
-      ["virulent", "病原性のある", "/ˈvɪrjələnt/", "The outbreak was caused by a highly virulent virus.", "大流行は非常に病原性の強いウイルスによって引き起こされた。"],
-      ["disproportionate", "不釣り合いな", "/ˌdɪsprəˈpɔːrʃənət/", "The penalty was disproportionate to the crime.", "その罰は犯罪に対して不釣り合いなものだった。"],
-      ["apprenticeship", "見習い", "/əˈprentɪsʃɪp/", "He served a five-year apprenticeship with a master carpenter.", "彼は大工の棟梁の下で5年間の見習い期間を務めた。"],
-      ["stigmatize", "汚名を着せる", "/ˈstɪɡmətaɪz/", "We should not stigmatize people suffering from mental illness.", "精神疾患に苦しむ人々に対して汚名を着せる（差別する）べきではない。"],
-      ["taint", "汚す", "/teɪnt/", "Scandals threatened to taint the reputation of the firm.", "スキャンダルがその事務所の評判を汚すおそれがあった。"],
-      ["cramped", "窮屈な", "/kræmpt/", "They lived together in a cramped apartment.", "彼らは窮屈なアパートで一緒に暮らしていた。"],
-      ["vie", "競う", "/vaɪ/", "Several companies vie for the lucrative contract.", "いくつかの企業が利益の大きい契約をめぐって競っている。"],
-      ["sluggish", "停滞した", "/ˈslʌɡɪʃ/", "Economic growth remained sluggish this quarter.", "今四半期の経済成長は停滞したままだった。"],
-      ["languish", "閉じ込められる", "/ˈlæŋɡwɪʃ/", "He was left to languish in prison for years.", "彼は何年も刑務所に閉じ込められたまま放置された。"],
-      ["submerge", "水に浸す", "/səbˈmɜːrdʒ/", "Floodwaters threaten to submerge the low-lying areas.", "洪水が低地エリアを水に浸すおそれがある。"],
-      ["cumbersome", "扱いにくい", "/ˈkʌmbərsəm/", "The bulky machinery was heavy and cumbersome.", "その嵩張る機械は重くて扱いにくかった。"],
-      ["obnoxious", "非常に不快な", "/əbˈnɑːkʃəs/", "His obnoxious behavior ruined the dinner party.", "彼の非常に不快な行動がディナーパーティーをぶち壊した。"],
-      ["ominous", "不吉な", "/ˈɑːmɪnəs/", "Dark clouds gathered in an ominous sky.", "不吉な空に暗い雲が集まった。"],
-      ["abyss", "どん底", "/əˈbɪs/", "The country seemed on the edge of a financial abyss.", "その国は財政のどん底の縁にあるように見えた。"],
-      ["rein", "手綱", "/reɪn/", "She kept a firm rein on her emotions.", "彼女は自分の感情をしっかり手綱を引いて（コントロールして）抑えた。"],
-      ["mainstay", "頼みの綱", "/ˈmeɪnsteɪ/", "Tourism is the economic mainstay of the island.", "観光業はその島の経済的頼みの綱だ。"],
-      ["fret", "思い悩む", "/fret/", "Don't fret over minor details that don't matter.", "重要でない細部について思い悩んではいけない。"],
-      ["tantalize", "じらす", "/ˈtæntəlaɪz/", "Delicious smells tantalize the hungry customer.", "美味しそうな匂いがお腹を空かせた客をじらす（気をそそる）。"],
-      ["engender", "生じる", "/ɪnˈdʒendər/", "Mutual trust can engender a strong partnership.", "相互の信頼が強力なパートナーシップを生じさせることができる。"],
-      ["inculcate", "教え込む", "/ɪnˈkʌlkeɪt/", "Parents try to inculcate values in their children.", "親は子供たちに価値観を教え込もうとする。"],
-      ["instill", "教え込む", "/ɪnˈstɪl/", "Teachers work to instill confidence in students.", "教師たちは生徒たちに自信を教え込む（植え付ける）よう努める。"],
-      ["repeal", "無効にする", "/rɪˈpiːl/", "Congress voted to repeal the unpopular tax law.", "議会は不評な税法を無効にする（撤廃する）よう可決した。"],
-      ["extant", "現存している", "/ˈekstənt/", "This is one of the few extant manuscripts of the work.", "これはその作品の数少ない現存している原稿の一つだ。"],
-      ["remnant", "残り", "/ˈremnənt/", "Remnants of the ancient wall can still be seen.", "古代の壁の残り（面影）が今でも見られる。"],
-      ["residue", "残り", "/ˈrezɪduː/", "A sticky residue was left on the table.", "テーブルの上に粘着性のある残留物（残り）が残されていた。"],
-      ["squint", "目を細めて見る", "/skwɪnt/", "He had to squint to read the small text in the light.", "彼は明かりの中で小さな文字を読むために目を細めて見なければならなかった。"],
-      ["guru", "指導者", "/ˈɡʊruː/", "He is considered a management guru in the industry.", "彼は業界でマネジメントの指導者（カリスマ）とみなされている。"],
-      ["accomplice", "共犯者", "/əˈkɑːmplɪs/", "The thief was assisted by an inside accomplice.", "泥棒は内部の共犯者によって支援されていた。"],
-      ["hatch", "思いつく", "/hætʃ/", "They met secretly to hatch a new plot.", "彼らは新しい計画を思いつく（企てる）ために秘密裏に会った。"],
-      ["forgo", "差し控える", "/fɔːrˈɡoʊ/", "He decided to forgo dessert to stick to his diet.", "彼はダイエットを守るためにデザートを差し控えることに決めた。"],
-      ["repel", "追い払う", "/rɪˈpel/", "The spray helps to repel mosquitoes.", "そのスプレーは蚊を追い払うのに役立つ。"],
-      ["extrapolate", "推定する", "/ɪkˈstræpəleɪt/", "We can extrapolate future trends from current data.", "現在のデータから将来の傾向を推定することができる。"],
-      ["surmise", "推測する", "/sərˈmaɪz/", "From his look, I could surmise that he was angry.", "彼の表情から、彼が怒っていると推測することができた。"],
-      ["conjecture", "推測", "/kənˈdʒektʃər/", "Her reasons remain a matter of conjecture.", "彼女の理由は推測の域を出ない。"],
-      ["conjure", "思いださせる", "/ˈkɑːndʒər/", "The smell of ocean air conjured images of childhood.", "潮風の匂いが子供時代のイメージを思い起こさせた（呼び覚ました）。"],
-      ["proxy", "代理", "/ˈprɑːksi/", "He sent his assistant to act as a proxy at the meeting.", "彼は会議で代理として機能させるために助手を派遣した。"],
-      ["wield", "行使する", "/wiːld/", "The leader continues to wield absolute authority.", "指導者は絶対的な権力を絶えず行使している。"],
-      ["murky", "暗い", "/ˈmɜːrki/", "The lake water was cold and murky.", "湖の水は冷たくて暗く濁っていた。"],
-      ["somber", "薄暗い", "/ˈsɑːmbər/", "The funeral was a somber and quiet event.", "葬儀は薄暗く（陰気で）静かな出来事だった。"],
-      ["dormant", "活動休止中の", "/ˈdɔːrmənt/", "The volcano has been dormant for centuries.", "その火山は何世紀もの間、活動休止中である。"],
-      ["lackluster", "精彩を欠いた", "/ˈlæklʌstər/", "The team gave a lackluster performance in the finals.", "チームは決勝で精彩を欠いたパフォーマンスを見せた。"],
-      ["vibrant", "活気に満ちた", "/ˈvaɪbrənt/", "The market was vibrant with color and activity.", "市場は色彩と活気に満ちていた。"],
-      ["revert", "戻る", "/rɪˈvɜːrt/", "After the meeting, things reverted to normal.", "会議の後、状況は通常状態に戻った。"],
-      ["resurrect", "復活させる", "/ˌrezəˈrekt/", "They attempted to resurrect the traditional event.", "彼らはその伝統的イベントを復活させようと試みた。"],
-      ["eavesdrop", "盗み聞きする", "/ˈiːvzdrɑːp/", "It is impolite to eavesdrop on private conversations.", "私的な会話を盗み聞きするのは不作法だ。"],
-      ["inoculation", "予防接種", "/ɪˌnɑːkjuˈleɪʃn/", "Inoculation protects against severe disease.", "予防接種は深刻な病気から体を守る。"],
-      ["connoisseur", "鑑定家", "/ˌkɑːnəˈsɜːr/", "He is a connoisseur of fine wines.", "彼は高級ワインの鑑定家（目利き）だ。"],
-      ["precocious", "早熟な", "/prɪˈkoʊʃəs/", "The precocious child showed talent for math.", "その早熟な子供は数学の才能を示した。"],
-      ["blurt", "うっかりしゃべる", "/blɜːrt/", "He blurted out the secret before he could stop.", "彼は止める前につい秘密をうっかりしゃべってしまった。"],
-      ["spew", "噴出する", "/spjuː/", "The volcano continued to spew ash into the air.", "火山は空中に灰を噴出し続けた。"],
-      ["oblivion", "忘却", "/əˈblɪviən/", "The ancient city sank into complete oblivion.", "古代都市は完全な忘却の中へ沈んでいった。"],
-      ["vigilant", "用心深い", "/ˈvɪdʒɪlənt/", "Guards remained vigilant throughout the night.", "警備員たちは夜間を通して用心深くあり続けた。"],
-      ["ineffable", "言葉で言い表せない", "/ɪnˈefəbl/", "She felt an ineffable joy when holding her newborn.", "彼女は生まれたばかりの子を抱いたとき、言葉で言い表せない喜びを感じた。"],
-      ["rustic", "田舎の", "/ˈrʌstɪk/", "We stayed in a charm rustic cabin in the woods.", "私たちは森にある魅力的で田舎風な小屋に滞在した。"],
-      ["faction", "派閥", "/ˈfækʃn/", "Rival factions inside the party disputed the candidate.", "党内のライバル派閥が候補者を巡って議論した。"],
-      ["cohort", "仲間", "/ˈkoʊhɔːrt/", "The study followed a cohort of patients over ten years.", "その研究は患者の仲間（集団）を10年間にわたり追跡した。"],
-      ["nonchalant", "よそよそしい", "/ˌnɑːnʃəˈlɑːnt/", "He appeared nonchalant about his upcoming exam.", "彼は近づく試験に対してよそよそしく（平然として）見えた。"],
-      ["relegate", "格下げする", "/ˈrelɪɡeɪt/", "The team was relegated to a lower division.", "チームは下位ディビジョンに格下げされた。"],
-      ["suffocate", "窒息する", "/ˈsʌfəkeɪt/", "The heavy smoke threatened to suffocate them.", "濃い煙が彼らを窒息させるおそれがあった。"],
-      ["embroider", "刺繍する", "/ɪmˈbrɔɪdər/", "She likes to embroider patterns on plain cushions.", "彼女は無地のクッションに模様を刺繍するのが好きだ。"],
-      ["swath", "広範囲", "/swɑːθ/", "The storm cut a wide swath of damage across the area.", "嵐はその地域全体にわたって大きな被害の広範囲を残した。"],
-      ["hue", "色合い", "/hjuː/", "The sky took on a deep reddish hue at sunset.", "夕暮れ時に空は深い赤みがかった色合いを帯びた。"],
-      ["annex", "併合する", "/æˈneks/", "The country moved to annex the border territory.", "その国は国境領土を併合しようと動いた。"],
-      ["unabridged", "省略されていない", "/ˌʌnəˈbrɪdʒd/", "I prefer reading the unabridged version of novels.", "私は小説の省略されていない（完訳の）バージョンを読む方が好きだ。"],
-      ["eclectic", "取捨選択した", "/ɪˈklektɪk/", "Her taste in music is delightfully eclectic.", "彼女の音楽の好みは喜ばしいほど取捨選択された（多岐にわたる）ものだ。"],
-      ["hectic", "やたらに忙しい", "/ˈhektɪk/", "I had a very hectic day at work today.", "今日は職場ですこぶる（やたらに）忙しい一日を過ごした。"],
-      ["trajectory", "軌道", "/trəˈdʒektəri/", "The missile's flight trajectory was carefully tracked.", "ミサイルの飛行軌道は注意深く追跡された。"],
-      ["countenance", "表情", "/ˈkaʊntənəns/", "Her calm countenance showed no sign of fear.", "彼女の冷静な表情には恐怖の気配が一切見られなかった。"],
-      ["resonate", "反響する", "/ˈrezəneɪt/", "His words continue to resonate with the audience.", "彼の言葉は聴衆の心に絶えず反響し（響き渡り）続けている。"],
-      ["poignant", "心を打つ", "/ˈpɔɪnjənt/", "The film has a poignant ending that left many in tears.", "その映画には多くの人々を涙させた、心を打つ結末がある。"],
-      ["vernacular", "日常語", "/vərˈnækjələr/", "The poetry was written in the local vernacular.", "その詩は地元の日常語（方言）で書かれていた。"],
-      ["excavate", "発掘する", "/ˈekskəveɪt/", "Archaeologists began to excavate the ancient site.", "考古学者たちは古代の遺跡を発掘し始めた。"],
-      ["perfunctory", "おざなりの", "/pərˈfʌŋktəri/", "He gave a perfunctory nod before walking away.", "彼は歩き去る前におざなりの（いい加減な）会釈をした。"],
-      ["juxtapose", "並列する", "/ˌdʒʌkstəˈpoʊz/", "The exhibit juxtaposes traditional art with modern style.", "その展示は伝統的芸術と現代的スタイルを並列して展示している。"]
+    // 全420単語データ（番号、英単語、発音記号、日本語訳、例文）
+    const wordList = [
+      { num: 1, en: "corroborate", ph: "/kəˈrɑːbəreɪt/", ja: "確証する", exEn: "The evidence corroborates his story.", exJa: "その証拠が彼の説明を確証している。" },
+      { num: 2, en: "substantiate", ph: "/səbˈstænʃieɪt/", ja: "立証する", exEn: "We need facts to substantiate the claim.", exJa: "主張を立証するための事実が必要だ。" },
+      { num: 3, en: "hype", ph: "/haɪp/", ja: "誇大宣伝", exEn: "Don't believe all the media hype.", exJa: "メディアの誇大宣伝をすべて信じてはいけない。" },
+      { num: 4, en: "unwavering", ph: "/ʌnˈweɪvərɪŋ/", ja: "揺るぎない", exEn: "She showed unwavering support for her friend.", exJa: "彼女は友人に対して揺るぎない支持を示した。" },
+      { num: 5, en: "fervent", ph: "/ˈfɜːrvənt/", ja: "熱心な、熱烈な；熱い", exEn: "He is a fervent believer in free speech.", exJa: "彼は言論の自由の熱烈な信奉者だ。" },
+      { num: 6, en: "avid", ph: "/ˈævɪd/", ja: "熱心な", exEn: "She is an avid reader of classic literature.", exJa: "彼女は古典文学の熱心な読者だ。" },
+      { num: 7, en: "frenzy", ph: "/ˈfrenzi/", ja: "激高、狂乱", exEn: "The crowd was in a shopping frenzy.", exJa: "群衆は買い物の狂乱状態にあった。" },
+      { num: 8, en: "ardent", ph: "/ˈɑːrdnt/", ja: "熱心な", exEn: "He is an ardent supporter of the team.", exJa: "彼はそのチームの熱心なサポーターだ。" },
+      { num: 9, en: "ephemeral", ph: "/ɪˈfemərəl/", ja: "つかの間の；一日限りの", exEn: "Fame in the digital age can be ephemeral.", exJa: "デジタル時代の名声はつかの間のものになり得る。" },
+      { num: 10, en: "fleeting", ph: "/ˈfliːtɪŋ/", ja: "つかの間の", exEn: "We caught a fleeting glimpse of the deer.", exJa: "私たちはシカのつかの間の姿を目撃した。" },
+      { num: 11, en: "upheaval", ph: "/ʌpˈhiːvl/", ja: "大変動", exEn: "The war caused major political upheaval.", exJa: "その戦争は政治的な大変動を引き起こした。" },
+      { num: 12, en: "prowess", ph: "/ˈpraʊəs/", ja: "優れた能力", exEn: "He is famous for his athletic prowess.", exJa: "彼は優れた運動能力で有名だ。" },
+      { num: 13, en: "savvy", ph: "/ˈsævi/", ja: "実際的知識のある, 経験豊かな", exEn: "She is a tech-savvy entrepreneur.", exJa: "彼女はテクノロジーに精通した起業家だ。" },
+      { num: 14, en: "dire", ph: "/ˈdaɪər/", ja: "恐ろしいほどの", exEn: "The country faces a dire economic crisis.", exJa: "その国は恐ろしいほどの経済危機に直面している。" },
+      { num: 15, en: "wane", ph: "/weɪn/", ja: "衰える", exEn: "His influence began to wane.", exJa: "彼の影響力は衰え始めた。" },
+      { num: 16, en: "underscore", ph: "/ˌʌndərˈskɔːr/", ja: "強調する", exEn: "The report underscores the need for reform.", exJa: "その報告書は改革の必要性を強調している。" },
+      { num: 17, en: "downright", ph: "/ˈdaʊnraɪt/", ja: "完全に", exEn: "His behavior was downright rude.", exJa: "彼の態度は完全に無礼だった。" },
+      { num: 18, en: "meticulous", ph: "/məˈtɪkjələs/", ja: "綿密な、細心な", exEn: "She paid meticulous attention to detail.", exJa: "彼女は細部に綿密な注意を払った。" },
+      { num: 19, en: "unscrupulous", ph: "/ʌnˈskruːpjələs/", ja: "不誠実な", exEn: "Unscrupulous dealers cheated the customers.", exJa: "不誠実な業者が顧客をだました。" },
+      { num: 20, en: "frivolous", ph: "/ˈfrɪvələs/", ja: "軽薄な", exEn: "Don't waste money on frivolous things.", exJa: "軽薄なものにお金を無駄使いするな。" },
+      { num: 21, en: "flimsy", ph: "/ˈflɪmzi/", ja: "見え透いた、壊れやすい", exEn: "He made a flimsy excuse for being late.", exJa: "彼は遅刻の言い訳に見え透いた説明をした。" },
+      { num: 22, en: "remorse", ph: "/rɪˈmɔːrs/", ja: "深い悔恨、自責の念", exEn: "He felt deep remorse for his actions.", exJa: "彼は自分の行動に深い自責の念を感じた。" },
+      { num: 23, en: "mitigate", ph: "/ˈmɪtɪɡeɪt/", ja: "和らげる、軽くする", exEn: "Steps were taken to mitigate the risks.", exJa: "リスクを和らげるための対策が講じられた。" },
+      { num: 24, en: "palliative", ph: "/ˈpæliətɪv/", ja: "一時的に緩和する", exEn: "The measure is only a palliative solution.", exJa: "その措置は一時的に緩和する解決策に過ぎない。" },
+      { num: 25, en: "quell", ph: "/kwel/", ja: "鎮圧する", exEn: "Police were called to quell the riot.", exJa: "暴動を鎮圧するために警察が呼ばれた。" },
+      { num: 26, en: "laudable", ph: "/ˈlɔːdəbl/", ja: "称賛に値する", exEn: "Her dedication to charity is laudable.", exJa: "彼女の慈善活動への献身は称賛に値する。" },
+      { num: 27, en: "crystallize", ph: "/ˈkrɪstəlaɪz/", ja: "結晶化する", exEn: "Our plans began to crystallize after the meeting.", exJa: "会議の後、私たちの計画は具体化（結晶化）し始めた。" },
+      { num: 28, en: "vehement", ph: "/ˈviːəmənt/", ja: "熱烈な", exEn: "There was vehement opposition to the plan.", exJa: "その計画には熱烈な反対があった。" },
+      { num: 29, en: "construe", ph: "/kənˈstruː/", ja: "解釈する", exEn: "His silence was construed as agreement.", exJa: "彼の沈黙は同意と解釈された。" },
+      { num: 30, en: "exacerbate", ph: "/ɪɡˈzæsərbeɪt/", ja: "悪化させる", exEn: "Stress can exacerbate health problems.", exJa: "ストレスは健康問題を悪化させることがある。" },
+      { num: 31, en: "superfluous", ph: "/suːˈpɜːrfluəs/", ja: "余分な；不必要な", exEn: "Please delete all superfluous words.", exJa: "余分な単語はすべて削除してください。" },
+      { num: 32, en: "redundant", ph: "/rɪˈdʌndənt/", ja: "余分な", exEn: "The explanation was redundant and unnecessary.", exJa: "その説明は余分で不要だった。" },
+      { num: 33, en: "antidote", ph: "/ˈæntidoʊt/", ja: "解毒剤", exEn: "Laughter is a great antidote to stress.", exJa: "笑いはストレスに対する優れた解毒剤だ。" },
+      { num: 34, en: "panacea", ph: "/ˌpænəˈsiːə/", ja: "万能薬", exEn: "Technology is not a panacea for all problems.", exJa: "テクノロジーはすべての問題に対する万能薬ではない。" },
+      { num: 35, en: "posit", ph: "/ˈpɑːzɪt/", ja: "仮定する", exEn: "Scientists posit that life exists elsewhere.", exJa: "科学者たちは他の場所にも生命が存在すると仮定している。" },
+      { num: 36, en: "cripple", ph: "/ˈkrɪpl/", ja: "身体を不自由にする", exEn: "The disease can cripple young children.", exJa: "その病気は幼い子供の身体を不自由にする可能性がある。" },
+      { num: 37, en: "torment", ph: "/ˈtɔːrment/", ja: "ひどく苦しめる", exEn: "Bad memories continued to torment him.", exJa: "悪い記憶が彼をひどく苦しめ続けた。" },
+      { num: 38, en: "afflict", ph: "/əˈflɪkt/", ja: "悩ます、苦しめる", exEn: "Severe drought afflicted the region.", exJa: "深刻な日照りがその地域を苦しめた。" },
+      { num: 39, en: "brink", ph: "/brɪŋk/", ja: "縁、きわ", exEn: "The company was on the brink of bankruptcy.", exJa: "その会社は倒産の縁にあった。" },
+      { num: 40, en: "culprit", ph: "/ˈkʌlprɪt/", ja: "犯人", exEn: "Police caught the culprit behind the fraud.", exJa: "警察は詐欺の裏にいる犯人を捕まえた。" },
+      { num: 41, en: "haphazard", ph: "/hæpˈhæzərd/", ja: "でたらめの、無計画の、偶然の", exEn: "Books were piled in a haphazard way.", exJa: "本でたらめに積み上げられていた。" },
+      { num: 42, en: "impromptu", ph: "/ɪmˈprɑːmptuː/", ja: "即興の、準備なしの", exEn: "He gave an impromptu speech at the party.", exJa: "彼はパーティーで即興のスピーチをした。" },
+      { num: 43, en: "pivotal", ph: "/ˈpɪvətl/", ja: "中心となる；旋回心軸の", exEn: "She played a pivotal role in the negotiations.", exJa: "彼女は交渉で中心となる役割を果たした。" },
+      { num: 44, en: "elicit", ph: "/ɪˈlɪsɪt/", ja: "引き出す", exEn: "The survey aims to elicit customer opinions.", exJa: "調査は顧客の意見を引き出すことを目的としている。" },
+      { num: 45, en: "propensity", ph: "/prəˈpensəti/", ja: "傾向、性向", exEn: "He has a propensity to exaggerate.", exJa: "彼には誇張する傾向がある。" },
+      { num: 46, en: "hallmark", ph: "/ˈhɔːlmɑːrk/", ja: "特徴", exEn: "Attention to detail is the hallmark of his work.", exJa: "細部へのこだわりが彼の仕事の特徴だ。" },
+      { num: 47, en: "deadlock", ph: "/ˈdedlɑːk/", ja: "行き詰まり", exEn: "Negotiations reached a deadlock.", exJa: "交渉は行き詰まりに達した。" },
+      { num: 48, en: "grindlock", ph: "/ˈɡraɪndlɑːk/", ja: "全面交通渋滞", exEn: "The strike caused total gridlock in the city.", exJa: "ストライキが市内に全面交通渋滞を引き起こした。" },
+      { num: 49, en: "covet", ph: "/ˈkʌvət/", ja: "〜をむやみに欲しいと思う", exEn: "Many people covet that prestigious award.", exJa: "多くの人がその名誉ある賞をむやみに欲しいと思っている。" },
+      { num: 50, en: "elusive", ph: "/ɪˈluːsɪv/", ja: "理解しにくい", exEn: "Success remained elusive for the young artist.", exJa: "その若い芸術家にとって成功は捉えがたい（理解しにくい）ものだった。" },
+      { num: 51, en: "entrenched", ph: "/ɪnˈtrentʃt/", ja: "確立した", exEn: "These beliefs are deeply entrenched in the culture.", exJa: "これらの信念はその文化に深く確立している。" },
+      { num: 52, en: "far-fetched", ph: "/ˌfɑːr ˈfetʃt/", ja: "ありえない、信じがたい、突飛な", exEn: "His story sounds completely far-fetched.", exJa: "彼の話はまったく信じがたいように聞こえる。" },
+      { num: 53, en: "meddle", ph: "/ˈmedl/", ja: "干渉する", exEn: "Don't meddle in my private affairs.", exJa: "私の私生活に干渉しないでくれ。" },
+      { num: 54, en: "exasperate", ph: "/ɪɡˈzæspəreɪt/", ja: "怒らせる", exEn: "His constant delays exasperated the team.", exJa: "彼の度重なる遅延はチームを怒らせた。" },
+      { num: 55, en: "vexing", ph: "/ˈveksɪŋ/", ja: "いらだたせる", exEn: "This is a vexing problem with no easy solution.", exJa: "これは簡単な解決策がない、いらだたせる問題だ。" },
+      { num: 56, en: "baffle", ph: "/ˈbæfl/", ja: "困惑させる", exEn: "The puzzle completely baffled the detectives.", exJa: "その謎は探偵たちを完全に困惑させた。" },
+      { num: 57, en: "evict", ph: "/ɪˈvɪkt/", ja: "立ち退かせる", exEn: "The landlord tried to evict the tenant.", exJa: "家主は借家人を立ち退かせようとした。" },
+      { num: 58, en: "homage", ph: "/ˈhɑːmɪdʒ/", ja: "敬意", exEn: "The movie pays homage to classic cinema.", exJa: "その映画は古典映画に敬意を払っている。" },
+      { num: 59, en: "revere", ph: "/rɪˈvɪr/", ja: "崇拝する", exEn: "Citizens revere him as a national hero.", exJa: "市民は彼を国民的ヒーローとして崇拝している。" },
+      { num: 60, en: "suffrage", ph: "/ˈsʌfrɪdʒ/", ja: "選挙権", exEn: "Women fought long for universal suffrage.", exJa: "女性たちは普通選挙権を求めて長く戦った。" },
+      { num: 61, en: "arduous", ph: "/ˈɑːrdʒuəs/", ja: "骨の折れる", exEn: "They completed an arduous journey through snow.", exJa: "彼らは雪の中の骨の折れる旅を完了した。" },
+      { num: 62, en: "strenuous", ph: "/ˈstrenjuəs/", ja: "激しい", exEn: "Avoid strenuous exercise after injury.", exJa: "怪我の後は激しい運動を避けなさい。" },
+      { num: 63, en: "excruciating", ph: "/ɪkˈskruːʃieɪtɪŋ/", ja: "耐えがたい", exEn: "He suffered excruciating pain in his back.", exJa: "彼は背中に耐えがたい痛みを患った。" },
+      { num: 64, en: "daunting", ph: "/ˈdɔːntɪŋ/", ja: "人の気力をくじく", exEn: "Starting a new business is a daunting task.", exJa: "新しい起業は気力をくじくようなタスクだ。" },
+      { num: 65, en: "intractable", ph: "/ɪnˈtræktəbl/", ja: "手に負えない", exEn: "The disease proved to be intractable.", exJa: "その病気は手に負えないものだと判明した。" },
+      { num: 66, en: "insurmountable", ph: "/ˌɪnsərˈmaʊntəbl/", ja: "克服できない", exEn: "The obstacles seemed insurmountable.", exJa: "障害は克服できないように思えた。" },
+      { num: 67, en: "condescending", ph: "/ˌkɑːndɪˈsendɪŋ/", ja: "人を見下すような", exEn: "He spoke in a condescending tone.", exJa: "彼は人を見下すような口調で話した。" },
+      { num: 68, en: "blatant", ph: "/ˈbleɪtnt/", ja: "露骨な", exEn: "That was a blatant lie.", exJa: "それは露骨な嘘だった。" },
+      { num: 69, en: "audacious", ph: "/ɔːˈdeɪʃəs/", ja: "大胆な", exEn: "She made an audacious plan to scale the cliff.", exJa: "彼女は崖を登るという大胆な計画を立てた。" },
+      { num: 70, en: "complacent", ph: "/kəmˈpleɪsnt/", ja: "自己満足の", exEn: "We cannot afford to become complacent.", exJa: "私たちは自己満足に陥る余裕はない。" },
+      { num: 71, en: "erratic", ph: "/ɪˈrætɪk/", ja: "不規則な", exEn: "The stock price showed erratic behavior.", exJa: "株価は不規則な動きを見せた。" },
+      { num: 72, en: "fickle", ph: "/ˈfɪkl/", ja: "気まぐれな", exEn: "Weather in spring can be very fickle.", exJa: "春の天気はとても気まぐれになり得る。" },
+      { num: 73, en: "precarious", ph: "/prɪˈkeriəs/", ja: "不安定な", exEn: "The ladder was in a precarious position.", exJa: "ハシゴは不安定な位置にあった。" },
+      { num: 74, en: "treacherous", ph: "/ˈtretʃərəs/", ja: "危険な", exEn: "The icy roads were extremely treacherous.", exJa: "凍結した道路は非常に危険だった。" },
+      { num: 75, en: "capricious", ph: "/kəˈprɪʃəs/", ja: "気まぐれな", exEn: "A capricious wind blew from the north.", exJa: "気まぐれな風が北から吹いた。" },
+      { num: 76, en: "quirk", ph: "/kwɜːrk/", ja: "変な癖", exEn: "Everyone has their own little quirks.", exJa: "誰にでも独自のちょっとした変な癖がある。" },
+      { num: 77, en: "whim", ph: "/wɪm/", ja: "気まぐれ", exEn: "He bought the car on a whim.", exJa: "彼は思いつき（気まぐれ）で車を買った。" },
+      { num: 78, en: "hunch", ph: "/hʌntʃ/", ja: "直感、予感", exEn: "I have a hunch that he will succeed.", exJa: "彼が成功するという予感がする。" },
+      { num: 79, en: "shrewd", ph: "/ʃruːd/", ja: "賢い、抜け目のない", exEn: "She is a shrewd businesswoman.", exJa: "彼女は抜け目のない実業家だ。" },
+      { num: 80, en: "peruse", ph: "/pəˈruːz/", ja: "熟読する", exEn: "Please peruse the document before signing.", exJa: "署名する前に文書を熟読してください。" },
+      { num: 81, en: "delve", ph: "/delv/", ja: "調査する", exEn: "We need to delve deeper into the matter.", exJa: "私たちはその問題をもっと深く調査する必要がある。" },
+      { num: 82, en: "grandeur", ph: "/ˈɡrændʒər/", ja: "壮大", exEn: "The grandeur of the castle impressed everyone.", exJa: "城の壮大さは全員を感動させた。" },
+      { num: 83, en: "fraught", ph: "/frɔːt/", ja: "伴う", exEn: "The mission was fraught with danger.", exJa: "その任務は危険を伴っていた。" },
+      { num: 84, en: "rife", ph: "/raɪf/", ja: "満ちて、広まって", exEn: "The city was rife with rumors.", exJa: "街は噂で満ちていた。" },
+      { num: 85, en: "rampant", ph: "/ˈræmpənt/", ja: "蔓延した；激しい；途方も無い", exEn: "Corruption was rampant in the administration.", exJa: "行政に汚職が蔓延していた。" },
+      { num: 86, en: "clutter", ph: "/ˈklʌtər/", ja: "散らかす", exEn: "Don't clutter your room with old papers.", exJa: "古い書類で部屋を散らかすな。" },
+      { num: 87, en: "antagonism", ph: "/ænˈtæɡənɪzəm/", ja: "対立、敵対心", exEn: "There is open antagonism between the rivals.", exJa: "ライバル間には公然たる対立がある。" },
+      { num: 88, en: "animosity", ph: "/ˌænɪˈmɑːsəti/", ja: "憎悪、敵意", exEn: "He felt no animosity toward his opponents.", exJa: "彼は対戦相手に対して敵意を感じなかった。" },
+      { num: 89, en: "loathe", ph: "/loʊð/", ja: "ひどく嫌う", exEn: "I loathe getting up early in winter.", exJa: "私は冬に早起きすることをひどく嫌う。" },
+      { num: 90, en: "xenophobia", ph: "/ˌzenəˈfoʊbiə/", ja: "外国人嫌い", exEn: "The policy was criticized for encouraging xenophobia.", exJa: "その政策は外国人嫌いを助長するとして批判された。" },
+      { num: 91, en: "calamity", ph: "/kəˈlæməti/", ja: "災難、災害", exEn: "The flood was an unexpected calamity.", exJa: "洪水は予期せぬ災難だった。" },
+      { num: 92, en: "havoc", ph: "/ˈhævək/", ja: "大混乱、大破壊", exEn: "The storm wreaked havoc on the town.", exJa: "嵐は町に大混乱をもたらした。" },
+      { num: 93, en: "influx", ph: "/ˈɪnflʌks/", ja: "流入、殺到", exEn: "The region saw an influx of tourists.", exJa: "その地域は観光客の流入を見た。" },
+      { num: 94, en: "insidious", ph: "/ɪnˈsɪdiəs/", ja: "陰険な、潜行性の", exEn: "High blood pressure is an insidious disease.", exJa: "高血圧は潜行性の病気だ。" },
+      { num: 95, en: "tacit", ph: "/ˈtæsɪt/", ja: "暗黙の", exEn: "They gave tacit approval to the proposal.", exJa: "彼らはその提案に暗黙の承認を与えた。" },
+      { num: 96, en: "unwittingly", ph: "/ʌnˈwɪtɪŋli/", ja: "知らずに、うっかり", exEn: "He unwittingly revealed the secret.", exJa: "彼は知らずに秘密を明かしてしまった。" },
+      { num: 97, en: "anecdote", ph: "/ˈænɪkdoʊt/", ja: "逸話", exEn: "He shared a funny anecdote during dinner.", exJa: "彼は夕食時に面白い逸話を共有した。" },
+      { num: 98, en: "demeanor", ph: "/dɪˈmiːnər/", ja: "態度", exEn: "Her calm demeanor maintained order.", exJa: "彼女の穏やかな態度が秩序を維持した。" },
+      { num: 99, en: "backdrop", ph: "/ˈbækdrɑːp/", ja: "背景、状況", exEn: "The mountain formed a scenic backdrop.", exJa: "山が美しい背景を形成していた。" },
+      { num: 100, en: "cumulative", ph: "/ˈkjuːmjəleɪtɪv/", ja: "累積する", exEn: "The cumulative effect of fatigue took its toll.", exJa: "疲労の累積効果が影響を及ぼした。" },
+      { num: 101, en: "incremental", ph: "/ˌɪŋkrəˈmentl/", ja: "ますます増加する", exEn: "They made incremental changes to the system.", exJa: "彼らはシステムに徐々に増える変更を加えた。" },
+      { num: 102, en: "exponentially", ph: "/ˌekspəˈnenʃəli/", ja: "加速度的に", exEn: "The population grew exponentially.", exJa: "人口は加速度的に増加した。" },
+      { num: 103, en: "augment", ph: "/ɔːɡˈment/", ja: "増加させる", exEn: "He took a second job to augment his income.", exJa: "彼は収入を増加させるために副業を始めた。" },
+      { num: 104, en: "bolster", ph: "/ˈboʊlstər/", ja: "を強化する、を支援する", exEn: "New evidence helped bolster the argument.", exJa: "新しい証拠が議論を強化するのに役立った。" },
+      { num: 105, en: "galvanize", ph: "/ˈɡælvənaɪz/", ja: "を活気づける、を刺激する", exEn: "The speech galvanized the audience into action.", exJa: "演説は聴衆を活気づけて行動に向かわせた。" },
+      { num: 106, en: "invigorate", ph: "/ɪnˈvɪɡəreɪt/", ja: "元気づける", exEn: "A cold shower can invigorate you in the morning.", exJa: "冷たいシャワーは朝にあなたを元気づけることができる。" },
+      { num: 107, en: "buoy", ph: "/ˈbuːi/", ja: "勇気づける", exEn: "Good news helped buoy his spirits.", exJa: "良いニュースが彼の気持ちを勇気づけるのに役立った。" },
+      { num: 108, en: "exalt", ph: "/ɪɡˈzɔːlt/", ja: "昇進させる；ほめる；刺激する", exEn: "The essay exalts the virtues of nature.", exJa: "その小論文は自然の美徳をたたえて（ほめて）いる。" },
+      { num: 109, en: "dwarf", ph: "/dwɔːrf/", ja: "小さく見せる", exEn: "The new skyscraper dwarfs the older buildings.", exJa: "新しい超高層ビルは古い建築物を小さく見せる。" },
+      { num: 110, en: "voracious", ph: "/vəˈreɪʃəs/", ja: "貪欲な", exEn: "He has a voracious appetite for reading.", exJa: "彼は読書に対して貪欲な意欲を持っている。" },
+      { num: 111, en: "insatiable", ph: "/ɪnˈseɪʃəbl/", ja: "飽くことのない", exEn: "She has an insatiable curiosity.", exJa: "彼女は飽くことのない好奇心を持っている。" },
+      { num: 112, en: "gluttony", ph: "/ˈɡlʌtəni/", ja: "大食い", exEn: "Gluttony can lead to severe health issues.", exJa: "大食いは深刻な健康問題につながる可能性がある。" },
+      { num: 113, en: "devour", ph: "/dɪˈvaʊər/", ja: "むさぼり食う", exEn: "The lion devoured the meat quickly.", exJa: "ライオンは素早く肉をむさぼり食った。" },
+      { num: 114, en: "destitution", ph: "/ˌdestɪˈtuːʃn/", ja: "貧困", exEn: "Many families faced extreme destitution.", exJa: "多くの家族が極度の貧困に直面した。" },
+      { num: 115, en: "impoverished", ph: "/ɪmˈpɑːvərɪʃt/", ja: "貧しい", exEn: "Charity aided the impoverished community.", exJa: "慈善団体が貧しい地域社会を支援した。" },
+      { num: 116, en: "bombard", ph: "/bɑːmˈbɑːrd/", ja: "～に浴びせる", exEn: "Reporters bombarded the official with questions.", exJa: "記者たちは当局者に質問を浴びせた。" },
+      { num: 117, en: "cascade", ph: "/kæˈskeɪd/", ja: "小滝", exEn: "Water fell in a gentle cascade over the rocks.", exJa: "水が岩の上を静かな小滝となって流れ落ちた。" },
+      { num: 118, en: "torrent", ph: "/ˈtɔːrənt/", ja: "急流；土砂降り", exEn: "Heavy rain turned the stream into a torrent.", exJa: "大雨で小川が急流へと変わった。" },
+      { num: 119, en: "lucid", ph: "/ˈluːsɪd/", ja: "明解な", exEn: "She gave a lucid explanation of the concept.", exJa: "彼女はその概念について明解な説明をした。" },
+      { num: 120, en: "elucidate", ph: "/ɪˈluːsɪdeɪt/", ja: "〜を説明する", exEn: "The professor elucidated the complex theory.", exJa: "教授はその複雑な理論を明解に説明した。" },
+      { num: 121, en: "backfire", ph: "/ˈbækfaɪər/", ja: "裏目に出る", exEn: "His attempt to cheat backfired badly.", exJa: "カンニングしようとする彼の試みは酷く裏目に出た。" },
+      { num: 122, en: "blunder", ph: "/ˈblʌndər/", ja: "大失敗", exEn: "Making that mistake was a costly blunder.", exJa: "その誤りを犯したことは大きな代償を伴う大失敗だった。" },
+      { num: 123, en: "anomaly", ph: "/əˈnɑːməli/", ja: "例外", exEn: "The snow in May was a weather anomaly.", exJa: "5月の雪は天候の例外（異常）だった。" },
+      { num: 124, en: "enunciate", ph: "/ɪˈnʌnsieɪt/", ja: "発表する、明瞭に発音する", exEn: "Speak clearly and enunciate each word.", exJa: "はっきりと話し、それぞれの単語を明瞭に発音しなさい。" },
+      { num: 125, en: "exemplify", ph: "/ɪɡˈzemplɪfaɪ/", ja: "例証する、良い例となる", exEn: "Her actions exemplify leadership.", exJa: "彼女の行動はリーダーシップの良い例となっている。" },
+      { num: 126, en: "epitomize", ph: "/ɪˈpɪtəmaɪz/", ja: "要約する、集約する", exEn: "This building epitomizes modern design.", exJa: "この建物は現代デザインを集約している。" },
+      { num: 127, en: "nascent", ph: "/ˈneɪsnt/", ja: "初期の", exEn: "The nascent industry shows great potential.", exJa: "初期の産業は大きな可能性を示している。" },
+      { num: 128, en: "burgeoning", ph: "/ˈbɜːrdʒənɪŋ/", ja: "急成長する", exEn: "The tech industry is burgeoning in this city.", exJa: "テック産業はこの都市で急成長している。" },
+      { num: 129, en: "fledgling", ph: "/ˈfledʒlɪŋ/", ja: "ひな鳥", exEn: "The fledgling company secured funding.", exJa: "駆け出しの（ひな鳥のような）会社が資金を確保した。" },
+      { num: 130, en: "inception", ph: "/ɪnˈsepʃn/", ja: "初め", exEn: "He has worked here since its inception.", exJa: "彼は創業（初め）の時点からここで働いている。" },
+      { num: 131, en: "inauguration", ph: "/ɪˌnɔːɡjəˈreɪʃn/", ja: "就任（式）、開始", exEn: "Thousands attended the president's inauguration.", exJa: "何千人もの人々が大統領就任式に出席した。" },
+      { num: 132, en: "vandalize", ph: "/ˈvændəlaɪz/", ja: "破壊する", exEn: "Teens were caught trying to vandalize property.", exJa: "10代の若者が財産を破壊しようとして捕まった。" },
+      { num: 133, en: "obliterate", ph: "/əˈblɪtəreɪt/", ja: "完全に破壊する、消す", exEn: "The explosion obliterated the old building.", exJa: "爆発は古い建物を完全に破壊した。" },
+      { num: 134, en: "annihilation", ph: "/əˌnaɪəˈleɪʃn/", ja: "絶滅", exEn: "Nuclear weapons threaten total annihilation.", exJa: "核兵器は完全な絶滅を脅かす。" },
+      { num: 135, en: "engulf", ph: "/ɪnˈɡʌlf/", ja: "飲み込む", exEn: "Flames engulfed the entire structure.", exJa: "炎が建造物全体を飲み込んだ。" },
+      { num: 136, en: "penchant", ph: "/ˈpentʃənt/", ja: "傾向、好み", exEn: "She has a penchant for fast cars.", exJa: "彼女は速い車を好む傾向がある。" },
+      { num: 137, en: "affinity", ph: "/əˈfɪnəti/", ja: "親近感", exEn: "I feel a deep affinity for nature.", exJa: "私は自然に対して深い親近感を感じる。" },
+      { num: 138, en: "muster", ph: "/ˈmʌstər/", ja: "を集める、を奮い起こす", exEn: "She mustered the courage to speak up.", exJa: "彼女は発言する勇気を奮い起こした。" },
+      { num: 139, en: "garner", ph: "/ˈɡɑːrnər/", ja: "得る", exEn: "The film garnered positive reviews.", exJa: "その映画は肯定的なレビューを得た。" },
+      { num: 140, en: "procure", ph: "/prəˈkjʊr/", ja: "獲得する", exEn: "It was hard to procure supplies in war.", exJa: "戦時中に物資を獲得するのは困難だった。" },
+      { num: 141, en: "jostle", ph: "/ˈdʒɑːsl/", ja: "押しのける", exEn: "Commuters jostled each other on the train.", exJa: "通勤者たちが電車内で押しのけ合った。" },
+      { num: 142, en: "poised", ph: "/pɔɪzd/", ja: "落ち着きがある", exEn: "She remained poised under heavy pressure.", exJa: "彼女は重圧の下でも落ち着きを保っていた。" },
+      { num: 143, en: "placid", ph: "/ˈplæsɪd/", ja: "穏やかな", exEn: "The lake was calm and placid at dawn.", exJa: "夜明けの湖は静かで穏やかだった。" },
+      { num: 144, en: "discrepancy", ph: "/dɪˈskrepənsi/", ja: "相違、食い違い", exEn: "There is a discrepancy in the numbers.", exJa: "数字に食い違いがある。" },
+      { num: 145, en: "discrete", ph: "/dɪˈskriːt/", ja: "別々の", exEn: "The task is split into discrete steps.", exJa: "そのタスクは別々のステップに分割されている。" },
+      { num: 146, en: "demarcation", ph: "/ˌdiːmɑːrˈkeɪʃn/", ja: "境界", exEn: "Clear demarcation of duties is vital.", exJa: "職務の明確な境界線（区分）が不可欠だ。" },
+      { num: 147, en: "dichotomy", ph: "/daɪˈkɑːtəmi/", ja: "二分すること", exEn: "There is a dichotomy between theory and practice.", exJa: "理論と実践の間には二分された隔たりがある。" },
+      { num: 148, en: "squander", ph: "/ˈskwɑːndər/", ja: "浪費する", exEn: "Don't squander your time on useless games.", exJa: "無駄なゲームに時間を浪費するな。" },
+      { num: 149, en: "exorbitant", ph: "/ɪɡˈzɔːrbɪtənt/", ja: "法外な", exEn: "The hotel charged exorbitant prices.", exJa: "そのホテルは法外な料金を請求した。" },
+      { num: 150, en: "ostentatious", ph: "/ˌɑːstenˈteɪʃəs/", ja: "これ見よがしの", exEn: "He wore ostentatious gold jewelry.", exJa: "彼はこれ見よがしの金の宝飾品を身につけていた。" },
+      { num: 151, en: "staunch", ph: "/stɔːntʃ/", ja: "忠実な", exEn: "He is a staunch advocate of human rights.", exJa: "彼は人権の忠実な擁護者だ。" },
+      { num: 152, en: "allegiance", ph: "/əˈliːdʒəns/", ja: "忠誠、献身", exEn: "Soldiers swear allegiance to their nation.", exJa: "兵士たちは国家への忠誠を誓う。" },
+      { num: 153, en: "rapport", ph: "/ræˈpɔːr/", ja: "信頼関係", exEn: "She quickly built a good rapport with clients.", exJa: "彼女はすぐに顧客との良好な信頼関係を築いた。" },
+      { num: 154, en: "acquiescence", ph: "/ˌækwiˈesns/", ja: "黙認", exEn: "Silence was taken as acquiescence.", exJa: "沈黙は黙認と捉えられた。" },
+      { num: 155, en: "subjugate", ph: "/ˈsʌbdʒʊɡeɪt/", ja: "征服する", exEn: "The empire sought to subjugate neighboring states.", exJa: "帝国は近隣諸国を征服しようとした。" },
+      { num: 156, en: "aftermath", ph: "/ˈæftərmæθ/", ja: "余波", exEn: "Rebuilding began in the aftermath of war.", exJa: "戦争の余波の中で再建が始まった。" },
+      { num: 157, en: "tumultuous", ph: "/tuːˈmʌltʃuəs/", ja: "騒がしい、激しく動揺した", exEn: "They received a tumultuous welcome at the airport.", exJa: "彼らは空港で騒がしいほどの歓迎を受けた。" },
+      { num: 158, en: "clamor", ph: "/ˈklæmər/", ja: "叫び声、わめき声", exEn: "The public clamor for reform grew louder.", exJa: "改革を求める大衆の叫び声は大きくなった。" },
+      { num: 159, en: "roaring", ph: "/ˈrɔːrɪŋ/", ja: "騒々しい", exEn: "The fire made a roaring sound.", exJa: "火が騒々しい音を立てて燃えていた。" },
+      { num: 160, en: "crux", ph: "/krʌks/", ja: "最も重要な点", exEn: "This issue is the crux of the problem.", exJa: "この問題が課題の最も重要な点だ。" },
+      { num: 161, en: "gist", ph: "/dʒɪst/", ja: "要点、骨子", exEn: "I understood the main gist of the speech.", exJa: "私は演説の主な要点を理解した。" },
+      { num: 162, en: "belated", ph: "/bɪˈleɪtɪd/", ja: "遅れた", exEn: "Happy belated birthday!", exJa: "遅ればせながら、誕生日おめでとう！" },
+      { num: 163, en: "procrastinate", ph: "/proʊˈkræstɪneɪt/", ja: "先延ばしにする", exEn: "Don't procrastinate on your homework.", exJa: "宿題を先延ばしにするな。" },
+      { num: 164, en: "plagiarism", ph: "/ˈpleɪdʒərɪzəm/", ja: "盗用、盗作", exEn: "Plagiarism is a serious offense in academia.", exJa: "盗用は学術界において深刻な違反行為だ。" },
+      { num: 165, en: "plunder", ph: "/ˈplʌndər/", ja: "略奪する", exEn: "Invaders came to plunder the village.", exJa: "侵略者たちが村を略奪するためにやってきた。" },
+      { num: 166, en: "usurp", ph: "/juːˈsɜːrp/", ja: "強奪する", exEn: "He attempted to usurp the throne.", exJa: "彼は王位を強奪しようとした。" },
+      { num: 167, en: "confiscate", ph: "/ˈkɑːnfɪskeɪt/", ja: "没収する", exEn: "Guards will confiscate illegal items.", exJa: "警備員は違法品を没収する。" },
+      { num: 168, en: "innocuous", ph: "/ɪˈnɑːkjuəs/", ja: "悪意のない", exEn: "It was an innocuous question, but it upset her.", exJa: "それは悪意のない質問だったが、彼女をうろたえさせた。" },
+      { num: 169, en: "neurotic", ph: "/nʊˈrɑːtɪk/", ja: "神経症の", exEn: "He had a neurotic fear of germs.", exJa: "彼は細菌に対して神経症的な恐怖を抱いていた。" },
+      { num: 170, en: "paranoid", ph: "/ˈpærənɔɪd/", ja: "偏執狂の", exEn: "She felt paranoid that people were watching.", exJa: "彼女は人々が見ているという偏執狂的な不安を感じた。" },
+      { num: 171, en: "gross", ph: "/ɡroʊs/", ja: "総計の", exEn: "The gross income exceeded expectations.", exJa: "総収入は予想を超えた。" },
+      { num: 172, en: "holistic", ph: "/hoʊˈlɪstɪk/", ja: "全体論的な", exEn: "We need a holistic approach to healthcare.", exJa: "ヘルスケアには全体論的なアプローチが必要だ。" },
+      { num: 173, en: "contentious", ph: "/kənˈtenʃəs/", ja: "議論を起こす、論争好きな", exEn: "Taxation is always a contentious issue.", exJa: "課税は常に議論を起こしやすい課題だ。" },
+      { num: 174, en: "dissent", ph: "/dɪˈsent/", ja: "異議を唱える", exEn: "Two judges expressed dissent from the verdict.", exJa: "2名の裁判官が判決に対して異議を唱えた。" },
+      { num: 175, en: "catapult", ph: "/ˈkætəpʌlt/", ja: "勢いよく投げ出す", exEn: "The success catapulted her into stardom.", exJa: "その成功は彼女をスターダムへと躍り出させた（投げ出した）。" },
+      { num: 176, en: "simmer", ph: "/ˈsɪmər/", ja: "ぐつぐつ煮える", exEn: "Let the soup simmer for twenty minutes.", exJa: "スープを20分間ぐつぐつ煮えさせておきなさい。" },
+      { num: 177, en: "scorching", ph: "/ˈskɔːrtʃɪŋ/", ja: "焼けつくような", exEn: "They walked under the scorching sun.", exJa: "彼らは焼けつくような太陽の下を歩いた。" },
+      { num: 178, en: "watershed", ph: "/ˈwɔːtərʃed/", ja: "分岐点", exEn: "The election marked a watershed in history.", exJa: "その選挙は歴史上の分岐点となった。" },
+      { num: 179, en: "seminal", ph: "/ˈsemɪnl/", ja: "先駆的な", exEn: "He published a seminal paper on physics.", exJa: "彼は物理学に関する先駆的な論文を発表した。" },
+      { num: 180, en: "seismic", ph: "/ˈsaɪzmɪk/", ja: "地震の", exEn: "The event caused a seismic shift in politics.", exJa: "その出来事は政治に激変（地震のようなシフト）をもたらした。" },
+      { num: 181, en: "emancipate", ph: "/ɪˈmænsɪpeɪt/", ja: "を解放する", exEn: "The law served to emancipate slaves.", exJa: "その法律は奴隷を解放するのに役立った。" },
+      { num: 182, en: "dismantle", ph: "/dɪsˈmæntl/", ja: "分解する", exEn: "Workers began to dismantle the stage.", exJa: "作業員たちはステージを分解し始めた。" },
+      { num: 183, en: "dissect", ph: "/dɪˈsekt/", ja: "解剖する", exEn: "Students dissect frogs in biology class.", exJa: "生徒たちは生物の授業でカエルを解剖する。" },
+      { num: 184, en: "ramification", ph: "/ˌræmɪfɪˈkeɪʃn/", ja: "結果", exEn: "Consider the ramifications of your decision.", exJa: "あなたの決定がもたらす結果（波及効果）を考慮しなさい。" },
+      { num: 185, en: "wince", ph: "/wɪns/", ja: "顔をしかめる、たじろぐ", exEn: "He winced in pain as the doctor touched his arm.", exJa: "医者が腕に触れると、彼は痛みに顔をしかめた。" },
+      { num: 186, en: "contort", ph: "/kənˈtɔːrt/", ja: "（意味・論理などを）ねじ曲げる、ゆがめる", exEn: "Pain made his face contort.", exJa: "痛みが彼の顔をゆがませた。" },
+      { num: 187, en: "skew", ph: "/skjuː/", ja: "歪んだ", exEn: "The survey results were skewed by biased questions.", exJa: "調査結果は偏った質問によって歪められた。" },
+      { num: 188, en: "lofty", ph: "/ˈlɔːfti/", ja: "崇高な、高慢な、非常に高い", exEn: "She set lofty goals for her career.", exJa: "彼女は自らのキャリアに崇高な目標を設定した。" },
+      { num: 189, en: "ruminate", ph: "/ˈruːmɪneɪt/", ja: "思いめぐらす", exEn: "He needed time to ruminate on the proposal.", exJa: "彼には提案について思いめぐらす時間が必要だった。" },
+      { num: 190, en: "reminisce", ph: "/ˌremɪˈnɪs/", ja: "思い出を語る", exEn: "Old friends met to reminisce about school days.", exJa: "古い友人たちが集まり学校時代の思い出を語り合った。" },
+      { num: 191, en: "maneuver", ph: "/məˈnuːvər/", ja: "巧みな操縦", exEn: "The pilot executed a brilliant maneuver.", exJa: "パイロットは見事な操縦を実行した。" },
+      { num: 192, en: "excrete", ph: "/ɪkˈskriːt/", ja: "排泄する", exEn: "Organs filter waste and excrete it.", exJa: "臓器は廃棄物をろ過して排泄する。" },
+      { num: 193, en: "thwart", ph: "/θwɔːrt/", ja: "阻止する", exEn: "Police thwarted an attempted robbery.", exJa: "警察は強盗未遂を阻止した。" },
+      { num: 194, en: "congenital", ph: "/kənˈdʒenɪtl/", ja: "先天性の", exEn: "The baby was born with a congenital heart flaw.", exJa: "赤ちゃんは先天性の心臓の欠陥を持って生まれた。" },
+      { num: 195, en: "orchestrate", ph: "/ˈɔːrkɪstreɪt/", ja: "組織化する", exEn: "She helped orchestrate the campaign.", exJa: "彼女はキャンペーンの組織化を助けた。" },
+      { num: 196, en: "reiterate", ph: "/riˈɪtəreɪt/", ja: "繰り返す", exEn: "Let me reiterate my main point.", exJa: "私の主要な点をもう一度繰り返させてください。" },
+      { num: 197, en: "egalitarian", ph: "/iˌɡælɪˈteriən/", ja: "平等主義者", exEn: "He promotes egalitarian principles in society.", exJa: "彼は社会において平等主義者の原則を推進している。" },
+      { num: 198, en: "staggering", ph: "/ˈstæɡərɪŋ/", ja: "びっくりさせる", exEn: "The project cost a staggering amount of money.", exJa: "そのプロジェクトはびっくりさせるような額の資金がかかった。" },
+      { num: 199, en: "appalling", ph: "/əˈpɔːlɪŋ/", ja: "ひどい、ぞっとするような", exEn: "The living conditions were appalling.", exJa: "生活環境はひどい（ぞっとする）ものだった。" },
+      { num: 200, en: "idiosyncratic", ph: "/ˌɪdioʊsɪŋˈkrætɪk/", ja: "独特な", exEn: "His painting style is highly idiosyncratic.", exJa: "彼の絵画スタイルは非常に独特だ。" },
+      { num: 201, en: "incessantly", ph: "/ɪnˈsesntli/", ja: "ひっきりなしに", exEn: "It rained incessantly for three days.", exJa: "3日間にわたって雨がひっきりなしに降った。" },
+      { num: 202, en: "entice", ph: "/ɪnˈtaɪs/", ja: "誘惑する", exEn: "Advertisers try to entice consumers with discounts.", exJa: "広告主は割引で消費者を誘惑しようとする。" },
+      { num: 203, en: "enthrall", ph: "/ɪnˈθrɔːl/", ja: "魅了する", exEn: "The singer managed to enthrall the audience.", exJa: "歌手は観客を魅了することに成功した。" },
+      { num: 204, en: "engrossed", ph: "/ɪnˈɡroʊst/", ja: "夢中になって", exEn: "He was engrossed in his book.", exJa: "彼は本に夢中になっていた。" },
+      { num: 205, en: "intoxicated", ph: "/ɪnˈtɑːksɪkeɪtɪd/", ja: "酒に酔った、熱狂した", exEn: "He was driving while intoxicated.", exJa: "彼は酔っ払った（酒に酔った）状態で運転していた。" },
+      { num: 206, en: "hallucinate", ph: "/həˈluːsɪneɪt/", ja: "幻覚を感じる", exEn: "High fever can cause patients to hallucinate.", exJa: "高熱は患者に幻覚を感じさせることがある。" },
+      { num: 207, en: "overt", ph: "/oʊˈvɜːrt/", ja: "露骨な", exEn: "There was no overt hostility, but tension remained.", exJa: "露骨な敵意はなかったが、緊張は残っていた。" },
+      { num: 208, en: "surreptitiously", ph: "/ˌsɜːrəpˈtɪʃəsli/", ja: "こっそりと", exEn: "He surreptitiously checked his phone.", exJa: "彼はこっそりとスマホをチェックした。" },
+      { num: 209, en: "intertwine", ph: "/ˌɪntərˈtwaɪn/", ja: "絡み合わせる", exEn: "Fate caused their lives to intertwine.", exJa: "運命が彼らの人生を絡み合わせることとなった。" },
+      { num: 210, en: "disentangle", ph: "/ˌdɪsɪnˈtæŋɡl/", ja: "もつれを解く", exEn: "It took time to disentangle the wires.", exJa: "ワイヤーのもつれを解くのに時間がかかった。" },
+      { num: 211, en: "inadvertently", ph: "/ˌɪnədˈvɜːrtəntli/", ja: "うっかりして", exEn: "I inadvertently deleted the email.", exJa: "うっかりしてメールを削除してしまった。" },
+      { num: 212, en: "purport", ph: "/pərˈpɔːrt/", ja: "主張する", exEn: "The document purports to be an official record.", exJa: "その文書は公式記録であると主張している。" },
+      { num: 213, en: "altruistic", ph: "/ˌæltruˈɪstɪk/", ja: "利他的な", exEn: "Her motivations were purely altruistic.", exJa: "彼女の動機は純粋に利他的なものだった。" },
+      { num: 214, en: "infallible", ph: "/ɪnˈfæləbl/", ja: "決して誤らない、絶対に確実な", exEn: "No human being is completely infallible.", exJa: "完全に誤らない人間など存在しない。" },
+      { num: 215, en: "disdain", ph: "/dɪsˈdeɪn/", ja: "軽蔑", exEn: "He looked at the mess with disdain.", exJa: "彼は軽蔑の目でその散らかりようを見た。" },
+      { num: 216, en: "deride", ph: "/dɪˈraɪd/", ja: "あざける、ばかにする", exEn: "Critics derided his new artwork.", exJa: "批評家たちは彼の新しい芸術作品をあざけった。" },
+      { num: 217, en: "resilient", ph: "/rɪˈzɪliənt/", ja: "立ち直りの早い", exEn: "Children are often remarkably resilient.", exJa: "子供たちは驚くほど立ち直りが早いことが多い。" },
+      { num: 218, en: "inundate", ph: "/ˈɪnʌndeɪt/", ja: "水浸しにする、殺到する", exEn: "Calls inundated the customer service center.", exJa: "カスタマーサービスセンターに電話が殺到した。" },
+      { num: 219, en: "tenacious", ph: "/təˈneɪʃəs/", ja: "粘り強い", exEn: "She is a tenacious investigator.", exJa: "彼女は粘り強い調査員だ。" },
+      { num: 220, en: "unfold", ph: "/ʌnˈfoʊld/", ja: "開く、広げる", exEn: "We watched the drama unfold.", exJa: "私たちはドラマが広がる（展開する）のを見守った。" },
+      { num: 221, en: "pernicious", ph: "/pərˈnɪʃəs/", ja: "有害な", exEn: "Lie has a pernicious effect on relationships.", exJa: "嘘は人間関係に有害な影響を及ぼす。" },
+      { num: 222, en: "detrimental", ph: "/ˌdetrɪˈmentl/", ja: "有害な", exEn: "Smoking is detrimental to health.", exJa: "喫煙は健康に有害だ。" },
+      { num: 223, en: "rationale", ph: "/ˌræʃəˈnæl/", ja: "理論的根拠", exEn: "What is the rationale behind this policy?", exJa: "この政策の背景にある理論的根拠は何ですか？" },
+      { num: 224, en: "disseminate", ph: "/dɪˈsemɪneɪt/", ja: "普及させる", exEn: "The internet helps disseminate information fast.", exJa: "インターネットは情報を素早く普及させるのに役立つ。" },
+      { num: 225, en: "permeate", ph: "/ˈpɜːrmieɪt/", ja: "広まる、浸透する", exEn: "The smell of coffee began to permeate the room.", exJa: "コーヒーの香りが部屋に広がり始めた。" },
+      { num: 226, en: "proliferate", ph: "/prəˈlɪfəreɪt/", ja: "急増する", exEn: "Fast food chains continue to proliferate.", exJa: "ファストフードチェーンが急増し続けている。" },
+      { num: 227, en: "binge", ph: "/bɪndʒ/", ja: "飲み騒ぎ", exEn: "They went on a TV show watching binge.", exJa: "彼らはテレビ番組を一気見（飲み騒ぎのように没頭）した。" },
+      { num: 228, en: "spike", ph: "/spaɪk/", ja: "急上昇する", exEn: "Oil prices spiked after the crisis.", exJa: "危機の後に石油価格が急上昇した。" },
+      { num: 229, en: "skyrocket", ph: "/ˈskaɪrɑːkɪt/", ja: "急上昇する", exEn: "Inflation caused food prices to skyrocket.", exJa: "インフレにより食品価格が急上昇した。" },
+      { num: 230, en: "plummet", ph: "/ˈplʌmɪt/", ja: "急落する", exEn: "Temperatures expected to plummet overnight.", exJa: "気温は一晩で急落すると予想される。" },
+      { num: 231, en: "dwindle", ph: "/ˈdwɪndl/", ja: "だんだん減少する", exEn: "Their savings began to dwindle.", exJa: "彼らの貯金はだんだん減少し始めた。" },
+      { num: 232, en: "solace", ph: "/ˈsɑːləs/", ja: "慰め、癒し", exEn: "He found solace in listening to music.", exJa: "彼は音楽を聴くことに慰めを見出した。" },
+      { num: 233, en: "underpin", ph: "/ˌʌndərˈpɪn/", ja: "支える、補強する", exEn: "Research underpins our scientific understanding.", exJa: "研究が私たちの科学的理解を支えている。" },
+      { num: 234, en: "chastise", ph: "/tʃæˈstaɪz/", ja: "厳しく非難する", exEn: "The manager chastised the employee for lateness.", exJa: "マネージャーは遅刻について従業員を厳しく非難した。" },
+      { num: 235, en: "reproach", ph: "/rɪˈproʊtʃ/", ja: "非難", exEn: "Her conduct was above reproach.", exJa: "彼女の行為は非難の余地がないものだった。" },
+      { num: 236, en: "denounce", ph: "/dɪˈnaʊns/", ja: "非難する", exEn: "Leaders met to denounce human rights abuses.", exJa: "指導者たちは人権侵害を非難するために集まった。" },
+      { num: 237, en: "gregarious", ph: "/ɡrɪˈɡeriəs/", ja: "社交的な", exEn: "She is a gregarious person who loves parties.", exJa: "彼女はパーティーが大好きな社交的な人だ。" },
+      { num: 238, en: "concoct", ph: "/kənˈkɑːkt/", ja: "をでっち上げる、を混ぜ合わせて作る", exEn: "He concocted an alibi for the police.", exJa: "彼は警察のためにアリバイをでっち上げた。" },
+      { num: 239, en: "phony", ph: "/ˈfoʊni/", ja: "偽の", exEn: "He presented a phony passport at customs.", exJa: "彼は税関で偽のパスポートを提示した。" },
+      { num: 240, en: "scapegoat", ph: "/ˈskeɪpɡoʊt/", ja: "身代わり", exEn: "He was made a scapegoat for the company's failure.", exJa: "彼は会社の失敗の身代わりにされた。" },
+      { num: 241, en: "sarcastic", ph: "/sɑːrˈkæstɪk/", ja: "皮肉な", exEn: "She made a sarcastic comment about his work.", exJa: "彼女は彼の仕事に対して皮肉なコメントをした。" },
+      { num: 242, en: "instigate", ph: "/ˈɪnstɪɡeɪt/", ja: "推進する、扇動する", exEn: "They tried to instigate a strike.", exJa: "彼らはストライキを扇動しようとした。" },
+      { num: 243, en: "jolt", ph: "/dʒoʊlt/", ja: "（急激に）揺さぶる、（精神的な）衝撃", exEn: "The sudden news gave him a severe jolt.", exJa: "その突然のニュースは彼に強い衝撃を与えた。" },
+      { num: 244, en: "leeway", ph: "/ˈliːweɪ/", ja: "余裕", exEn: "The schedule gives us some leeway.", exJa: "そのスケジュールは私たちに多少の余裕を与えてくれる。" },
+      { num: 245, en: "protagonist", ph: "/prəˈtæɡənɪst/", ja: "主人公", exEn: "The protagonist faces many challenges.", exJa: "主人公は多くの課題に直面する。" },
+      { num: 246, en: "circumvent", ph: "/ˌsɜːrkəmˈvent/", ja: "回避する", exEn: "They tried to circumvent the new rules.", exJa: "彼らは新しい規則を回避しようとした。" },
+      { num: 247, en: "eschew", ph: "/ɪsˈtʃuː/", ja: "避ける", exEn: "A healthy lifestyle eschews junk food.", exJa: "健康的なライフスタイルはジャンクフードを避ける。" },
+      { num: 248, en: "tenet", ph: "/ˈtenɪt/", ja: "教義", exEn: "Equality is a central tenet of democracy.", exJa: "平等は民主主義の中心的な教義だ。" },
+      { num: 249, en: "axiom", ph: "/ˈæksiəm/", ja: "原理、自明の理", exEn: "It is an accepted axiom in economics.", exJa: "それは経済学において受け入れられている公理（自明の理）だ。" },
+      { num: 250, en: "mantra", ph: "/ˈmæntrə/", ja: "スローガン", exEn: "'Practice makes perfect' became his mantra.", exJa: "「継続は力なり」が彼のスローガンとなった。" },
+      { num: 251, en: "caveat", ph: "/ˈkæviæt/", ja: "警告, 注意条項", exEn: "The contract comes with an important caveat.", exJa: "その契約には重要な注意条項が付いている。" },
+      { num: 252, en: "premise", ph: "/ˈpremɪs/", ja: "前提", exEn: "The argument is based on a false premise.", exJa: "その議論は誤った前提に基づいている。" },
+      { num: 253, en: "efficacy", ph: "/ˈefɪkəsi/", ja: "効き目", exEn: "Clinical tests proved the efficacy of the drug.", exJa: "臨床試験でその薬の効き目が証明された。" },
+      { num: 254, en: "amenable", ph: "/əˈmiːnəbl/", ja: "なじみやすい", exEn: "He was amenable to our proposed changes.", exJa: "彼は提案された変更になじみやすかった（素直に受け入れた）。" },
+      { num: 255, en: "docile", ph: "/ˈdɑːsl/", ja: "従順な", exEn: "The dog was calm and docile.", exJa: "その犬は穏やかで従順だった。" },
+      { num: 256, en: "malleable", ph: "/ˈmæliəbl/", ja: "素直な", exEn: "Young children have malleable minds.", exJa: "幼い子供たちは素直で形作られやすい心を持っている。" },
+      { num: 257, en: "defy", ph: "/dɪˈfaɪ/", ja: "に反抗する；を拒む", exEn: "She chose to defy her parents' wishes.", exJa: "彼女は親の願いに反抗することを選んだ。" },
+      { num: 258, en: "rudimentary", ph: "/ˌruːdɪˈmentri/", ja: "基本的な、初歩的な、原始的な", exEn: "He has only a rudimentary knowledge of physics.", exJa: "彼には物理学の初歩的な知識しかない。" },
+      { num: 259, en: "lurk", ph: "/lɜːrk/", ja: "潜む", exEn: "Dangers lurk in the dark forest.", exJa: "暗い森には危険が潜んでいる。" },
+      { num: 260, en: "hoax", ph: "/hoʊks/", ja: "作り話、悪ふざけ", exEn: "The bomb threat turned out to be a hoax.", exJa: "爆破予告は作り話（悪ふざけ）だと判明した。" },
+      { num: 261, en: "delude", ph: "/dɪˈluːd/", ja: "だます、欺く", exEn: "Don't delude yourself into thinking it's easy.", exJa: "それが簡単だと思って自分を欺くな。" },
+      { num: 262, en: "coax", ph: "/koʊks/", ja: "説得して～させる；なだめる", exEn: "She managed to coax the cat out of the tree.", exJa: "彼女は猫をなだめて木から降ろすことに成功した。" },
+      { num: 263, en: "coerce", ph: "/koʊˈɜːrs/", ja: "～を強制する", exEn: "They tried to coerce him into signing.", exJa: "彼らは彼に署名を強制しようとした。" },
+      { num: 264, en: "relish", ph: "/ˈrelɪʃ/", ja: "楽しむ", exEn: "He relishes the challenge of new projects.", exJa: "彼は新しいプロジェクトの挑戦を楽しんでいる。" },
+      { num: 265, en: "drudgery", ph: "/ˈdrʌdʒəri/", ja: "退屈なつらい仕事、骨折り仕事", exEn: "Cleaning house felt like pure drudgery.", exJa: "家の掃除は純粋な退屈なつらい仕事に感じられた。" },
+      { num: 266, en: "unequivocal", ph: "/ˌʌnɪˈkwɪvəkl/", ja: "明白な、疑う余地の無い", exEn: "She gave an unequivocal answer.", exJa: "彼女は明白な答えを与えた。" },
+      { num: 267, en: "backlash", ph: "/ˈbæklæʃ/", ja: "反発、反動", exEn: "The new policy met with public backlash.", exJa: "新政策は大衆の反発に直面した。" },
+      { num: 268, en: "perverse", ph: "/pərˈvɜːrs/", ja: "道理から外れた, 倒錯した", exEn: "It would be perverse to quit now.", exJa: "今やめるのは道理から外れているだろう。" },
+      { num: 269, en: "deviate", ph: "/ˈdiːvieɪt/", ja: "逸脱する", exEn: "Do not deviate from the plan.", exJa: "計画から逸脱してはならない。" },
+      { num: 270, en: "pertinent", ph: "/ˈpɜːrtnənt/", ja: "関連する、適切な", exEn: "Please ask questions pertinent to the topic.", exJa: "トピックに関連する適切な質問をしてください。" },
+      { num: 271, en: "duly", ph: "/ˈduːli/", ja: "適切に", exEn: "The agreement was duly signed.", exJa: "協定は適切に署名された。" },
+      { num: 272, en: "encapsulate", ph: "/ɪnˈkæpsuleɪt/", ja: "要約する", exEn: "The summary encapsulates the main points.", exJa: "要約が主要なポイントを集約（要約）している。" },
+      { num: 273, en: "hone", ph: "/hoʊn/", ja: "（技術）を磨く", exEn: "He went abroad to hone his skills.", exJa: "彼は技術を磨くために留学した。" },
+      { num: 274, en: "scour", ph: "/ˈskaʊər/", ja: "みがく［こする］、急いで捜し回る", exEn: "Police scoured the area for evidence.", exJa: "警察は証拠を求めてその地域を急いで捜し回った。" },
+      { num: 275, en: "distill", ph: "/dɪˈstɪl/", ja: "蒸留する", exEn: "The report distills years of research.", exJa: "報告書は長年の研究を精髄（蒸留）している。" },
+      { num: 276, en: "hinge", ph: "/hɪndʒ/", ja: "蝶番", exEn: "The outcome hinges on the team's effort.", exJa: "結果はチームの努力にかかっている（蝶番のように依拠する）。" },
+      { num: 277, en: "sporadic", ph: "/spəˈrædɪk/", ja: "散発的な、時々起こる", exEn: "We experienced sporadic gunfire throughout the night.", exJa: "一晩中、散発的な砲火を経験した。" },
+      { num: 278, en: "intermittently", ph: "/ˌɪntərˈmɪtəntli/", ja: "断続的に", exEn: "It rained intermittently all afternoon.", exJa: "午後中ずっと断続的に雨が降った。" },
+      { num: 279, en: "precipitate", ph: "/prɪˈsɪpɪteɪt/", ja: "突然引き起こす", exEn: "The crisis precipitated a collapse of the market.", exJa: "その危機が市場の崩壊を突然引き起こした。" },
+      { num: 280, en: "congregate", ph: "/ˈkɑːŋɡrɪɡeɪt/", ja: "集まる", exEn: "People began to congregate in the square.", exJa: "人々が広場に集まり始めた。" },
+      { num: 281, en: "arsenal", ph: "/ˈɑːrsənl/", ja: "兵器庫", exEn: "The country expanded its military arsenal.", exJa: "その国は軍事兵器庫を拡大した。" },
+      { num: 282, en: "configuration", ph: "/kənˌfɪɡjəˈreɪʃn/", ja: "配置、形状", exEn: "The software allows flexible configuration.", exJa: "そのソフトウェアは柔軟な配置・設定を可能にする。" },
+      { num: 283, en: "predicament", ph: "/prɪˈdɪkəmənt/", ja: "苦境", exEn: "He found himself in a difficult predicament.", exJa: "彼は自分が難しい苦境にあることに気付いた。" },
+      { num: 284, en: "mishap", ph: "/ˈmɪshæp/", ja: "トラブル", exEn: "The trip ended without any mishap.", exJa: "旅行は何のトラブルもなく終わった。" },
+      { num: 285, en: "wretched", ph: "/ˈretʃɪd/", ja: "悲惨な、みじめな", exEn: "They lived in a wretched, broken hut.", exJa: "彼らは悲惨で壊れかけた小屋に住んでいた。" },
+      { num: 286, en: "woe", ph: "/woʊ/", ja: "悲痛、苦悩・災難", exEn: "She shared her tale of financial woe.", exJa: "彼女は経済的苦悩の話を共有した。" },
+      { num: 287, en: "unobtrusive", ph: "/ˌʌnəbˈtruːsɪv/", ja: "控え目な", exEn: "The service staff was quick and unobtrusive.", exJa: "給仕スタッフは手早く控え目だった。" },
+      { num: 288, en: "retaliate", ph: "/rɪˈtælieɪt/", ja: "報復する", exEn: "The country promised to retaliate against the attack.", exJa: "その国は攻撃に対して報復することを約束した。" },
+      { num: 289, en: "viable", ph: "/ˈvaɪəbl/", ja: "実行可能な", exEn: "We need a commercially viable business plan.", exJa: "商業的に実行可能なビジネスプランが必要だ。" },
+      { num: 290, en: "harbinger", ph: "/ˈhɑːrbɪndʒər/", ja: "前触れ", exEn: "Warm breezes are a harbinger of spring.", exJa: "暖かい微風は春の前触れだ。" },
+      { num: 291, en: "precursor", ph: "/priːˈkɜːrsər/", ja: "先駆者、前兆", exEn: "Early tools were the precursor to modern tech.", exJa: "初期の道具は現代技術の前兆（先駆者）だった。" },
+      { num: 292, en: "usher", ph: "/ˈʌʃər/", ja: "案内する", exEn: "The usher showed us to our seats.", exJa: "案内係が私たちを座席まで案内した。" },
+      { num: 293, en: "herald", ph: "/ˈherəld/", ja: "の到来を告げる、をもてはやす", exEn: "The invention heralds a new era in medicine.", exJa: "その発明は医学の新しい時代の到来を告げている。" },
+      { num: 294, en: "salient", ph: "/ˈseɪliənt/", ja: "目立った、顕著な", exEn: "Summarize the salient points of the speech.", exJa: "演説の目立った要点を要約してください。" },
+      { num: 295, en: "envisage", ph: "/ɪnˈvɪzɪdʒ/", ja: "を心に描く、想像する、を予想する", exEn: "I envisage a bright future for this team.", exJa: "私はこのチームの明るい未来を心に描いている。" },
+      { num: 296, en: "faced", ph: "/feɪst/", ja: "一面", exEn: "We are faced with difficult choices.", exJa: "私たちは困難な選択の一面に直面している。" },
+      { num: 297, en: "facade", ph: "/fəˈsɑːd/", ja: "うわべ、見せかけ", exEn: "Behind his friendly facade lay a harsh critic.", exJa: "親しみやすい見せかけの裏には厳しい批判家がいた。" },
+      { num: 298, en: "ostensibly", ph: "/ɑːˈstensəbli/", ja: "表面上は", exEn: "He arrived ostensibly for business, but stayed for vacation.", exJa: "彼は表面上は仕事で到着したが、滞在して休暇を楽しんだ。" },
+      { num: 299, en: "tailor", ph: "/ˈteɪlər/", ja: "仕立てる", exEn: "We tailor our services to client needs.", exJa: "私たちは顧客のニーズに合わせてサービスを仕立てる。" },
+      { num: 300, en: "banal", ph: "/bəˈnɑːl/", ja: "ありふれた、平凡な", exEn: "The conversation was filled with banal topics.", exJa: "会話はありふれた話題で満ちていた。" },
+      { num: 301, en: "amalgam", ph: "/əˈmælɡəm/", ja: "混合物、合成物", exEn: "The city is an amalgam of different cultures.", exJa: "その都市は多様な文化の混合物だ。" },
+      { num: 302, en: "contraption", ph: "/kənˈtræpʃn/", ja: "からくり", exEn: "He built a strange contraption in his shed.", exJa: "彼は小屋の中に奇妙なからくり（機械）を作った。" },
+      { num: 303, en: "knack", ph: "/næk/", ja: "こつ", exEn: "She has a knack for making friends quickly.", exJa: "彼女はすぐに友達を作るコツを捉えている。" },
+      { num: 304, en: "inscrutable", ph: "/ɪnˈskruːtəbl/", ja: "謎めいた、不可解な", exEn: "His poker face was completely inscrutable.", exJa: "彼のポーカーフェイスは完全に不可解だった。" },
+      { num: 305, en: "uncanny", ph: "/ʌnˈkæni/", ja: "不可不思議な、奇異な", exEn: "She had an uncanny resemblance to her mother.", exJa: "彼女は母親と奇異な（不気味なほどの）類似性を持っていた。" },
+      { num: 306, en: "detain", ph: "/dɪˈteɪn/", ja: "拘留する", exEn: "Police may detain suspects for questioning.", exJa: "警察は尋問のために容疑者を拘留することができる。" },
+      { num: 307, en: "crackdown", ph: "/ˈkrækdaʊn/", ja: "取り締まり", exEn: "Authorities launched a crackdown on crime.", exJa: "当局は犯罪に対する厳重な取り締まりを開始した。" },
+      { num: 308, en: "indictment", ph: "/ɪnˈdaɪtmənt/", ja: "悪い印、欠陥、告発", exEn: "The poverty rate is a sad indictment of system.", exJa: "貧困率はシステムの悲しい欠陥（悪い印）だ。" },
+      { num: 309, en: "jurisdiction", ph: "/ˌdʒʊrɪsˈdɪkʃn/", ja: "司法権", exEn: "The case falls outside our jurisdiction.", exJa: "その事件は私たちの司法権（管轄）の外にある。" },
+      { num: 310, en: "infringement", ph: "/ɪnˈfrɪndʒmənt/", ja: "侵害", exEn: "Illegal downloads are a copyright infringement.", exJa: "違法ダウンロードは著作権侵害である。" },
+      { num: 311, en: "transgression", ph: "/trænzˈɡreʃn/", ja: "違反、犯罪", exEn: "He was punished for his minor transgression.", exJa: "彼は軽微な違反のために罰せられた。" },
+      { num: 312, en: "stipulate", ph: "/ˈstɪpjuleɪt/", ja: "規定する", exEn: "The contract stipulates payment within 30 days.", exJa: "契約は30日以内の支払いを規定している。" },
+      { num: 313, en: "enshrine", ph: "/ɪnˈʃraɪn/", ja: "明記する", exEn: "Rights are enshrined in the constitution.", exJa: "権利は憲法に明記（奉納）されている。" },
+      { num: 314, en: "quaint", ph: "/kweɪnt/", ja: "古風で趣のある", exEn: "We stayed in a quaint village in the countryside.", exJa: "私たちは田舎の古風で趣のある村に滞在した。" },
+      { num: 315, en: "anachronistic", ph: "/əˌnækrəˈnɪstɪk/", ja: "時代錯誤の", exEn: "His views on gender roles seem anachronistic.", exJa: "性役割に関する彼の見解は時代錯誤に見える。" },
+      { num: 316, en: "pseudonym", ph: "/ˈsuːdənɪm/", ja: "ペンネーム", exEn: "The author wrote under a pseudonym.", exJa: "著者はペンネームで書いた。" },
+      { num: 317, en: "culminate", ph: "/ˈkʌlmɪneɪt/", ja: "頂点に達する", exEn: "Years of work culminated in a grand discovery.", exJa: "長年の研究が偉大な発見となって頂点に達した。" },
+      { num: 318, en: "pinnacle", ph: "/ˈpɪnəkl/", ja: "頂点", exEn: "Winning the prize was the pinnacle of his career.", exJa: "受賞は彼のキャリアの頂点だった。" },
+      { num: 319, en: "stark", ph: "/stɑːrk/", ja: "あからさまな", exEn: "There is a stark contrast between rich and poor.", exJa: "貧富の間にあからさまな（顕著な）対比がある。" },
+      { num: 320, en: "succinct", ph: "/səkˈsɪŋkt/", ja: "簡潔な", exEn: "Keep your answers succinct and clear.", exJa: "回答は簡潔かつ明解に保ちなさい。" },
+      { num: 321, en: "quarantine", ph: "/ˈkwɔːrəntiːn/", ja: "隔離、検疫", exEn: "Travelers were placed in quarantine for two weeks.", exJa: "旅行者たちは2週間隔離された。" },
+      { num: 322, en: "seclude", ph: "/sɪˈkluːd/", ja: "隔離する", exEn: "He secluded himself in a cabin to write a book.", exJa: "彼は本を書くために小屋に身を隔離した。" },
+      { num: 323, en: "untenable", ph: "/ʌnˈtenəbl/", ja: "支持できない", exEn: "His position became completely untenable.", exJa: "彼の立場は完全に支持できないものになった。" },
+      { num: 324, en: "depletion", ph: "/dɪˈpliːʃn/", ja: "減少、枯渇", exEn: "Overfishing leads to resource depletion.", exJa: "乱獲はリソースの枯渇につながる。" },
+      { num: 325, en: "scant", ph: "/skænt/", ja: "乏しい、不十分な", exEn: "The team paid scant attention to warnings.", exJa: "チームは警告に対して乏しい（わずかな）注意しか払わなかった。" },
+      { num: 326, en: "infinitesimal", ph: "/ˌɪnfɪnɪˈtesɪml/", ja: "微小の、無限小の", exEn: "The risk involved is infinitesimal.", exJa: "伴うリスクはごく微小（無限小）だ。" },
+      { num: 327, en: "copious", ph: "/ˈkoʊpiəs/", ja: "多量の、豊富な", exEn: "She took copious notes during the lecture.", exJa: "彼女は講義中に多量のメモを取った。" },
+      { num: 328, en: "accrue", ph: "/əˈkruː/", ja: "生じる、増える", exEn: "Interest will accrue on the account daily.", exJa: "利息は口座に毎日生じる（増える）。" },
+      { num: 329, en: "anthem", ph: "/ˈænθəm/", ja: "国歌", exEn: "The crowd sang the national anthem together.", exJa: "群衆は一緒に国歌を歌った。" },
+      { num: 330, en: "balk", ph: "/bɔːk/", ja: "ためらう", exEn: "Investors balked at the high cost.", exJa: "投資家たちは高額な費用にためらった。" },
+      { num: 331, en: "unpalatable", ph: "/ʌnˈpælətəbl/", ja: "受け入れられない", exEn: "The truth was unpalatable to the public.", exJa: "真実は大衆にとって受け入れがたいものだった。" },
+      { num: 332, en: "congenital", ph: "/kənˈdʒenɪtl/", ja: "気の合った", exEn: "We spent a congenial evening with friends.", exJa: "私たちは友人と気の合った夜を過ごした。" },
+      { num: 333, en: "perturb", ph: "/pərˈtɜːrb/", ja: "動揺させる", exEn: "The strange news perturbed her quiet mind.", exJa: "その奇妙なニュースは彼女の静かな心を動揺させた。" },
+      { num: 334, en: "decipher", ph: "/dɪˈsaɪfər/", ja: "解読する", exEn: "Experts tried to decipher the secret code.", exJa: "専門家たちは暗号を解読しようと試みた。" },
+      { num: 335, en: "cryptic", ph: "/ˈkrɪptɪk/", ja: "秘密の、隠された；謎の", exEn: "He left a cryptic message on the board.", exJa: "彼は掲示板に謎めいたメッセージを残した。" },
+      { num: 336, en: "enigma", ph: "/ɪˈnɪɡmə/", ja: "謎", exEn: "Her motivation remains a complete enigma.", exJa: "彼女の動機は完全な謎のままだ。" },
+      { num: 337, en: "conundrum", ph: "/kəˈnʌndrəm/", ja: "難問、なぞなぞ", exEn: "Finding a solution is a complex conundrum.", exJa: "解決策を見つけることは複雑な難問だ。" },
+      { num: 338, en: "latent", ph: "/ˈleɪtnt/", ja: "潜在的な", exEn: "He showed latent talent for painting.", exJa: "彼は絵画に対する潜在的な才能を示した。" },
+      { num: 339, en: "optimal", ph: "/ˈɑːptɪməl/", ja: "最適な", exEn: "This is the optimal condition for growth.", exJa: "これが成長のための最適な条件だ。" },
+      { num: 340, en: "exhilarating", ph: "/ɪɡˈzɪləreɪtɪŋ/", ja: "爽快な", exEn: "Skiing down the mountain was exhilarating.", exJa: "山を滑り降りるスキーは爽快だった。" },
+      { num: 341, en: "hilarious", ph: "/hɪˈleriəs/", ja: "とても面白い", exEn: "The comedy show was absolutely hilarious.", exJa: "そのコメディショーは実にとても面白かった。" },
+      { num: 342, en: "propriety", ph: "/prəˈpraɪəti/", ja: "礼儀正しさ", exEn: "She behaved with perfect decorum and propriety.", exJa: "彼女は完璧な作法と礼儀正しさで行動した。" },
+      { num: 343, en: "traitor", ph: "/ˈtreɪtər/", ja: "裏切り者", exEn: "He was branded a traitor to his country.", exJa: "彼は国家に対する裏切り者の刻印を押された。" },
+      { num: 344, en: "refute", ph: "/rɪˈfjuːt/", ja: "誤りを証明する", exEn: "Scientists easily refuted the wrong claim.", exJa: "科学者たちは誤った主張を容易に論破（証明）した。" },
+      { num: 345, en: "debunk", ph: "/diːˈbʌŋk/", ja: "暴露する", exEn: "The documentary aims to debunk popular myths.", exJa: "ドキュメンタリーは一般的な神話を暴露することを目的としている。" },
+      { num: 346, en: "allude", ph: "/əˈluːd/", ja: "ほのめかす、それとなく言う", exEn: "He alluded to problems in his marriage.", exJa: "彼は結婚生活のトラブルをそれとなく言った。" },
+      { num: 347, en: "virulent", ph: "/ˈvɪrjələnt/", ja: "病原性のある, 毒性のある", exEn: "A virulent strain of the virus spread rapidly.", exJa: "ウイルスの毒性の強い株が急速に広がった。" },
+      { num: 348, en: "disproportionate", ph: "/ˌdɪsprəˈpɔːrʃənət/", ja: "不釣り合いな", exEn: "They spent a disproportionate amount of time.", exJa: "彼らは不釣り合いなほどの時間を費やした。" },
+      { num: 349, en: "apprenticeship", ph: "/əˈprentɪsʃɪp/", ja: "見習い", exEn: "He completed a three-year apprenticeship.", exJa: "彼は3年間の見習い期間を終えた。" },
+      { num: 350, en: "stigmatize", ph: "/ˈstɪɡmətaɪz/", ja: "汚名を着せる", exEn: "Society should not stigmatize mental illness.", exJa: "社会は精神疾患に汚名を着せるべきではない。" },
+      { num: 351, en: "taint", ph: "/teɪnt/", ja: "汚す", exEn: "Scandal served to taint his reputation.", exJa: "スキャンダルは彼の評判を汚すことになった。" },
+      { num: 352, en: "cramped", ph: "/kræmpt/", ja: "窮屈な", exEn: "They worked in cramped, dark quarters.", exJa: "彼らは窮屈で暗い部屋で働いた。" },
+      { num: 353, en: "vie", ph: "/vaɪ/", ja: "競う", exEn: "Athletes vie for the gold medal.", exJa: "アスリートたちが金メダルを競い合う。" },
+      { num: 354, en: "sluggish", ph: "/ˈslʌɡɪʃ/", ja: "停滞した", exEn: "The economy remains sluggish this quarter.", exJa: "今四半期、経済は停滞したままだ。" },
+      { num: 355, en: "languish", ph: "/ˈlæŋɡwɪʃ/", ja: "閉じ込められる", exEn: "He was left to languish in jail for months.", exJa: "彼は何ヶ月も刑務所に閉じ込められたままにされた。" },
+      { num: 356, en: "submerge", ph: "/səbˈmɜːrdʒ/", ja: "水に浸す、潜水する", exEn: "Floodwaters submerge the entire street.", exJa: "洪水が通り全体を水に浸した。" },
+      { num: 357, en: "cumbersome", ph: "/ˈkʌmbərsəm/", ja: "扱いにくい", exEn: "The old computer system was cumbersome to use.", exJa: "古いコンピュータシステムは扱いにくかった。" },
+      { num: 358, en: "obnoxious", ph: "/əbˈnɑːkʃəs/", ja: "非常に不快な", exEn: "His obnoxious behavior ruined the party.", exJa: "彼の非常に不快な行動がパーティーを台無しにした。" },
+      { num: 359, en: "ominous", ph: "/ˈɑːmɪnəs/", ja: "不吉な", exEn: "Dark clouds gave an ominous look to the sky.", exJa: "黒い雲が空に不吉な印象を与えた。" },
+      { num: 360, en: "abyss", ph: "/əˈbɪs/", ja: "どん底", exEn: "He felt himself falling into an abyss of despair.", exJa: "彼は自分が絶望のどん底に落ちていくのを感じた。" },
+      { num: 361, en: "rein", ph: "/reɪn/", ja: "手綱", exEn: "The government pulled the reins on spending.", exJa: "政府は支出の手綱を締めた。" },
+      { num: 362, en: "mainstay", ph: "/ˈmeɪnsteɪ/", ja: "頼みの綱", exEn: "Tourism is the mainstay of the local economy.", exJa: "観光業が地域経済の頼みの綱だ。" },
+      { num: 363, en: "fret", ph: "/fret/", ja: "やきもきする、思い悩む", exEn: "Don't fret about small mistakes.", exJa: "小さな失敗でやきもきするな。" },
+      { num: 364, en: "tantalize", ph: "/ˈtæntəlaɪz/", ja: "じらす", exEn: "The delicious smell tantalized our senses.", exJa: "美味しそうな匂いが私たちの感覚をじらした。" },
+      { num: 365, en: "engender", ph: "/ɪnˈdʒendər/", ja: "～を生じる", exEn: "Suspicion engenders conflict.", exJa: "疑念は対立を生じる。" },
+      { num: 366, en: "inculcate", ph: "/ɪnˈkʌlkeɪt/", ja: "教え込む", exEn: "Parents try to inculcate good values in kids.", exJa: "親は子供たちに優れた価値観を教え込もうとする。" },
+      { num: 367, en: "instill", ph: "/ɪnˈstɪl/", ja: "を教え込む", exEn: "Teachers aim to instill confidence in students.", exJa: "教師は生徒に自信を教え込む（植え付ける）ことを目指す。" },
+      { num: 368, en: "repeal", ph: "/rɪˈpiːl/", ja: "無効にする", exEn: "Congress voted to repeal the old law.", exJa: "議会は古い法律を無効にする（撤廃する）よう投票した。" },
+      { num: 369, en: "extant", ph: "/ˈekstənt/", ja: "現存している", exEn: "Few original copies remain extant today.", exJa: "今日、現存しているオリジナルコピーはほとんどない。" },
+      { num: 370, en: "remnant", ph: "/ˈremnənt/", ja: "残り", exEn: "Remnants of the ancient wall can still be seen.", exJa: "古代の壁の残り（名残）が今でも見られる。" },
+      { num: 371, en: "residue", ph: "/ˈrezɪduː/", ja: "残り", exEn: "Sticky residue was left on the table.", exJa: "テーブルの上にベタベタした残りが放置されていた。" },
+      { num: 372, en: "squint", ph: "/skwɪnt/", ja: "目を細めて見る", exEn: "He had to squint in the bright sunlight.", exJa: "彼は明るい日光の中で目を細めて見なければならなかった。" },
+      { num: 373, en: "guru", ph: "/ˈɡuːruː/", ja: "指導者", exEn: "She is considered a financial management guru.", exJa: "彼女は財務管理の指導者と見なされている。" },
+      { num: 374, en: "accomplice", ph: "/əˈkɑːmplɪs/", ja: "共犯者", exEn: "The thief worked with an accomplice.", exJa: "泥棒は共犯者とともに作業した。" },
+      { num: 375, en: "hatch", ph: "/hætʃ/", ja: "を思いつく", exEn: "They hatched a plan to escape.", exJa: "彼らは脱出する計画を思いついた（企てた）。" },
+      { num: 376, en: "forgo", ph: "/fɔːrˈɡoʊ/", ja: "を差し控える", exEn: "He decided to forgo dessert to save calories.", exJa: "彼はカロリーのためにデザートを差し控えることに決めた。" },
+      { num: 377, en: "repel", ph: "/rɪˈpel/", ja: "追い払う", exEn: "This spray will repel mosquitoes.", exJa: "このスプレーは蚊を追い払う。" },
+      { num: 378, en: "extrapolate", ph: "/ɪkˈstræpəleɪt/", ja: "推定する", exEn: "We can extrapolate future trends from current data.", exJa: "現在のデータから将来の傾向を推定できる。" },
+      { num: 379, en: "surmise", ph: "/sərˈmaɪz/", ja: "推測する", exEn: "I can only surmise what really happened.", exJa: "実際に何が起きたのか推測することしかできない。" },
+      { num: 380, en: "conjecture", ph: "/kənˈdʒektʃər/", ja: "推測、憶測", exEn: "His conclusions were based on conjecture.", exJa: "彼の結論は憶測（推測）に基づいていた。" },
+      { num: 381, en: "conjure", ph: "/ˈkɑːndʒər/", ja: "〜を思い出させる", exEn: "The music helped conjure memories of youth.", exJa: "音楽は青春の記憶を思い出させるのに役立った。" },
+      { num: 382, en: "proxy", ph: "/ˈprɑːksi/", ja: "代理、委任", exEn: "He voted by proxy as he could not attend.", exJa: "出席できなかったため、彼は代理で投票した。" },
+      { num: 383, en: "wield", ph: "/wiːld/", ja: "行使する", exEn: "The president wields immense political power.", exJa: "大統領は絶大な政治力を行使する。" },
+      { num: 384, en: "murky", ph: "/ˈmɜːrki/", ja: "暗い、陰気な", exEn: "The water in the pond was dark and murky.", exJa: "池の水は暗く陰気（濁っていた）だった。" },
+      { num: 385, en: "somber", ph: "/ˈsɑːmbər/", ja: "薄暗い、陰気な", exEn: "Everyone was in a somber mood after the news.", exJa: "ニュースの後、みんな陰気な気分になった。" },
+      { num: 386, en: "dormant", ph: "/ˈdɔːrmənt/", ja: "活動休止中の", exEn: "The volcano has been dormant for centuries.", exJa: "その火山は何世紀も活動休止中だ。" },
+      { num: 387, en: "lackluster", ph: "/ˈlæklʌstər/", ja: "精彩を欠いた、ぱっとしない", exEn: "The team gave a lackluster performance.", exJa: "チームは精彩を欠いたパフォーマンスを示した。" },
+      { num: 388, en: "vibrant", ph: "/ˈvaɪbrənt/", ja: "活気に満ちた", exEn: "The city has a vibrant cultural life.", exJa: "その都市は活気に満ちた文化的生活を持っている。" },
+      { num: 389, en: "revert", ph: "/rɪˈvɜːrt/", ja: "戻る", exEn: "The system will revert to previous settings.", exJa: "システムは以前の設定に戻る。" },
+      { num: 390, en: "resurrect", ph: "/ˌrezəˈrekt/", ja: "復活させる", exEn: "They managed to resurrect an old custom.", exJa: "彼らは古い習慣を復活させることに成功した。" },
+      { num: 391, en: "eavesdrop", ph: "/ˈiːvzdrɑːp/", ja: "盗み聞きする", exEn: "He tried to eavesdrop on their private talk.", exJa: "彼は彼らの私的な会話を盗み聞きしようとした。" },
+      { num: 392, en: "inoculation", ph: "/ɪˌnɑːkjuˈleɪʃn/", ja: "予防接種", exEn: "The child received an inoculation against flu.", exJa: "子供はインフルエンザの予防接種を受けた。" },
+      { num: 393, en: "connoisseur", ph: "/ˌkɑːnəˈsɜːr/", ja: "鑑定家", exEn: "He is a connoisseur of fine wine.", exJa: "彼は高級ワインの鑑定家だ。" },
+      { num: 394, en: "precocious", ph: "/prɪˈkoʊʃəs/", ja: "早熟な", exEn: "The precocious child could read at age three.", exJa: "その早熟な子供は3歳で読むことができた。" },
+      { num: 395, en: "blurt", ph: "/blɜːrt/", ja: "うっかりしゃべる", exEn: "He blurted out the secret by mistake.", exJa: "彼は手違いでうっかり秘密をしゃべってしまった。" },
+      { num: 396, en: "spew", ph: "/spjuː/", ja: "噴出する、 吐く", exEn: "The factory chimneys spew black smoke.", exJa: "工場の煙突が黒い煙を噴出している。" },
+      { num: 397, en: "oblivion", ph: "/əˈblɪviən/", ja: "忘却", exEn: "His name sank into complete oblivion.", exJa: "彼の名前は完全な忘却の中へ沈んだ。" },
+      { num: 398, en: "vigilant", ph: "/ˈvɪdʒɪlənt/", ja: "用心深い", exEn: "Guards must remain vigilant at night.", exJa: "警備員は夜間に用心深い状態を保たねばならない。" },
+      { num: 399, en: "ineffable", ph: "/ɪnˈefəbl/", ja: "言葉で言い表せない", exEn: "She felt an ineffable joy upon seeing him.", exJa: "彼女は彼に会って言葉で言い表せない喜びを感じた。" },
+      { num: 400, en: "rustic", ph: "/ˈrʌstɪk/", ja: "田舎の", exEn: "They stayed in a simple, rustic cabin.", exJa: "彼らはシンプルで田舎風の小屋に宿泊した。" },
+      { num: 401, en: "faction", ph: "/ˈfækʃn/", ja: "派閥", exEn: "A rival faction attempted to gain control.", exJa: "ライバルの派閥が実権を握ろうと試みた。" },
+      { num: 402, en: "cohort", ph: "/ˈkoʊhɔːrt/", ja: "仲間、集団", exEn: "The study tracked a cohort of students.", exJa: "研究は学生の集団（コホート）を追跡した。" },
+      { num: 403, en: "nonchalant", ph: "/ˌnɑːnʃəˈlɑːnt/", ja: "よそよそしい", exEn: "He gave a nonchalant shrug of his shoulders.", exJa: "彼はよそよそしく肩をすくめた。" },
+      { num: 404, en: "relegate", ph: "/ˈrelɪɡeɪt/", ja: "格下げする", exEn: "The team was relegated to a lower division.", exJa: "チームは下位ディビジョンに格下げされた。" },
+      { num: 405, en: "suffocate", ph: "/ˈsʌfəkeɪt/", ja: "窒息する", exEn: "The heat in the room was suffocating.", exJa: "部屋の中の熱気は窒息しそうなほどだった。" },
+      { num: 406, en: "embroider", ph: "/ɪmˈbrɔɪdər/", ja: "刺繍する", exEn: "She likes to embroider flowers on towels.", exJa: "彼女はタオルに花を刺繍するのが好きだ。" },
+      { num: 407, en: "swath", ph: "/swɑːθ/", ja: "広範囲", exEn: "The storm cut a wide swath through the city.", exJa: "嵐は市内に広い範囲の爪痕を残した。" },
+      { num: 408, en: "hue", ph: "/hjuː/", ja: "色合い", exEn: "The sky turned a deep hue of blue.", exJa: "空は濃い青の色合いに変わった。" },
+      { num: 409, en: "annex", ph: "/əˈneks/", ja: "～を併合する", exEn: "The country plans to annex neighboring land.", exJa: "その国は隣接する土地を併合する計画を立てている。" },
+      { num: 410, en: "unabridged", ph: "/ˌʌnəˈbrɪdʒd/", ja: "省略されていない", exEn: "He read the unabridged edition of the book.", exJa: "彼はその本の省略されていない版を読んだ。" },
+      { num: 411, en: "eclectic", ph: "/ɪˈklektɪk/", ja: "取捨選択した", exEn: "She has an eclectic taste in music.", exJa: "彼女は取捨選択された（多岐にわたる）音楽の好みを持つ。" },
+      { num: 412, en: "hectic", ph: "/ˈhektɪk/", ja: "やたらに忙しい", exEn: "It was a hectic week at the office.", exJa: "オフィスはやたらに忙しい一週間だった。" },
+      { num: 413, en: "trajectory", ph: "/trəˈdʒektəri/", ja: "軌道", exEn: "The rocket maintained its planned trajectory.", exJa: "ロケットは計画された軌道を維持した。" },
+      { num: 414, en: "countenance", ph: "/ˈkaʊntənəns/", ja: "表情、顔つき", exEn: "His calm countenance hid his inner fear.", exJa: "彼の穏やかな顔つきは内なる恐怖を隠していた。" },
+      { num: 415, en: "resonate", ph: "/ˈrezəneɪt/", ja: "反響する", exEn: "His speech resonated with many voters.", exJa: "彼の演説は多くの有権者の心に反響した（響いた）。" },
+      { num: 416, en: "poignant", ph: "/ˈpɔɪnjənt/", ja: "心を打つ", exEn: "The movie has a poignant ending.", exJa: "その映画には心を打つ結末がある。" },
+      { num: 417, en: "vernacular", ph: "/vərˈnækjələr/", ja: "日常語", exEn: "He wrote poetry using the local vernacular.", exJa: "彼は地元の日常語（方言）を使って詩を書いた。" },
+      { num: 418, en: "excavate", ph: "/ˈekskəveɪt/", ja: "発掘する", exEn: "Archeologists excavated ancient ruins.", exJa: "考古学者たちは古代の遺跡を発掘した。" },
+      { num: 419, en: "perfunctory", ph: "/pərˈfʌŋktəri/", ja: "おざなりの、いい加減な", exEn: "He gave a perfunctory smile before leaving.", exJa: "彼は立ち去る前におざなりの微笑みを浮かべた。" },
+      { num: 420, en: "juxtapose", ph: "/ˌdʒʌkstəˈpoʊz/", ja: "並列する", exEn: "The museum juxtaposes modern art with old craft.", exJa: "美術館は現代アートと古美術を並列して展示している。" }
     ];
 
-    // LocalStorage State Management
-    let wordList = [];
-    let currentQuiz = [];
+    // 学習ステータスの管理 (LocalStorage連携)
+    let wordStats = JSON.parse(localStorage.getItem('wordStats_v1')) || {};
+
+    function getStat(num) {
+      if (!wordStats[num]) {
+        wordStats[num] = { streak: 0, wrongCount: 0 };
+      }
+      return wordStats[num];
+    }
+
+    function saveStats() {
+      localStorage.setItem('wordStats_v1', JSON.stringify(wordStats));
+    }
+
+    // アプリの状態
+    let currentMode = 'choice';
+    let timerLimit = 5;
+    let quizQueue = [];
     let currentIndex = 0;
-    let score = 0;
+    let timerInterval = null;
+    let timeLeft = 0;
+    let sessionStats = { correct: 0, wrong: 0 };
 
-    function initData() {
-      const stored = localStorage.getItem('pinnacle_word_data');
-      if (stored) {
-        wordList = JSON.parse(stored);
-      } else {
-        wordList = rawWords.map((item, index) => ({
-          id: index,
-          word: item[0],
-          meaning: item[1],
-          phonetic: item[2],
-          exEn: item[3],
-          exJa: item[4],
-          status: 'unlearned', // 'unlearned', 'learned', 'weak'
-          correctCount: 0
-        }));
-        saveData();
+    // DOM要素
+    const menuScreen = document.getElementById('menu-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const listScreen = document.getElementById('list-screen');
+
+    const modeSelect = document.getElementById('mode-select');
+    const countSelect = document.getElementById('count-select');
+    const timerSelect = document.getElementById('timer-select');
+    const filterSelect = document.getElementById('filter-select');
+
+    const cardWordNum = document.getElementById('card-word-num');
+    const cardStreakBadge = document.getElementById('card-streak-badge');
+    const cardEnglish = document.getElementById('card-english');
+    const cardPhonetic = document.getElementById('card-phonetic');
+    const cardJapanese = document.getElementById('card-japanese');
+    const cardExample = document.getElementById('card-example');
+    const cardExEn = document.getElementById('card-ex-en');
+    const cardExJa = document.getElementById('card-ex-ja');
+    const wordCard = document.getElementById('word-card');
+
+    const choiceContainer = document.getElementById('choice-container');
+    const flashcardContainer = document.getElementById('flashcard-container');
+    const timerDisplay = document.getElementById('timer-display');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('quiz-progress-text');
+
+    // 画面切り替え
+    function showScreen(screen) {
+      [menuScreen, quizScreen, resultScreen, listScreen].forEach(s => s.classList.add('hidden'));
+      screen.classList.remove('hidden');
+    }
+
+    // イベント設定
+    document.getElementById('start-btn').addEventListener('click', startQuiz);
+    document.getElementById('view-list-btn').addEventListener('click', renderListScreen);
+    document.getElementById('list-back-btn').addEventListener('click', () => showScreen(menuScreen));
+    document.getElementById('back-menu-btn').addEventListener('click', () => showScreen(menuScreen));
+    document.getElementById('retry-btn').addEventListener('click', startQuiz);
+    document.getElementById('abort-btn').addEventListener('click', abortQuiz);
+
+    wordCard.addEventListener('click', () => {
+      if (currentMode === 'flashcard') {
+        cardJapanese.classList.toggle('hidden');
+        cardExample.classList.toggle('hidden');
       }
-      updateHomeStats();
-    }
+    });
 
-    function saveData() {
-      localStorage.setItem('pinnacle_word_data', JSON.stringify(wordList));
-    }
+    document.getElementById('fc-correct-btn').addEventListener('click', () => handleAnswer(true));
+    document.getElementById('fc-wrong-btn').addEventListener('click', () => handleAnswer(false));
 
-    function updateHomeStats() {
-      const learned = wordList.filter(w => w.status === 'learned').length;
-      const rate = Math.round((learned / wordList.length) * 100);
-      document.getElementById('mastery-rate').innerText = rate + '%';
-      document.getElementById('stats-detail').innerText = `${learned} / ${wordList.length} 単語完了`;
-    }
+    // 4択ボタン設定
+    const optionBtns = document.querySelectorAll('.option-btn');
+    optionBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const isCorrect = e.target.dataset.correct === "true";
+        
+        // 日本語訳と例文を表示
+        cardJapanese.classList.remove('hidden');
+        cardExample.classList.remove('hidden');
 
-    // UI View Controllers
-    function showHome() {
-      updateHomeStats();
-      document.getElementById('screen-home').classList.remove('hidden');
-      document.getElementById('screen-quiz').classList.add('hidden');
-      document.getElementById('screen-result').classList.add('hidden');
-    }
+        // ボタン色変更
+        optionBtns.forEach(b => {
+          if (b.dataset.correct === "true") b.classList.add('correct');
+          else b.classList.add('wrong');
+          b.disabled = true;
+        });
 
-    function startQuiz(mode) {
-      let pool = [];
-      if (mode === 'weak') {
-        pool = wordList.filter(w => w.status !== 'learned');
-        if (pool.length === 0) pool = wordList; // Fallback if everything is learned
-      } else {
-        pool = [...wordList];
-      }
+        setTimeout(() => {
+          optionBtns.forEach(b => {
+            b.classList.remove('correct', 'wrong');
+            b.disabled = false;
+          });
+          handleAnswer(isCorrect);
+        }, 1200);
+      });
+    });
 
-      // Shuffle and pick up to 10
-      pool.sort(() => Math.random() - 0.5);
-      currentQuiz = pool.slice(0, 10);
-      currentIndex = 0;
-      score = 0;
+    // クイズ開始処理
+    function startQuiz() {
+      currentMode = modeSelect.value;
+      timerLimit = parseInt(timerSelect.value, 10);
+      const countVal = countSelect.value;
+      const filterVal = filterSelect.value;
 
-      document.getElementById('screen-home').classList.add('hidden');
-      document.getElementById('screen-quiz').classList.remove('hidden');
-      document.getElementById('screen-result').classList.add('hidden');
-
-      renderQuestion();
-    }
-
-    function renderQuestion() {
-      const item = currentQuiz[currentIndex];
-      
-      // Update UI Progress
-      document.getElementById('progress').style.width = `${((currentIndex) / currentQuiz.length) * 100}%`;
-      document.getElementById('quiz-word').innerText = item.word;
-      document.getElementById('quiz-phonetic').innerText = item.phonetic;
-      
-      // Example Setup
-      document.getElementById('example-en').innerText = item.exEn;
-      document.getElementById('example-ja').innerText = item.exJa;
-      document.getElementById('example-container').classList.add('hidden');
-      document.getElementById('next-btn').classList.add('hidden');
-
-      // Generate 4 Options
-      const optionsContainer = document.getElementById('options');
-      optionsContainer.innerHTML = '';
-
-      let choices = [item.meaning];
-      while (choices.length < 4) {
-        const randomItem = wordList[Math.floor(Math.random() * wordList.length)];
-        if (!choices.includes(randomItem.meaning)) {
-          choices.push(randomItem.meaning);
-        }
-      }
-      choices.sort(() => Math.random() - 0.5);
-
-      choices.forEach(choice => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerText = choice;
-        btn.onclick = () => handleAnswer(choice, item, btn);
-        optionsContainer.appendChild(btn);
+      // フィルタリング
+      let filtered = wordList.filter(item => {
+        const stat = getStat(item.num);
+        if (filterVal === 'unlearned') return stat.streak < 5;
+        if (filterVal === 'weak') return stat.wrongCount > 0;
+        return true;
       });
 
-      // Automatically speak English word
-      speakCurrentWord();
-    }
-
-    function handleAnswer(selectedMeaning, currentItem, btnElement) {
-      const allBtns = document.querySelectorAll('.option-btn');
-      allBtns.forEach(b => b.onclick = null); // Disable further clicking
-
-      const isCorrect = selectedMeaning === currentItem.meaning;
-      
-      if (isCorrect) {
-        btnElement.classList.add('correct');
-        score++;
-        // Upgrade Status
-        const masterItem = wordList.find(w => w.id === currentItem.id);
-        masterItem.correctCount += 1;
-        if (masterItem.correctCount >= 2) {
-          masterItem.status = 'learned';
-        }
-      } else {
-        btnElement.classList.add('wrong');
-        // Show correct button
-        allBtns.forEach(b => {
-          if (b.innerText === currentItem.meaning) {
-            b.classList.add('correct');
-          }
-        });
-        // Downgrade Status
-        const masterItem = wordList.find(w => w.id === currentItem.id);
-        masterItem.status = 'weak';
-        masterItem.correctCount = 0;
+      if (filtered.length === 0) {
+        alert('条件に一致する単語がありません。');
+        return;
       }
 
-      saveData();
-      
-      // Reveal example and next button
-      document.getElementById('example-container').classList.remove('hidden');
-      document.getElementById('next-btn').classList.remove('hidden');
+      // シャッフル
+      filtered.sort(() => Math.random() - 0.5);
+
+      // 出題数の決定
+      const totalQuestions = countVal === 'all' ? filtered.length : Math.min(parseInt(countVal, 10), filtered.length);
+      quizQueue = filtered.slice(0, totalQuestions);
+
+      currentIndex = 0;
+      sessionStats = { correct: 0, wrong: 0 };
+
+      if (currentMode === 'choice') {
+        choiceContainer.classList.remove('hidden');
+        flashcardContainer.classList.add('hidden');
+      } else {
+        choiceContainer.classList.add('hidden');
+        flashcardContainer.classList.remove('hidden');
+      }
+
+      showScreen(quizScreen);
+      loadQuestion();
     }
 
-    function nextQuestion() {
-      currentIndex++;
-      if (currentIndex < currentQuiz.length) {
-        renderQuestion();
-      } else {
+    // 問題の読み込み
+    function loadQuestion() {
+      clearInterval(timerInterval);
+      
+      if (currentIndex >= quizQueue.length) {
         finishQuiz();
+        return;
       }
-    }
 
-    function finishQuiz() {
-      document.getElementById('screen-quiz').classList.add('hidden');
-      document.getElementById('screen-result').classList.remove('hidden');
-      document.getElementById('result-score').innerText = `${score} / ${currentQuiz.length}`;
+      const currentWord = quizQueue[currentIndex];
+      const stat = getStat(currentWord.num);
+
+      // プログレスバー
+      const pct = ((currentIndex) / quizQueue.length) * 100;
+      progressFill.style.width = `${pct}%`;
+      progressText.textContent = `${currentIndex + 1} / ${quizQueue.length}`;
+
+      // カード表示
+      cardWordNum.textContent = `No. ${currentWord.num}`;
       
-      const msg = document.getElementById('result-msg');
-      if (score === currentQuiz.length) {
-        msg.innerText = "素晴らしい！完璧です！";
-      } else if (score >= 7) {
-        msg.innerText = "素晴らしいペースです。間違えた単語を復習しましょう。";
+      let statusText = `連続正解: ${stat.streak}`;
+      if (stat.streak >= 5) statusText += " (完璧)";
+      else if (stat.streak >= 3) statusText += " (修得)";
+      cardStreakBadge.textContent = statusText;
+
+      cardEnglish.textContent = currentWord.en;
+      cardPhonetic.textContent = currentWord.ph;
+      cardJapanese.textContent = currentWord.ja;
+      cardExEn.textContent = currentWord.exEn;
+      cardExJa.textContent = currentWord.exJa;
+
+      // 初期状態では隠す
+      cardJapanese.classList.add('hidden');
+      cardExample.classList.add('hidden');
+
+      if (currentMode === 'choice') {
+        setupOptions(currentWord);
+      }
+
+      // タイマー処理
+      if (timerLimit > 0) {
+        timeLeft = timerLimit;
+        timerDisplay.textContent = `${timeLeft}s`;
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          timerDisplay.textContent = `${timeLeft}s`;
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            handleAnswer(false); // 時間切れは不正解
+          }
+        }, 1000);
       } else {
-        msg.innerText = "苦手単語から繰り返しトレーニングしましょう！";
+        timerDisplay.textContent = '';
       }
     }
 
-    function speakCurrentWord() {
-      if ('speechSynthesis' in window) {
-        const text = currentQuiz[currentIndex].word;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        speechSynthesis.speak(utterance);
+    // 4択選択肢の作成
+    function setupOptions(correctWord) {
+      const dummyOptions = wordList
+        .filter(w => w.num !== correctWord.num)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+
+      const options = [...dummyOptions, correctWord].sort(() => Math.random() - 0.5);
+
+      optionBtns.forEach((btn, idx) => {
+        btn.textContent = `${idx + 1}. ${options[idx].ja}`;
+        btn.dataset.correct = (options[idx].num === correctWord.num) ? "true" : "false";
+      });
+    }
+
+    // 回答処理
+    function handleAnswer(isCorrect) {
+      clearInterval(timerInterval);
+      const currentWord = quizQueue[currentIndex];
+      const stat = getStat(currentWord.num);
+
+      if (isCorrect) {
+        stat.streak += 1;
+        sessionStats.correct += 1;
+      } else {
+        stat.streak = 0; // 連続正解リセット
+        stat.wrongCount += 1; // 間違えた回数を加算
+        sessionStats.wrong += 1;
+      }
+
+      saveStats();
+      currentIndex++;
+      loadQuestion();
+    }
+
+    // 途中中断
+    function abortQuiz() {
+      if (confirm("学習を中断してメニューに戻りますか？")) {
+        clearInterval(timerInterval);
+        showScreen(menuScreen);
       }
     }
 
-    // App Initialize
-    window.onload = initData;
+    // 終了処理
+    function finishQuiz() {
+      document.getElementById('res-total').textContent = quizQueue.length;
+      document.getElementById('res-correct').textContent = sessionStats.correct;
+      document.getElementById('res-wrong').textContent = sessionStats.wrong;
+      showScreen(resultScreen);
+    }
+
+    // 一覧画面の表示
+    function renderListScreen() {
+      const listContainer = document.getElementById('list-container');
+      listContainer.innerHTML = '';
+
+      wordList.forEach(item => {
+        const stat = getStat(item.num);
+        const div = document.createElement('div');
+        div.className = 'list-item';
+
+        let tagClass = 'tag-unlearned';
+        let tagText = '未着手';
+
+        if (stat.streak >= 5) {
+          tagClass = 'tag-perfect';
+          tagText = '完璧 (5連勝)';
+        } else if (stat.streak >= 3) {
+          tagClass = 'tag-remembered';
+          tagText = '修得 (3連勝)';
+        } else if (stat.streak > 0 || stat.wrongCount > 0) {
+          tagClass = 'tag-learning';
+          tagText = `学習中 (${stat.streak}連勝)`;
+        }
+
+        div.innerHTML = `
+          <div class="list-item-top">
+            <div class="list-info">
+              <span class="list-num">No.${item.num}</span>
+              <span class="list-word">${item.en}</span>
+              <span class="list-phonetic">${item.ph}</span>
+            </div>
+            <div>
+              <span class="status-tag ${tagClass}">${tagText}</span>
+              <span style="font-size: 0.75rem; color: var(--danger-color); margin-left: 6px;">ミス:${stat.wrongCount}</span>
+            </div>
+          </div>
+          <div class="list-meaning">${item.ja}</div>
+          <div class="list-ex">
+            <div>${item.exEn}</div>
+            <div style="color: var(--text-sub);">${item.exJa}</div>
+          </div>
+        `;
+        listContainer.appendChild(div);
+      });
+
+      showScreen(listScreen);
+    }
   </script>
 </body>
 </html>
