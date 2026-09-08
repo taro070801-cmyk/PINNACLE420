@@ -10,6 +10,7 @@
       --bg-gray: #d8d8d8;
       --text-black: #111111;
       --accent-red: #d90429;
+      --accent-green: #2b9348;
     }
 
     * {
@@ -38,9 +39,10 @@
       display: flex;
       flex-direction: column;
       position: relative;
+      min-height: 650px;
     }
 
-    /* ヘッダーエリア */
+    /* ヘッダー */
     .header-top {
       display: flex;
       align-items: center;
@@ -66,21 +68,94 @@
 
     .main-title {
       text-align: center;
-      font-size: 1.7rem;
-      letter-spacing: 4px;
+      font-size: 1.5rem;
+      letter-spacing: 3px;
       color: var(--text-black);
-      margin: 2px 0 8px 0;
+      margin: 2px 0 6px 0;
       line-height: 1.2;
     }
 
-    /* メイン青枠カード部分 */
+    /* ナビゲーションタブ */
+    .nav-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--main-blue);
+      background: #f0f0f0;
+      font-family: sans-serif;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 8px 4px;
+      border: none;
+      background: none;
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--main-blue);
+      color: #fff;
+    }
+
+    /* 各画面切り替え用 */
+    .view-panel {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      padding: 10px;
+    }
+
+    .view-panel.active {
+      display: flex;
+    }
+
+    /* --- 設定画面 --- */
+    .config-group {
+      margin-bottom: 12px;
+      font-family: sans-serif;
+    }
+
+    .config-group label {
+      display: block;
+      font-weight: bold;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+      color: var(--main-blue);
+    }
+
+    .config-group select, .config-group input {
+      width: 100%;
+      padding: 6px;
+      font-size: 0.9rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .start-btn {
+      background: var(--main-blue);
+      color: #fff;
+      border: none;
+      padding: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-family: sans-serif;
+    }
+
+    /* --- 学習カード共通 --- */
     .pinnacle-box {
       border: 5px solid var(--main-blue);
-      margin: 0 15px 10px 15px;
-      padding: 12px 15px;
+      margin: 0 5px 8px 5px;
+      padding: 10px 12px;
       text-align: center;
       background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(230,235,250,0.95));
       position: relative;
+      touch-action: pan-y;
+      user-select: none;
     }
 
     .word-meta {
@@ -94,45 +169,63 @@
       font-family: sans-serif;
       font-weight: bold;
       color: var(--main-blue);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .pinnacle-text {
       font-family: 'Arial Black', Impact, sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       color: var(--main-blue);
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       border-bottom: 2px solid var(--main-blue);
-      display: inline-block;
-      padding-bottom: 1px;
     }
 
     .question-word {
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 900;
       color: var(--main-blue);
-      margin: 4px 0 2px 0;
+      margin: 4px 0;
       word-break: break-word;
     }
 
     .phonetic-symbol {
-      font-family: "Lucida Sans Unicode", "Arial Unicode MS", sans-serif;
-      font-size: 0.95rem;
+      font-family: "Lucida Sans Unicode", sans-serif;
+      font-size: 0.9rem;
       color: #555;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .audio-btn {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .meaning-display {
+      font-family: sans-serif;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--accent-red);
+      margin: 6px 0;
+      min-height: 1.5em;
     }
 
     .example-sentence {
       font-family: sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #333;
       background: #f0f3fa;
-      padding: 6px 10px;
+      padding: 6px 8px;
       border-radius: 4px;
       border-left: 3px solid var(--main-blue);
       text-align: left;
-      margin-bottom: 8px;
+      margin-top: 4px;
       line-height: 1.3;
     }
 
@@ -140,8 +233,8 @@
     .timer-container {
       width: 100%;
       background-color: #e0e0e0;
-      height: 7px;
-      border-radius: 4px;
+      height: 6px;
+      border-radius: 3px;
       overflow: hidden;
       margin-top: 6px;
     }
@@ -155,73 +248,60 @@
 
     .timer-text {
       font-family: sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--main-blue);
-      margin-top: 3px;
+      margin-top: 2px;
       font-weight: bold;
     }
 
-    /* 選択肢エリア */
+    /* 4択オプション */
     .options-section {
-      padding: 0 15px 10px 15px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
+      padding: 0 5px;
     }
 
     .option-btn {
       background-color: #fff;
       border: 2px solid #ccc;
-      padding: 10px 12px;
-      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-      font-size: 0.95rem;
+      padding: 8px 10px;
+      font-family: sans-serif;
+      font-size: 0.9rem;
       font-weight: bold;
       color: #333;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s ease;
       border-radius: 4px;
-      line-height: 1.3;
     }
 
-    .option-btn:hover:not(:disabled) {
-      border-color: var(--main-blue);
-      background-color: #f0f4ff;
-    }
-
-    /* 正解・不正解ハイライト */
     .option-btn.correct {
       border-color: var(--accent-red) !important;
       background-color: #ffe6e6 !important;
       color: var(--accent-red) !important;
-      font-weight: bold;
     }
 
     .option-btn.wrong {
       border-color: #999 !important;
       background-color: #eee !important;
-      color: #888 !important;
       opacity: 0.6;
     }
 
-    /* アクションエリア（メッセージ＆「次へ」ボタン） */
+    /* アクションエリア */
     .action-section {
-      padding: 0 15px 10px 15px;
-      min-height: 55px;
+      min-height: 45px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      margin-top: 4px;
     }
 
     .status-message {
       font-family: sans-serif;
       font-weight: bold;
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-      min-height: 20px;
+      font-size: 0.85rem;
     }
-
     .status-message.timeout { color: var(--accent-red); }
     .status-message.correct-text { color: var(--main-blue); }
     .status-message.wrong-text { color: var(--accent-red); }
@@ -230,8 +310,8 @@
       background-color: var(--main-blue);
       color: #fff;
       border: none;
-      padding: 8px 24px;
-      font-size: 0.95rem;
+      padding: 6px 20px;
+      font-size: 0.9rem;
       font-family: sans-serif;
       font-weight: bold;
       cursor: pointer;
@@ -239,26 +319,68 @@
       display: none;
     }
 
-    .next-btn:hover {
-      opacity: 0.9;
+    /* フラッシュカード操作系 */
+    .flash-controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
     }
+
+    .flash-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      font-weight: bold;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: sans-serif;
+    }
+    .btn-ng { background: var(--accent-red); }
+    .btn-ok { background: var(--accent-green); }
+
+    /* 単語一覧 */
+    .list-container {
+      overflow-y: auto;
+      max-height: 420px;
+      font-family: sans-serif;
+    }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      font-size: 0.85rem;
+    }
+
+    .list-item .word-info { flex: 1; }
+    .list-item .word-en { font-weight: bold; color: var(--main-blue); }
+    .list-item .word-ja { color: #555; }
+    .status-badge {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .status-0 { background: #eee; color: #666; }
+    .status-1 { background: #e3f2fd; color: #0d47a1; }
+    .status-2 { background: #e8f5e9; color: #1b5e20; }
 
     /* フッター帯 */
     .footer-banner {
       background-color: var(--main-blue);
       color: #fff;
       text-align: center;
-      padding: 10px 5px;
-      font-size: 1.15rem;
+      padding: 8px 5px;
+      font-size: 1rem;
       font-weight: bold;
       letter-spacing: 2px;
       margin-top: auto;
     }
-
-    .footer-banner span {
-      font-size: 0.85rem;
-      font-weight: normal;
-    }
+    .footer-banner span { font-size: 0.8rem; font-weight: normal; }
   </style>
 </head>
 <body>
@@ -270,43 +392,127 @@
     <div class="sub-title">を目指す人のための「仕上げの英単語集」</div>
   </div>
 
-  <div class="main-title">
-    大学入試<br>無敵の難単語 420
+  <div class="main-title">大学入試<br>無敵の難単語 420</div>
+
+  <!-- タブナビゲーション -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('config')">学習設定</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">テスト/カード</button>
+    <button class="tab-btn" onclick="switchTab('list')">単語一覧</button>
   </div>
 
-  <!-- メイン表示エリア -->
-  <div class="pinnacle-box">
-    <div class="word-meta">
-      <span class="word-number" id="word-num">No. 1 / 420</span>
-      <span class="pinnacle-text">PINNACLE</span>
+  <!-- 1. 設定パネル -->
+  <div id="view-config" class="view-panel active">
+    <div class="config-group">
+      <label>モード選択</label>
+      <select id="cfg-mode">
+        <option value="choice">4択テスト</option>
+        <option value="flash">フラッシュカード（スワイプ/判定）</option>
+        <option value="judge">正誤判定テスト</option>
+      </select>
     </div>
-    <div class="question-word" id="word-display">---</div>
-    <div class="phonetic-symbol" id="phonetic-display">/---/</div>
-    <div class="example-sentence" id="example-display">---</div>
-    
-    <div class="timer-container">
-      <div class="timer-bar" id="timer-bar"></div>
+
+    <div class="config-group">
+      <label>出題範囲</label>
+      <select id="cfg-range" onchange="toggleCustomRange()">
+        <option value="all">全範囲 (1-420)</option>
+        <option value="day1">DAY 1 (1-30)</option>
+        <option value="day2">DAY 2 (31-60)</option>
+        <option value="day3">DAY 3 (61-90)</option>
+        <option value="day4">DAY 4 (91-120)</option>
+        <option value="day5">DAY 5 (121-150)</option>
+        <option value="day6">DAY 6 (151-180)</option>
+        <option value="day7">DAY 7 (181-210)</option>
+        <option value="day8">DAY 8 (211-240)</option>
+        <option value="day9">DAY 9 (241-270)</option>
+        <option value="day10">DAY 10 (271-300)</option>
+        <option value="day11">DAY 11 (301-330)</option>
+        <option value="day12">DAY 12 (331-360)</option>
+        <option value="day13">DAY 13 (361-390)</option>
+        <option value="day14">DAY 14 (391-420)</option>
+        <option value="unlearned">覚圧未完成・未覚(ステータス別)</option>
+        <option value="custom">番号を直接指定</option>
+      </select>
     </div>
-    <div class="timer-text" id="timer-text">制限時間: 5.0秒</div>
+
+    <div id="custom-range-box" class="config-group" style="display:none;">
+      <label>開始No. ~ 終了No.</label>
+      <div style="display:flex; gap:5px;">
+        <input type="number" id="cfg-start" value="1" min="1" max="420">
+        <input type="number" id="cfg-end" value="420" min="1" max="420">
+      </div>
+    </div>
+
+    <div class="config-group">
+      <label>出題数</label>
+      <select id="cfg-count">
+        <option value="10">10問</option>
+        <option value="20">20問</option>
+        <option value="30">30問</option>
+        <option value="all">対象全問</option>
+      </select>
+    </div>
+
+    <div class="config-group">
+      <label>1問の制限時間 (秒)</label>
+      <input type="number" id="cfg-time" value="5" min="1" max="60">
+    </div>
+
+    <button class="start-btn" onclick="startSession()">学習を開始する</button>
   </div>
 
-  <!-- 選択肢ボタン -->
-  <div class="options-section" id="options-container"></div>
+  <!-- 2. 学習画面 -->
+  <div id="view-quiz" class="view-panel">
+    <div class="pinnacle-box" id="card-box" onclick="revealCardDetails()">
+      <div class="word-meta">
+        <span class="word-number" id="word-num">No. --</span>
+        <span class="pinnacle-text">PINNACLE</span>
+      </div>
+      <div class="question-word" id="word-display">---</div>
+      <div class="phonetic-symbol">
+        <span id="phonetic-display">/---/</span>
+        <button class="audio-btn" onclick="playAudio(event)">🔊</button>
+      </div>
 
-  <!-- 状態表示 & 次へ進むボタン -->
-  <div class="action-section">
-    <div class="status-message" id="status-message"></div>
-    <button class="next-btn" id="next-btn" onclick="nextQuestion()">次の問題へ</button>
+      <!-- 意味（フラッシュカード時またはタップ時に表示） -->
+      <div class="meaning-display" id="meaning-display" style="display:none;">---</div>
+      <div class="example-sentence" id="example-display" style="display:none;">---</div>
+      
+      <div class="timer-container" id="timer-container">
+        <div class="timer-bar" id="timer-bar"></div>
+      </div>
+      <div class="timer-text" id="timer-text">制限時間: --秒</div>
+    </div>
+
+    <!-- 4択 / 正誤モード用ボタン -->
+    <div class="options-section" id="options-container"></div>
+
+    <!-- フラッシュカード用判定ボタン -->
+    <div class="flash-controls" id="flash-controls" style="display:none;">
+      <button class="flash-btn btn-ng" onclick="processResult(false)">覚えてない (←)</button>
+      <button class="flash-btn btn-ok" onclick="processResult(true)">覚えた (→)</button>
+    </div>
+
+    <!-- アクションメッセージ -->
+    <div class="action-section">
+      <div class="status-message" id="status-message"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">次の問題へ</button>
+    </div>
   </div>
 
-  <!-- フッター帯 -->
+  <!-- 3. 単語一覧画面 -->
+  <div id="view-list" class="view-panel">
+    <div class="list-container" id="list-container"></div>
+  </div>
+
+  <!-- フッター -->
   <div class="footer-banner">
     英単語<span>は</span>極限<span>まで</span>覚えろ！
   </div>
 </div>
 
 <script>
-  // 420単語完全データセット（番号、単語、発音記号、正解意味、例文）
+  // 420単語完全データセット
   const fullVocabulary = [
     { id: 1, word: "corroborate", ipa: "/kəˈrɑːbəreɪt/", meaning: "確証する", sentence: "Recent evidence helps to corroborate his story." },
     { id: 2, word: "substantiate", ipa: "/səbˈstænʃieɪt/", meaning: "立証する", sentence: "There is no evidence to substantiate the claim." },
@@ -392,7 +598,7 @@
     { id: 82, word: "grandeur", ipa: "/ˈɡrændʒər/", meaning: "壮大", sentence: "The grandeur of the ancient cathedral amazed the tourists." },
     { id: 83, word: "fraught", ipa: "/frɔːt/", meaning: "伴う", sentence: "The expedition was fraught with danger at every turn." },
     { id: 84, word: "rife", ipa: "/raɪf/", meaning: "満ちて、広まって", sentence: "The city was rife with rumors of political corruption." },
-    { id: 85, word: "rampant", ipa: "/ˈræmpənt/", meaning: "蔓延した；激しい；途方も無い", sentence: "Wild speculation became rampant on social media." },
+    { id: 85, word: "rampant", ipa: "/ˈræmpənt/", meaning: "蔓延した；激しい；途方無い", sentence: "Wild speculation became rampant on social media." },
     { id: 86, word: "clutter", ipa: "/ˈklʌtər/", meaning: "散らかす", sentence: "Unnecessary files clutter up the computer memory." },
     { id: 87, word: "antagonism", ipa: "/ænˈtæɡənɪzəm/", meaning: "対立、敵対心", sentence: "Deep antagonism existed between the rival political groups." },
     { id: 88, word: "animosity", ipa: "/ˌænɪˈmɑːsəti/", meaning: "憎悪、敵意", sentence: "Despite their differences, there was no animosity between them." },
@@ -412,10 +618,10 @@
     { id: 102, word: "exponentially", ipa: "/ˌekspəˈnenʃəli/", meaning: "加速度的に", sentence: "Data usage has grown exponentially in recent years." },
     { id: 103, word: "augment", ipa: "/ɔːɡˈment/", meaning: "増加させる", sentence: "He took a second job to augment his monthly income." },
     { id: 104, word: "bolster", ipa: "/ˈboʊlstər/", meaning: "を強化する、を支援する", sentence: "New evidence helped bolster the defense lawyer's case." },
-    { id: 105, word: "galvanize", ipa: "/ˈɡælvənaɪz/", meaning: "を活気づける、を刺激する、に電流を流す", sentence: "The speech managed to galvanize the public into action." },
+    { id: 105, word: "galvanize", ipa: "/ˈɡælvənaɪz/", meaning: "を活気づける、を刺激する", sentence: "The speech managed to galvanize the public into action." },
     { id: 106, word: "invigorate", ipa: "/ɪnˈvɪɡəreɪt/", meaning: "元気づける", sentence: "A brisk walk in the morning can invigorate your body." },
     { id: 107, word: "buoy", ipa: "/ˈbuːi/", meaning: "勇気づける", sentence: "Good financial news served to buoy investor confidence." },
-    { id: 108, word: "exalt", ipa: "/ɪɡˈzɔːlt/", meaning: "昇進させる；ほめる；刺激する", sentence: "The poem was written to exalt the bravery of soldiers." },
+    { id: 108, word: "exalt", ipa: "/ɪɡˈzɔːlt/", meaning: "昇進させる；ほめる", sentence: "The poem was written to exalt the bravery of soldiers." },
     { id: 109, word: "dwarf", ipa: "/dwɔːrf/", meaning: "小さく見せる", sentence: "The skyscraper dwarfs the surrounding office buildings." },
     { id: 110, word: "voracious", ipa: "/vəˈreɪʃəs/", meaning: "貪欲な", sentence: "He has a voracious appetite for knowledge." },
     { id: 111, word: "insatiable", ipa: "/ɪnˈseɪʃəbl/", meaning: "飽くことのない", sentence: "Her insatiable curiosity drives her scientific research." },
@@ -481,7 +687,7 @@
     { id: 171, word: "gross", ipa: "/ɡroʊs/", meaning: "総計の", sentence: "The gross annual revenue exceeded expectations." },
     { id: 172, word: "holistic", ipa: "/hoʊˈlɪstɪk/", meaning: "全体論的な", sentence: "The clinic advocates a holistic approach to health." },
     { id: 173, word: "contentious", ipa: "/kənˈtenʃəs/", meaning: "議論を起こす、論争好きな", sentence: "Taxation remains a highly contentious political issue." },
-    { id: 174, word: "dissent", ipa: "/dɪˈsent/", meaning: "異議を唱える", sentence: "Two judges expressed strong dissent from the verdict." },
+    { id: 174, word: "dissent", ipa: "/dɪˈsen t/", meaning: "異議を唱える", sentence: "Two judges expressed strong dissent from the verdict." },
     { id: 175, word: "catapult", ipa: "/ˈkætəpʌlt/", meaning: "勢いよく投げ出す", sentence: "The successful single catapulted the band to stardom." },
     { id: 176, word: "simmer", ipa: "/ˈsɪmər/", meaning: "ぐつぐつ煮える", sentence: "Let the soup simmer gently on low heat." },
     { id: 177, word: "scorching", ipa: "/ˈskɔːrtʃɪŋ/", meaning: "焼けつくような", sentence: "We survived the scorching heat of the desert." },
@@ -493,9 +699,9 @@
     { id: 183, word: "dissect", ipa: "/daɪˈsekt/", meaning: "解剖する", sentence: "Students learn to dissect frogs in biology class." },
     { id: 184, word: "ramification", ipa: "/ˌræmɪfɪˈkeɪʃn/", meaning: "結果", sentence: "Consider the economic ramifications of your decision." },
     { id: 185, word: "wince", ipa: "/wɪns/", meaning: "顔をしかめる、たじろぐ", sentence: "He couldn't help but wince as the needle pierced his skin." },
-    { id: 186, word: "contort", ipa: "/kənˈtɔːrt/", meaning: "（意味・論理などを）ねじ曲げる、ゆがめる", sentence: "His face was contorted with anger and frustration." },
+    { id: 186, word: "contort", ipa: "/kənˈtɔːrt/", meaning: "ねじ曲げる、ゆがめる", sentence: "His face was contorted with anger and frustration." },
     { id: 187, word: "skew", ipa: "/skjuː/", meaning: "歪んだ", sentence: "The faulty data will skew the research findings." },
-    { id: 188, word: "lofty", ipa: "/ˈlɔːfti/", meaning: "崇高な、高慢な、非常に高い", sentence: "The team set lofty goals for the upcoming season." },
+    { id: 188, word: "lofty", ipa: "/ˈlɔːfti/", meaning: "崇高な、高慢な", sentence: "The team set lofty goals for the upcoming season." },
     { id: 189, word: "ruminate", ipa: "/ˈruːmɪneɪt/", meaning: "思いめぐらす", sentence: "He sat quietly to ruminate on his future career." },
     { id: 190, word: "reminisce", ipa: "/ˌremɪˈnɪs/", meaning: "思い出を語る", sentence: "Old friends met to reminisce about their school days." },
     { id: 191, word: "maneuver", ipa: "/məˈnuːvər/", meaning: "巧みな操縦", sentence: "The pilot executed a skillful maneuver to land safely." },
@@ -520,10 +726,10 @@
     { id: 210, word: "disentangle", ipa: "/ˌdɪsɪnˈtæŋɡl/", meaning: "もつれを解く", sentence: "It took hours to disentangle the complicated wires." },
     { id: 211, word: "inadvertently", ipa: "/ˌɪnədˈvɜːrtəntli/", meaning: "うっかりして", sentence: "I inadvertently deleted important files from my computer." },
     { id: 212, word: "purport", ipa: "/pərˈpɔːrt/", meaning: "主張する", sentence: "Documents purport to show evidence of fraud." },
-    { id: 213, word: "altruistic", ipa: "/ˌæltruˈɪstɪk/", meaning: "利他的な", sentence: "Her altruistic acts inspired others in the community." },
-    { id: 214, word: "infallible", ipa: "/ɪnˈfæləbl/", meaning: "決して誤らない、絶対に確実な、信頼の置ける", sentence: "No computer system is completely infallible." },
+    { id: 213, word: "altruistic", ipa: "/ˌæltruˈɪstɪk/", meaning: "利他の", sentence: "Her altruistic acts inspired others in the community." },
+    { id: 214, word: "infallible", ipa: "/ɪnˈfæləbl/", meaning: "決して誤らない", sentence: "No computer system is completely infallible." },
     { id: 215, word: "disdain", ipa: "/dɪsˈdeɪn/", meaning: "軽蔑", sentence: "He treated their suggestions with obvious disdain." },
-    { id: 216, word: "deride", ipa: "/dɪˈraɪd/", meaning: "あざける、ばかにする", sentence: "Critics continue to deride his controversial theories." },
+    { id: 216, word: "deride", ipa: "/dɪˈraɪd/", meaning: "あざける", sentence: "Critics continue to deride his controversial theories." },
     { id: 217, word: "resilient", ipa: "/rɪˈzɪliənt/", meaning: "立ち直りの早い", sentence: "Children are often remarkably resilient in facing challenges." },
     { id: 218, word: "inundate", ipa: "/ˈɪnʌndeɪt/", meaning: "水浸しにする、殺到する", sentence: "Fans inundate the star with letters every day." },
     { id: 219, word: "tenacious", ipa: "/təˈneɪʃəs/", meaning: "粘り強い", sentence: "She is a tenacious investigator who never gives up." },
@@ -545,18 +751,18 @@
     { id: 235, word: "reproach", ipa: "/rɪˈproʊtʃ/", meaning: "非難", sentence: "His honest conduct was completely above reproach." },
     { id: 236, word: "denounce", ipa: "/dɪˈnaʊns/", meaning: "非難する", sentence: "Leaders stepped forward to denounce political violence." },
     { id: 237, word: "gregarious", ipa: "/ɡrɪˈɡeriəs/", meaning: "社交的な", sentence: "She is a gregarious person who enjoys making friends." },
-    { id: 238, word: "concoct", ipa: "/kənˈkɑːkt/", meaning: "をでっち上げる、を混ぜ合わせて作る", sentence: "He tried to concoct an alibi for his whereabouts." },
+    { id: 238, word: "concoct", ipa: "/kənˈkɑːkt/", meaning: "でっち上げる", sentence: "He tried to concoct an alibi for his whereabouts." },
     { id: 239, word: "phony", ipa: "/ˈfoʊni/", meaning: "偽の", sentence: "The suspect presented a phony passport at border control." },
     { id: 240, word: "scapegoat", ipa: "/ˈskeɪpɡoʊt/", meaning: "身代わり", sentence: "Minority groups were made a scapegoat for economic trouble." },
     { id: 241, word: "sarcastic", ipa: "/sɑːrˈkæstɪk/", meaning: "皮肉な", sentence: "She made a sarcastic remark about his messy room." },
     { id: 242, word: "instigate", ipa: "/ˈɪnstɪɡeɪt/", meaning: "推進する、扇動する", sentence: "They attempted to instigate protests against the government." },
-    { id: 243, word: "jolt", ipa: "/dʒoʊlt/", meaning: "（急激に）揺さぶる、（精神的な）衝撃", sentence: "The sudden jolt woke passengers from their sleep." },
+    { id: 243, word: "jolt", ipa: "/dʒoʊlt/", meaning: "揺さぶる、衝撃", sentence: "The sudden jolt woke passengers from their sleep." },
     { id: 244, word: "leeway", ipa: "/ˈliːweɪ/", meaning: "余裕", sentence: "Designers were given considerable creative leeway." },
     { id: 245, word: "Protagonist", ipa: "/prəˈtæɡənɪst/", meaning: "主人公", sentence: "The novel follows the main protagonist on his journey." },
     { id: 246, word: "circumvent", ipa: "/ˌsɜːrkəmˈvent/", meaning: "回避する", sentence: "Smart investors know how to legally circumvent high taxes." },
     { id: 247, word: "eschew", ipa: "/ɪsˈtʃuː/", meaning: "避ける", sentence: "Monks choose to eschew material luxury." },
     { id: 248, word: "tenet", ipa: "/ˈtenɪt/", meaning: "教義", sentence: "Freedom of speech is a core tenet of democracy." },
-    { id: 249, word: "axiom", ipa: "/ˈæksiəm/", meaning: "原理、自明の理、（数学の）公理", sentence: "It is an accepted axiom that experience is the best teacher." },
+    { id: 249, word: "axiom", ipa: "/ˈæksiəm/", meaning: "原理、自明の理", sentence: "It is an accepted axiom that experience is the best teacher." },
     { id: 250, word: "mantra", ipa: "/ˈmæntrə/", meaning: "スローガン", sentence: "'Practice makes perfect' became her daily personal mantra." },
     { id: 251, word: "caveat", ipa: "/ˈkæviæt/", meaning: "警告, 注意条項", sentence: "The offer sounds great, but comes with one major caveat." },
     { id: 252, word: "premise", ipa: "/ˈpremɪs/", meaning: "前提", sentence: "The entire argument rests on a false premise." },
@@ -565,26 +771,26 @@
     { id: 255, word: "docile", ipa: "/ˈdɑːsl/", meaning: "従順な", sentence: "The horse was remarkably docile and easy to ride." },
     { id: 256, word: "malleable", ipa: "/ˈmæliəbl/", meaning: "素直な", sentence: "Young minds are malleable and open to learning." },
     { id: 257, word: "defy", ipa: "/dɪˈfaɪ/", meaning: "に反抗する；を拒む", sentence: "His courageous actions continue to defy expectations." },
-    { id: 258, word: "rudimentary", ipa: "/ˌruːdɪˈmentri/", meaning: "基本的な、初歩的な、原始的な", sentence: "He possesses only a rudimentary understanding of French." },
+    { id: 258, word: "rudimentary", ipa: "/ˌruːdɪˈmentri/", meaning: "基本的な、初歩的な", sentence: "He possesses only a rudimentary understanding of French." },
     { id: 259, word: "lurk", ipa: "/lɜːrk/", meaning: "潜む", sentence: "Hidden dangers lurk in the dark forest." },
-    { id: 260, word: "hoax", ipa: "/hoʊks/", meaning: "作り話、悪ふざけ", sentence: "The alien sighting turned out to be an elaborate hoax." },
-    { id: 261, word: "delude", ipa: "/dɪˈluːd/", meaning: "だます、欺く", sentence: "Do not delude yourself into thinking this will be easy." },
-    { id: 262, word: "coax", ipa: "/koʊks/", meaning: "説得して～させる；なだめる", sentence: "She tried to coax the scared kitten out from under the bed." },
+    { id: 260, word: "hoax", ipa: "/hoʊks/", meaning: "作り話", sentence: "The alien sighting turned out to be an elaborate hoax." },
+    { id: 261, word: "delude", ipa: "/dɪˈluːd/", meaning: "だます", sentence: "Do not delude yourself into thinking this will be easy." },
+    { id: 262, word: "coax", ipa: "/koʊks/", meaning: "説得して～させる", sentence: "She tried to coax the scared kitten out from under the bed." },
     { id: 263, word: "coerce", ipa: "/koʊˈɜːrs/", meaning: "～を強制する", sentence: "No one should be coerced into signing a contract." },
     { id: 264, word: "relish", ipa: "/ˈrelɪʃ/", meaning: "楽しむ", sentence: "He seems to relish taking on difficult engineering challenges." },
-    { id: 265, word: "drudgery", ipa: "/ˈdrʌdʒəri/", meaning: "退屈なつらい仕事、骨折り仕事", sentence: "Automation frees workers from daily routine drudgery." },
-    { id: 266, word: "unequivocal", ipa: "/ˌʌnɪˈkwɪvəkl/", meaning: "明白な、疑う余地の無い", sentence: "The president gave an unequivocal refusal to the terms." },
+    { id: 265, word: "drudgery", ipa: "/ˈdrʌdʒəri/", meaning: "退屈なつらい仕事", sentence: "Automation frees workers from daily routine drudgery." },
+    { id: 266, word: "unequivocal", ipa: "/ˌʌnɪˈkwɪvəkl/", meaning: "明白な", sentence: "The president gave an unequivocal refusal to the terms." },
     { id: 267, word: "backlash", ipa: "/ˈbæklæʃ/", meaning: "反発、反動", sentence: "The proposed policy change triggered severe public backlash." },
-    { id: 268, word: "perverse", ipa: "/pərˈvɜːrs/", meaning: "道理から外れた, 倒錯した", sentence: "He took perverse pleasure in contradicting everyone." },
+    { id: 268, word: "perverse", ipa: "/pərˈvɜːrs/", meaning: "道理から外れた", sentence: "He took perverse pleasure in contradicting everyone." },
     { id: 269, word: "deviate", ipa: "/ˈdiːvieɪt/", meaning: "逸脱する", sentence: "Do not deviate from the safety rules under any circumstances." },
     { id: 270, word: "pertinent", ipa: "/ˈpɜːrtnənt/", meaning: "関連する、適切な", sentence: "Please ask questions that are pertinent to today's topic." },
     { id: 271, word: "duly", ipa: "/ˈduːli/", meaning: "適切に", sentence: "The completed forms were duly signed and returned." },
     { id: 272, word: "encapsulate", ipa: "/ɪnˈkæpsuleɪt/", meaning: "要約する", sentence: "The summary encapsulates all key takeaways of the report." },
     { id: 273, word: "hone", ipa: "/hoʊn/", meaning: "（技術）を磨く", sentence: "Athletes spend years working to hone their physical skills." },
-    { id: 274, word: "scour", ipa: "/ˈskaʊər/", meaning: "みがく［こする］、急いで捜し回る", sentence: "Detectives scour the crime scene looking for clues." },
-    { id: 275, word: "distill", ipa: "/dɪˈstɪl/", meaning: "蒸留する", sentence: "The editor managed to distill the article down to its essential points." },
+    { id: 274, word: "scour", ipa: "/ˈskaʊər/", meaning: "さがし回る", sentence: "Detectives scour the crime scene looking for clues." },
+    { id: 275, word: "distill", ipa: "/dɪˈstɪl/", meaning: "蒸留する", sentence: "The editor managed to distill the article down to essential points." },
     { id: 276, word: "hinge", ipa: "/hɪndʒ/", meaning: "蝶番", sentence: "The door was squeaking loudly because of a rusty hinge." },
-    { id: 277, word: "sporadic", ipa: "/spəˈrædɪk/", meaning: "散発的な、時々起こる", sentence: "There were sporadic outbursts of gunfire in the distance." },
+    { id: 277, word: "sporadic", ipa: "/spəˈrædɪk/", meaning: "散発的な", sentence: "There were sporadic outbursts of gunfire in the distance." },
     { id: 278, word: "intermittently", ipa: "/ˌɪntərˈmɪtəntli/", meaning: "断続的に", sentence: "It rained intermittently throughout the afternoon." },
     { id: 279, word: "precipitate", ipa: "/prɪˈsɪpɪteɪt/", meaning: "突然引き起こす", sentence: "The economic crisis helped precipitate political collapse." },
     { id: 280, word: "congregate", ipa: "/ˈkɑːŋɡrɪɡeɪt/", meaning: "集まる", sentence: "Crowds begin to congregate outside the concert arena." },
@@ -593,29 +799,29 @@
     { id: 283, word: "predicament", ipa: "/prɪˈdɪkəmənt/", meaning: "苦境", sentence: "He found himself in a difficult financial predicament." },
     { id: 284, word: "mishap", ipa: "/ˈmɪshæp/", meaning: "トラブル", sentence: "The journey was completed smoothly without any mishap." },
     { id: 285, word: "wretched", ipa: "/ˈretʃɪd/", meaning: "悲惨な、みじめな", sentence: "The homeless family lived in wretched conditions." },
-    { id: 286, word: "woe", ipa: "/woʊ/", meaning: "悲痛、苦悩・災難", sentence: "He shared his tales of financial woe with his friends." },
+    { id: 286, word: "woe", ipa: "/woʊ/", meaning: "悲痛、苦悩", sentence: "He shared his tales of financial woe with his friends." },
     { id: 287, word: "unobtrusive", ipa: "/ˌʌnəbˈtruːsɪv/", meaning: "控え目な", sentence: "Security staff kept an unobtrusive presence in the background." },
     { id: 288, word: "retaliate", ipa: "/rɪˈtælieɪt/", meaning: "報復する", sentence: "The country threatened to retaliate if attacked." },
     { id: 289, word: "viable", ipa: "/ˈvaɪəbl/", meaning: "実行可能な", sentence: "Solar power offers a commercially viable alternative." },
     { id: 290, word: "harbinger", ipa: "/ˈhɑːrbɪndʒər/", meaning: "前触れ", sentence: "The early arrival of swallows is a harbinger of spring." },
     { id: 291, word: "precursor", ipa: "/prɪˈkɜːrsər/", meaning: "先駆者、前兆", sentence: "The mainframe computer was the precursor to personal PCs." },
     { id: 292, word: "usher", ipa: "/ˈʌʃər/", meaning: "案内する", sentence: "The usher guided guests to their assigned theater seats." },
-    { id: 293, word: "herald", ipa: "/ˈherəld/", meaning: "の到来を告げる、をもてはやす", sentence: "The invention heralded a new era of digital communications." },
+    { id: 293, word: "herald", ipa: "/ˈherəld/", meaning: "の到来を告げる", sentence: "The invention heralded a new era of digital communications." },
     { id: 294, word: "salient", ipa: "/ˈseɪliənt/", meaning: "目立った、顕著な", sentence: "She outlined the most salient points of the proposal." },
-    { id: 295, word: "envisage", ipa: "/ɪnˈvɪzɪdʒ/", meaning: "を心に描く、想像する、を予想する", sentence: "It is difficult to envisage what the future will bring." },
+    { id: 295, word: "envisage", ipa: "/ɪnˈvɪzɪdʒ/", meaning: "心に描く、想像する", sentence: "It is difficult to envisage what the future will bring." },
     { id: 296, word: "faced", ipa: "/feɪst/", meaning: "一面", sentence: "The town is faced with severe infrastructure problems." },
     { id: 297, word: "facade", ipa: "/fəˈsɑːd/", meaning: "うわべ、見せかけ", sentence: "Behind his friendly facade lay a cold personality." },
-    { id: 298, word: "ostensibly", ipa: "/ɑːˈstensəbli/", meaning: "表面上は", sentence: "He visited the firm ostensibly for business reasons." },
+    { id: 298, word: "ostensilbly", ipa: "/ɑːˈstensəbli/", meaning: "表面上は", sentence: "He visited the firm ostensibly for business reasons." },
     { id: 299, word: "tailor", ipa: "/ˈteɪlər/", meaning: "仕立てる", sentence: "We can tailor the course to meet your specific requirements." },
-    { id: 300, word: "banal", ipa: "/bəˈnɑːl/", meaning: "ありふれた、平凡な", sentence: "The movie plot was predictable and banal." },
-    { id: 301, word: "amalgam", ipa: "/əˈmælɡəm/", meaning: "混合物、合成物", sentence: "The style is an amalgam of traditional and modern art." },
+    { id: 300, word: "banal", ipa: "/bəˈnɑːl/", meaning: "ありふれた", sentence: "The movie plot was predictable and banal." },
+    { id: 301, word: "amalgam", ipa: "/əˈmælɡəm/", meaning: "混合物", sentence: "The style is an amalgam of traditional and modern art." },
     { id: 302, word: "contraption", ipa: "/kənˈtræpʃn/", meaning: "からくり", sentence: "He built a strange mechanical contraption in his garage." },
     { id: 303, word: "knack", ipa: "/næk/", meaning: "こつ", sentence: "She has a natural knack for learning foreign languages." },
-    { id: 304, word: "inscrutable", ipa: "/ɪnˈskruːtəbl/", meaning: "謎めいた、不可解な", sentence: "He listened to the news with an inscrutable facial expression." },
-    { id: 305, word: "uncanny", ipa: "/ʌnˈkæni/", meaning: "不可思議な、奇異な", sentence: "She has an uncanny ability to predict market trends." },
+    { id: 304, word: "inscrutable", ipa: "/ɪnˈskruːtəbl/", meaning: "謎めいた", sentence: "He listened to the news with an inscrutable facial expression." },
+    { id: 305, word: "uncanny", ipa: "/ʌnˈkæni/", meaning: "不可思議な", sentence: "She has an uncanny ability to predict market trends." },
     { id: 306, word: "detain", ipa: "/dɪˈteɪn/", meaning: "拘留する", sentence: "Police decided to detain the suspect for questioning." },
     { id: 307, word: "crackdown", ipa: "/ˈkrækdaʊn/", meaning: "取り締まり", sentence: "Authorities launched a crackdown on illegal street racing." },
-    { id: 308, word: "indictment", ipa: "/ɪnˈdaɪtmənt/", meaning: "悪い印、欠陥、告発", sentence: "The report is a severe indictment of government failure." },
+    { id: 308, word: "indictment", ipa: "/ɪnˈdaɪtmənt/", meaning: "告発", sentence: "The report is a severe indictment of government failure." },
     { id: 309, word: "jurisdiction", ipa: "/ˌdʒʊrɪsˈdɪkʃn/", meaning: "司法権", sentence: "The case falls outside the jurisdiction of local courts." },
     { id: 310, word: "infringement", ipa: "/ɪnˈfrɪndʒmənt/", meaning: "侵害", sentence: "Downloading unauthorized files is a copyright infringement." },
     { id: 311, word: "transgression", ipa: "/trænzˈɡreʃn/", meaning: "違反、犯罪", sentence: "He apologized sincerely for his past transgressions." },
@@ -632,9 +838,9 @@
     { id: 322, word: "seclude", ipa: "/sɪˈkluːd/", meaning: "隔離する", sentence: "He chose to seclude himself in a remote cabin to write." },
     { id: 323, word: "untenable", ipa: "/ʌnˈtenəbl/", meaning: "支持できない", sentence: "The scandal made his position as director untenable." },
     { id: 324, word: "depletion", ipa: "/dɪˈpliːʃn/", meaning: "減少、枯渇", sentence: "Overfishing leads to the depletion of marine life." },
-    { id: 325, word: "scant", ipa: "/skænt/", meaning: "乏しい、不十分な", sentence: "The company paid scant attention to customer feedback." },
-    { id: 326, word: "infinitesimal", ipa: "/ˌɪnfɪnɪˈtesɪml/", meaning: "微小の、無限小の", sentence: "The risk of error was reduced to an infinitesimal amount." },
-    { id: 327, word: "copious", ipa: "/ˈkoʊpiəs/", meaning: "多量の、豊富な", sentence: "She took copious notes during the lecture." },
+    { id: 325, word: "scant", ipa: "/skænt/", meaning: "乏しい", sentence: "The company paid scant attention to customer feedback." },
+    { id: 326, word: "infinitesimal", ipa: "/ˌɪnfɪnɪˈtesɪml/", meaning: "微小の", sentence: "The risk of error was reduced to an infinitesimal amount." },
+    { id: 327, word: "copious", ipa: "/ˈkoʊpiəs/", meaning: "多量の", sentence: "She took copious notes during the lecture." },
     { id: 328, word: "accrue", ipa: "/əˈkruː/", meaning: "生じる、増える", sentence: "Interest will accrue on the savings account over time." },
     { id: 329, word: "anthem", ipa: "/ˈænθəm/", meaning: "国歌", sentence: "The crowd sang the national anthem before the match." },
     { id: 330, word: "balk", ipa: "/bɔːk/", meaning: "ためらう", sentence: "Many consumers balk at paying such high prices." },
@@ -642,9 +848,9 @@
     { id: 332, word: "congenial", ipa: "/kənˈdʒiːniəl/", meaning: "気の合った", sentence: "They worked together in a warm, congenial atmosphere." },
     { id: 333, word: "perturb", ipa: "/pərˈtɜːrb/", meaning: "動揺させる", sentence: "Bad economic news did not seem to perturb investors." },
     { id: 334, word: "decipher", ipa: "/dɪˈsaɪfər/", meaning: "解読する", sentence: "Scholars struggled to decipher the ancient inscription." },
-    { id: 335, word: "cryptic", ipa: "/ˈkrɪptɪk/", meaning: "秘密の、隠された；謎の", sentence: "He left a cryptic message on my answering machine." },
+    { id: 335, word: "cryptic", ipa: "/ˈkrɪptɪk/", meaning: "秘密の、謎の", sentence: "He left a cryptic message on my answering machine." },
     { id: 336, word: "enigma", ipa: "/ɪˈnɪɡmə/", meaning: "謎", sentence: "His sudden disappearance remains a complete enigma." },
-    { id: 337, word: "conundrum", ipa: "/kəˈnʌndrəm/", meaning: "難問、なぞなぞ", sentence: "How to balance budget cuts is a difficult conundrum." },
+    { id: 337, word: "conundrum", ipa: "/kəˈnʌndrəm/", meaning: "難問", sentence: "How to balance budget cuts is a difficult conundrum." },
     { id: 338, word: "latent", ipa: "/ˈleɪtnt/", meaning: "潜在的な", sentence: "The test is designed to uncover latent artistic talent." },
     { id: 339, word: "optimal", ipa: "/ˈɑːptɪməl/", meaning: "最適な", sentence: "Proper sleep is essential for optimal performance." },
     { id: 340, word: "exhilarating", ipa: "/ɪɡˈzɪləreɪtɪŋ/", meaning: "爽快な", sentence: "Riding the roller coaster was an exhilarating experience." },
@@ -653,9 +859,9 @@
     { id: 343, word: "traitor", ipa: "/ˈtreɪtər/", meaning: "裏切り者", sentence: "He was branded a traitor for selling secrets." },
     { id: 344, word: "refute", ipa: "/rɪˈfjuːt/", meaning: "誤りを証明する", sentence: "Scientists used experimental data to refute the theory." },
     { id: 345, word: "debunk", ipa: "/diːˈbʌŋk/", meaning: "暴露する", sentence: "The article aims to debunk common urban myths." },
-    { id: 346, word: "allude", ipa: "/əˈluːd/", meaning: "ほのめかす、それとなく言う", sentence: "The speaker chose to allude to past mistakes indirectly." },
-    { id: 347, word: "virulent", ipa: "/ˈvɪrjələnt/", meaning: "病原性のある, 毒性のある", sentence: "The patient contracted an extremely virulent virus strain." },
-    { id: 348, word: "disproportionate", ipa: "/ˌdɪsprəˈpɔːrʃənət/", meaning: "不釣り合いな", sentence: "Small businesses bear a disproportionate burden of regulations." },
+    { id: 346, word: "allude", ipa: "/əˈluːd/", meaning: "ほのめかす", sentence: "The speaker chose to allude to past mistakes indirectly." },
+    { id: 347, word: "virulent", ipa: "/ˈvɪrjələnt/", meaning: "毒性のある", sentence: "The patient contracted an extremely virulent virus strain." },
+    { id: 348, word: "disproportionate", ipa: "/ˌdɪsprəˈpɔːrʃənət/", meaning: "不釣り合いな", sentence: "Small businesses bear a disproportionate burden." },
     { id: 349, word: "apprenticeship", ipa: "/əˈprentɪsʃɪp/", meaning: "見習い", sentence: "He served a four-year apprenticeship as a carpenter." },
     { id: 350, word: "stigmatize", ipa: "/ˈstɪɡmətaɪz/", meaning: "汚名を着せる", sentence: "Society should not stigmatize mental health issues." },
     { id: 351, word: "taint", ipa: "/teɪnt/", meaning: "汚す", sentence: "The scandal threatens to taint his professional reputation." },
@@ -663,18 +869,18 @@
     { id: 353, word: "vie", ipa: "/vaɪ/", meaning: "競う", sentence: "Top athletes vie for the gold medal every four years." },
     { id: 354, word: "sluggish", ipa: "/ˈslʌɡɪʃ/", meaning: "停滞した", sentence: "Economic growth was sluggish throughout the second quarter." },
     { id: 355, word: "languish", ipa: "/ˈlæŋɡwɪʃ/", meaning: "閉じ込められる", sentence: "The bill continues to languish in parliament." },
-    { id: 356, word: "submerge", ipa: "/səbˈmɜːrdʒ/", meaning: "水に浸す、潜水する", sentence: "Floods threaten to submerge low-lying coastal areas." },
-    { id: 357, word: "cumbersome", ipa: "/ˈkʌmbərsəm/", meaning: "扱いにくい", sentence: "Heavy administrative bureaucracy can be very cumbersome." },
+    { id: 356, word: "submerge", ipa: "/səbˈmɜːrdʒ/", meaning: "水に浸す", sentence: "Floods threaten to submerge low-lying coastal areas." },
+    { id: 357, word: "cumbersome", ipa: "/ˈkʌmbərsəm/", meaning: "扱いにくい", sentence: "Heavy administrative bureaucracy can be cumbersome." },
     { id: 358, word: "obnoxious", ipa: "/əbˈnɑːkʃəs/", meaning: "非常に不快な", sentence: "His obnoxious behavior ruined the party for everyone." },
     { id: 359, word: "ominous", ipa: "/ˈɑːmɪnəs/", meaning: "不吉な", sentence: "Dark black clouds gathered in an ominous sky." },
     { id: 360, word: "abyss", ipa: "/əˈbɪs/", meaning: "どん底", sentence: "The economy stood on the edge of a deep abyss." },
     { id: 361, word: "rein", ipa: "/reɪn/", meaning: "手綱", sentence: "The government tried to keep a tight rein on spending." },
     { id: 362, word: "mainstay", ipa: "/ˈmeɪnsteɪ/", meaning: "頼みの綱", sentence: "Tourism is the economic mainstay of the island." },
-    { id: 363, word: "fret", ipa: "/fret/", meaning: "やきもきする、思い悩む", sentence: "There is no need to fret over small mistakes." },
-    { id: 364, word: "tantalize", ipa: "/ˈtæntəlaɪz/", meaning: "じらす", sentence: "Delicious food smells tantalize customers outside the bakery." },
+    { id: 363, word: "fret", ipa: "/fret/", meaning: "思い悩む", sentence: "There is no need to fret over small mistakes." },
+    { id: 364, word: "tantalize", ipa: "/ˈtæntəlaɪz/", meaning: "じらす", sentence: "Delicious food smells tantalize customers outside." },
     { id: 365, word: "engender", ipa: "/ɪnˈdʒendər/", meaning: "～を生じる", sentence: "Clear communication helps engender mutual trust." },
-    { id: 366, word: "inculcate", ipa: "/ɪnˈkʌlkeɪt/", meaning: "教え込む", sentence: "Teachers work to inculcate moral values in young children." },
-    { id: 367, word: "instill", ipa: "/ɪnˈstɪl/", meaning: "を教え込む", sentence: "Parents try to instill discipline in their kids." },
+    { id: 366, word: "inculcate", ipa: "/ɪnˈkʌlkeɪt/", meaning: "教え込む", sentence: "Teachers work to inculcate moral values in children." },
+    { id: 367, word: "instill", ipa: "/ɪnˈstɪl/", meaning: "教え込む", sentence: "Parents try to instill discipline in their kids." },
     { id: 368, word: "repeal", ipa: "/rɪˈpiːl/", meaning: "無効にする", sentence: "Parliament voted to repeal the unpopular tax law." },
     { id: 369, word: "extant", ipa: "/ˈekstənt/", meaning: "現存している", sentence: "Only a few manuscripts from that period remain extant." },
     { id: 370, word: "remnant", ipa: "/ˈremnənt/", meaning: "残り", sentence: "Ruins are the last remnant of the ancient civilization." },
@@ -683,35 +889,35 @@
     { id: 373, word: "guru", ipa: "/ˈɡʊruː/", meaning: "指導者", sentence: "He is regarded as an investment guru on Wall Street." },
     { id: 374, word: "accomplice", ipa: "/əˈkɑːmplɪs/", meaning: "共犯者", sentence: "Police arrested the robber along with his accomplice." },
     { id: 375, word: "hatch", ipa: "/hætʃ/", meaning: "を思いつく", sentence: "They met secretly to hatch a business scheme." },
-    { id: 376, word: "forgo", ipa: "/fɔːrˈɡoʊ/", meaning: "を差し控える", sentence: "She decided to forgo dessert while on a strict diet." },
+    { id: 376, word: "forgo", ipa: "/fɔːrˈɡoʊ/", meaning: "差し控える", sentence: "She decided to forgo dessert while on a strict diet." },
     { id: 377, word: "repel", ipa: "/rɪˈpel/", meaning: "追い払う", sentence: "This spray helps repel mosquitoes in the summer." },
     { id: 378, word: "extrapolate", ipa: "/ɪkˈstræpəleɪt/", meaning: "推定する", sentence: "We can extrapolate future sales trends from current data." },
-    { id: 379, word: "surmise", ipa: "/sərˈmaɪz/", meaning: "推測する", sentence: "Detectives surmise that the burglary occurred late at night." },
-    { id: 380, word: "conjecture", ipa: "/kənˈdʒektʃər/", meaning: "推測、憶測", sentence: "His conclusions are based on pure conjecture, not facts." },
-    { id: 381, word: "conjure", ipa: "/ˈkɑːndʒər/", meaning: "〜を思い出させる", sentence: "The familiar smell managed to conjure up childhood memories." },
-    { id: 382, word: "proxy", ipa: "/ˈprɑːksi/", meaning: "代理、委任", sentence: "You may vote by proxy if you cannot attend the meeting." },
-    { id: 383, word: "wield", ipa: "/wiːld/", meaning: "行使する", sentence: "He holds a position that enables him to wield political power." },
+    { id: 379, word: "surmise", ipa: "/sərˈmaɪz/", meaning: "推測する", sentence: "Detectives surmise that the burglary occurred late." },
+    { id: 380, word: "conjecture", ipa: "/kənˈdʒektʃər/", meaning: "推測、憶測", sentence: "His conclusions are based on pure conjecture." },
+    { id: 381, word: "conjure", ipa: "/ˈkɑːndʒər/", meaning: "思い出させる", sentence: "The smell managed to conjure up childhood memories." },
+    { id: 382, word: "proxy", ipa: "/ˈprɑːksi/", meaning: "代理", sentence: "You may vote by proxy if you cannot attend." },
+    { id: 383, word: "wield", ipa: "/wiːld/", meaning: "行使する", sentence: "He holds a position that enables him to wield power." },
     { id: 384, word: "murky", ipa: "/ˈmɜːrki/", meaning: "暗い、陰気な", sentence: "The divers swam into the murky waters of the river." },
-    { id: 385, word: "somber", ipa: "/ˈsɑːmbər/", meaning: "薄暗い、陰気な", sentence: "The room was filled with a somber, silent atmosphere." },
-    { id: 386, word: "dormant", ipa: "/ˈdɔːrmənt/", meaning: "活動休止中の", sentence: "The volcano has remained dormant for several centuries." },
-    { id: 387, word: "lackluster", ipa: "/ˈlæklʌstər/", meaning: "精彩を欠いた、ぱっとしない", sentence: "The actor gave a lackluster performance in the play." },
+    { id: 385, word: "somber", ipa: "/ˈsɑːmbər/", meaning: "薄暗い、陰気な", sentence: "The room was filled with a somber atmosphere." },
+    { id: 386, word: "dormant", ipa: "/ˈdɔːrmənt/", meaning: "活動休止中の", sentence: "The volcano has remained dormant for centuries." },
+    { id: 387, word: "lackluster", ipa: "/ˈlæklʌstər/", meaning: "ぱっとしない", sentence: "The actor gave a lackluster performance in the play." },
     { id: 388, word: "vibrant", ipa: "/ˈvaɪbrənt/", meaning: "活気に満ちた", sentence: "The city is famous for its vibrant street night market." },
     { id: 389, word: "revert", ipa: "/rɪˈvɜːrt/", meaning: "戻る", sentence: "The system will revert to default settings automatically." },
     { id: 390, word: "resurrect", ipa: "/ˌrezəˈrekt/", meaning: "復活させる", sentence: "The company tried to resurrect an old product line." },
     { id: 391, word: "eavesdrop", ipa: "/ˈiːvzdrɑːp/", meaning: "盗み聞きする", sentence: "He tried to eavesdrop on their private conversation." },
-    { id: 392, word: "inoculation", ipa: "/ɪˌnɑːkjuˈleɪʃn/", meaning: "予防接種", sentence: "Inoculation protects against dangerous infectious diseases." },
+    { id: 392, word: "inoculation", ipa: "/ɪˌnɑːkjuˈleɪʃn/", meaning: "予防接種", sentence: "Inoculation protects against infectious diseases." },
     { id: 393, word: "connoisseur", ipa: "/ˌkɑːnəˈsɜːr/", meaning: "鑑定家", sentence: "He is a recognized connoisseur of fine French wines." },
     { id: 394, word: "precocious", ipa: "/prɪˈkoʊʃəs/", meaning: "早熟な", sentence: "The precocious child learned to read at age three." },
-    { id: 395, word: "blurt", ipa: "/blɜːrt/", meaning: "うっかりしゃべる", sentence: "He blurted out the surprise answer before being called on." },
-    { id: 396, word: "spew", ipa: "/spjuː/", meaning: "噴出する、 吐く", sentence: "Volcanoes spew ash high into the atmosphere." },
+    { id: 395, word: "blurt", ipa: "/blɜːrt/", meaning: "うっかりしゃべる", sentence: "He blurted out the surprise answer." },
+    { id: 396, word: "spew", ipa: "/spjuː/", meaning: "噴出する", sentence: "Volcanoes spew ash high into the atmosphere." },
     { id: 397, word: "oblivion", ipa: "/əˈblɪviən/", meaning: "忘却", sentence: "Old tech products gradually fade into total oblivion." },
     { id: 398, word: "vigilant", ipa: "/ˈvɪdʒɪlənt/", meaning: "用心深い", sentence: "Security guards must remain vigilant at all times." },
-    { id: 399, word: "ineffable", ipa: "/ɪnˈefəbl/", meaning: "言葉で言い表せない", sentence: "Watching the mountain sunrise filled her with ineffable joy." },
+    { id: 399, word: "ineffable", ipa: "/ɪnˈefəbl/", meaning: "言葉で言い表せない", sentence: "The sunrise filled her with ineffable joy." },
     { id: 400, word: "rustic", ipa: "/ˈrʌstɪk/", meaning: "田舎の", sentence: "They stayed in a simple rustic cabin in the woods." },
     { id: 401, word: "faction", ipa: "/ˈfækʃn/", meaning: "派閥", sentence: "A political faction separated from the ruling party." },
     { id: 402, word: "cohort", ipa: "/ˈkoʊhɔːrt/", meaning: "仲間、集団", sentence: "The study tracked a cohort of students over ten years." },
-    { id: 403, word: "nonchalant", ipa: "/ˌnɑːnʃəˈlɑːnt/", meaning: "よそよそしい", sentence: "He maintained a nonchalant attitude despite the panic." },
-    { id: 404, word: "relegate", ipa: "/ˈrelɪɡeɪt/", meaning: "格下げする", sentence: "The team was relegated to a lower division after losses." },
+    { id: 403, word: "nonchalant", ipa: "/ˌnɑːnʃəˈlɑːnt/", meaning: "よそよそしい", sentence: "He maintained a nonchalant attitude despite panic." },
+    { id: 404, word: "relegate", ipa: "/ˈrelɪɡeɪt/", meaning: "格下げする", sentence: "The team was relegated to a lower division." },
     { id: 405, word: "suffocate", ipa: "/ˈsʌfəkeɪt/", meaning: "窒息する", sentence: "Thick smoke caused people inside to suffocate." },
     { id: 406, word: "embroider", ipa: "/ɪmˈbrɔɪdər/", meaning: "刺繍する", sentence: "She likes to embroider flowers onto cotton towels." },
     { id: 407, word: "swath", ipa: "/swɑːθ/", meaning: "広範囲", sentence: "Wildfires burned a wide swath of forest land." },
@@ -721,96 +927,253 @@
     { id: 411, word: "eclectic", ipa: "/ɪˈklektɪk/", meaning: "取捨選択した", sentence: "Her home features an eclectic mix of furniture styles." },
     { id: 412, word: "hectic", ipa: "/ˈhektɪk/", meaning: "やたらに忙しい", sentence: "He leads a hectic lifestyle with continuous travel." },
     { id: 413, word: "trajectory", ipa: "/trəˈdʒektəri/", meaning: "軌道", sentence: "The missile stayed accurately on its planned trajectory." },
-    { id: 414, word: "countenance", ipa: "/ˈkaʊntənəns/", meaning: "表情、顔つき", sentence: "Her calm countenance showed no signs of stress." },
+    { id: 414, word: "countenance", ipa: "/ˈkaʊntənəns/", meaning: "表情", sentence: "Her calm countenance showed no signs of stress." },
     { id: 415, word: "resonate", ipa: "/ˈrezəneɪt/", meaning: "反響する", sentence: "His speech resonated deeply with voters nationwide." },
     { id: 416, word: "poignant", ipa: "/ˈpɔɪnjənt/", meaning: "心を打つ", sentence: "The movie reached a poignant ending that brought tears." },
     { id: 417, word: "vernacular", ipa: "/vərˈnækjələr/", meaning: "日常語", sentence: "The author writes in local vernacular language." },
     { id: 418, word: "excavate", ipa: "/ˈekskəveɪt/", meaning: "発掘する", sentence: "Archaeologists plan to excavate the ancient site." },
-    { id: 419, word: "perfunctory", ipa: "/pərˈfʌŋktəri/", meaning: "おざなりの、いい加減な", sentence: "He gave a perfunctory greeting and walked past quickly." },
+    { id: 419, word: "perfunctory", ipa: "/pərˈfʌŋktəri/", meaning: "おざなりの", sentence: "He gave a perfunctory greeting and walked past." },
     { id: 420, word: "juxtapose", ipa: "/ˌdʒʌkstəˈpoʊz/", meaning: "並列する", sentence: "The artist likes to juxtapose light and dark elements." }
   ];
 
-  const LIMIT_TIME = 5; // 制限時間（秒）
-  let currentIdx = 0;
-  let remainingTime = LIMIT_TIME;
-  let timerInterval = null;
-  let isAnswered = false;
+  // --- ローカルストレージ（習熟度状態） ---
+  // 各単語の状態: { streak: 連続正解数, status: 0(未), 1(覚えた:3回以上), 2(完璧:5回以上) }
+  let userProgress = JSON.parse(localStorage.getItem('pinnacle_progress')) || {};
 
-  const wordNum = document.getElementById("word-num");
-  const wordDisplay = document.getElementById("word-display");
-  const phoneticDisplay = document.getElementById("phonetic-display");
-  const exampleDisplay = document.getElementById("example-display");
-  const optionsContainer = document.getElementById("options-container");
-  const timerBar = document.getElementById("timer-bar");
-  const timerText = document.getElementById("timer-text");
-  const statusMessage = document.getElementById("status-message");
-  const nextBtn = document.getElementById("next-btn");
-
-  // ランダムなダミー選択肢（誤答肢）を生成する関数
-  function getRandomDistractors(correctIdx, count = 3) {
-    const distractors = [];
-    const usedIndices = new Set([correctIdx]);
-
-    while (distractors.length < count) {
-      const rand = Math.floor(Math.random() * fullVocabulary.length);
-      if (!usedIndices.has(rand)) {
-        usedIndices.add(rand);
-        distractors.push(fullVocabulary[rand].meaning);
-      }
-    }
-    return distractors;
+  function saveProgress() {
+    localStorage.setItem('pinnacle_progress', JSON.stringify(userProgress));
   }
 
-  function loadQuestion() {
-    isAnswered = false;
-    remainingTime = LIMIT_TIME;
-    statusMessage.textContent = "";
-    statusMessage.className = "status-message";
-    nextBtn.style.display = "none";
-    
-    const currentQ = fullVocabulary[currentIdx];
-    
-    wordNum.textContent = `No. ${currentQ.id} / ${fullVocabulary.length}`;
-    wordDisplay.textContent = currentQ.word;
-    phoneticDisplay.textContent = currentQ.ipa;
-    exampleDisplay.textContent = `Ex: ${currentQ.sentence}`;
+  function getWordState(id) {
+    if (!userProgress[id]) {
+      userProgress[id] = { streak: 0, status: 0 };
+    }
+    return userProgress[id];
+  }
 
-    // 4択選択肢の作成 (正解1つ + ランダム誤答3つをシャッフル)
-    const distractors = getRandomDistractors(currentIdx, 3);
-    const options = [currentQ.meaning, ...distractors];
-    
-    // フィッシャー–イェーツシャッフル
-    for (let i = options.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [options[i], options[j]] = [options[j], options[i]];
+  // 連続正解カウント処理
+  function updateWordProgress(id, isCorrect) {
+    let state = getWordState(id);
+    if (isCorrect) {
+      state.streak += 1;
+      if (state.streak >= 5) {
+        state.status = 2; // 完璧
+      } else if (state.streak >= 3) {
+        state.status = 1; // 覚えた
+      }
+    } else {
+      state.streak = 0;
+      state.status = 0; // 覚えてない側に入る
+    }
+    saveProgress();
+  }
+
+  // --- タブ切り替え ---
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
+
+    if (tab === 'config') {
+      document.querySelectorAll('.tab-btn')[0].classList.add('active');
+      document.getElementById('view-config').classList.add('active');
+    } else if (tab === 'quiz') {
+      document.querySelectorAll('.tab-btn')[1].classList.add('active');
+      document.getElementById('view-quiz').classList.add('active');
+    } else if (tab === 'list') {
+      document.querySelectorAll('.tab-btn')[2].classList.add('active');
+      document.getElementById('view-list').classList.add('active');
+      renderWordList();
+    }
+  }
+
+  function toggleCustomRange() {
+    const val = document.getElementById('cfg-range').value;
+    document.getElementById('custom-range-box').style.display = (val === 'custom') ? 'block' : 'none';
+  }
+
+  // --- 学習セッション変数 ---
+  let activeQueue = [];
+  let currentSessionIdx = 0;
+  let mode = 'choice';
+  let limitTime = 5;
+  let timerInterval = null;
+  let remainingTime = 0;
+  let isAnswered = false;
+
+  function startSession() {
+    mode = document.getElementById('cfg-mode').value;
+    limitTime = parseInt(document.getElementById('cfg-time').value) || 5;
+
+    // 範囲抽出
+    const rangeVal = document.getElementById('cfg-range').value;
+    let list = [];
+
+    if (rangeVal.startsWith('day')) {
+      const dayNum = parseInt(rangeVal.replace('day', ''));
+      const start = (dayNum - 1) * 30 + 1;
+      const end = dayNum * 30;
+      list = fullVocabulary.filter(w => w.id >= start && w.id <= end);
+    } else if (rangeVal === 'custom') {
+      const s = parseInt(document.getElementById('cfg-start').value) || 1;
+      const e = parseInt(document.getElementById('cfg-end').value) || 420;
+      list = fullVocabulary.filter(w => w.id >= s && w.id <= e);
+    } else if (rangeVal === 'unlearned') {
+      list = fullVocabulary.filter(w => getWordState(w.id).status < 2);
+    } else {
+      list = [...fullVocabulary];
     }
 
-    const correctOptionIndex = options.indexOf(currentQ.meaning);
-    optionsContainer.dataset.correctIndex = correctOptionIndex;
+    if (list.length === 0) {
+      alert("該当する単語がありません");
+      return;
+    }
 
-    optionsContainer.innerHTML = "";
+    // 出題数
+    const countVal = document.getElementById('cfg-count').value;
+    if (countVal !== 'all') {
+      const cnt = parseInt(countVal);
+      // ランダムシャッフルして指定数取得
+      list = list.sort(() => Math.random() - 0.5).slice(0, cnt);
+    }
+
+    activeQueue = list;
+    currentSessionIdx = 0;
+    switchTab('quiz');
+    loadQuestion();
+  }
+
+  // 問題ロード
+  function loadQuestion() {
+    if (currentSessionIdx >= activeQueue.length) {
+      alert("セッションが終了しました！");
+      switchTab('config');
+      return;
+    }
+
+    isAnswered = false;
+    document.getElementById("status-message").textContent = "";
+    document.getElementById("status-message").className = "status-message";
+    document.getElementById("next-btn").style.display = "none";
+    document.getElementById("meaning-display").style.display = "none";
+    document.getElementById("example-display").style.display = "none";
+
+    const item = activeQueue[currentSessionIdx];
+
+    document.getElementById("word-num").textContent = `No. ${item.id} / 420 (連勝:${getWordState(item.id).streak})`;
+    document.getElementById("word-display").textContent = item.word;
+    document.getElementById("phonetic-display").textContent = item.ipa;
+    document.getElementById("meaning-display").textContent = item.meaning;
+    document.getElementById("example-display").textContent = `Ex: ${item.sentence}`;
+
+    const optContainer = document.getElementById("options-container");
+    const flashControls = document.getElementById("flash-controls");
+    const timerContainer = document.getElementById("timer-container");
+
+    optContainer.innerHTML = "";
+
+    if (mode === 'flash') {
+      optContainer.style.display = "none";
+      flashControls.style.display = "flex";
+      timerContainer.style.display = "none";
+      document.getElementById("timer-text").style.display = "none";
+      document.getElementById("meaning-display").style.display = "block";
+      document.getElementById("example-display").style.display = "block";
+    } else {
+      optContainer.style.display = "flex";
+      flashControls.style.display = "none";
+      timerContainer.style.display = "block";
+      document.getElementById("timer-text").style.display = "block";
+
+      if (mode === 'choice') {
+        renderChoiceOptions(item);
+      } else if (mode === 'judge') {
+        renderJudgeOptions(item);
+      }
+      startTimer();
+    }
+  }
+
+  // 4択選択肢の作成
+  function renderChoiceOptions(item) {
+    const optContainer = document.getElementById("options-container");
+    const distractors = [];
+    while (distractors.length < 3) {
+      const rand = fullVocabulary[Math.floor(Math.random() * fullVocabulary.length)];
+      if (rand.id !== item.id && !distractors.includes(rand.meaning)) {
+        distractors.push(rand.meaning);
+      }
+    }
+    const options = [item.meaning, ...distractors].sort(() => Math.random() - 0.5);
+    const correctIdx = options.indexOf(item.meaning);
+
     options.forEach((opt, idx) => {
       const btn = document.createElement("button");
       btn.className = "option-btn";
       btn.textContent = `${idx + 1}. ${opt}`;
-      btn.onclick = () => selectAnswer(idx, correctOptionIndex);
-      optionsContainer.appendChild(btn);
+      btn.onclick = (e) => { e.stopPropagation(); handleSelect(idx === correctIdx, btn); };
+      optContainer.appendChild(btn);
     });
-
-    startTimer();
   }
 
+  // 正誤判定用の作成
+  function renderJudgeOptions(item) {
+    const optContainer = document.getElementById("options-container");
+    const isTrue = Math.random() > 0.5;
+    let shownMeaning = item.meaning;
+
+    if (!isTrue) {
+      let randItem;
+      do {
+        randItem = fullVocabulary[Math.floor(Math.random() * fullVocabulary.length)];
+      } while (randItem.id === item.id);
+      shownMeaning = randItem.meaning;
+    }
+
+    document.getElementById("meaning-display").textContent = `意味: ${shownMeaning}`;
+    document.getElementById("meaning-display").style.display = "block";
+
+    const btn1 = document.createElement("button");
+    btn1.className = "option-btn";
+    btn1.textContent = "◯ 正しい";
+    btn1.onclick = (e) => { e.stopPropagation(); handleSelect(isTrue, btn1); };
+
+    const btn2 = document.createElement("button");
+    btn2.className = "option-btn";
+    btn2.textContent = "✕ 誤り";
+    btn2.onclick = (e) => { e.stopPropagation(); handleSelect(!isTrue, btn2); };
+
+    optContainer.appendChild(btn1);
+    optContainer.appendChild(btn2);
+  }
+
+  // 時間内でもカードタップで詳細を表示
+  function revealCardDetails() {
+    document.getElementById("meaning-display").style.display = "block";
+    document.getElementById("example-display").style.display = "block";
+  }
+
+  // 音声再生
+  function playAudio(e) {
+    e.stopPropagation();
+    const word = activeQueue[currentSessionIdx].word;
+    const uttr = new SpeechSynthesisUtterance(word);
+    uttr.lang = 'en-US';
+    window.speechSynthesis.speak(uttr);
+  }
+
+  // タイマー処理
   function startTimer() {
     clearInterval(timerInterval);
+    remainingTime = limitTime;
     const startTime = Date.now();
-    
+
     timerInterval = setInterval(() => {
       const elapsed = (Date.now() - startTime) / 1000;
-      remainingTime = Math.max(0, LIMIT_TIME - elapsed);
-      
-      const percentage = (remainingTime / LIMIT_TIME) * 100;
-      timerBar.style.width = `${percentage}%`;
-      timerText.textContent = `残り時間: ${remainingTime.toFixed(1)} 秒`;
+      remainingTime = Math.max(0, limitTime - elapsed);
+
+      const pct = (remainingTime / limitTime) * 100;
+      document.getElementById("timer-bar").style.width = `${pct}%`;
+      document.getElementById("timer-text").textContent = `残り時間: ${remainingTime.toFixed(1)}秒`;
 
       if (remainingTime <= 0) {
         clearInterval(timerInterval);
@@ -819,59 +1182,112 @@
     }, 50);
   }
 
-  function selectAnswer(selectedIdx, correctIdx) {
+  // 回答選択処理
+  function handleSelect(isCorrect, btnObj) {
     if (isAnswered) return;
     isAnswered = true;
     clearInterval(timerInterval);
 
-    const buttons = optionsContainer.querySelectorAll(".option-btn");
+    const item = activeQueue[currentSessionIdx];
+    updateWordProgress(item.id, isCorrect);
 
-    buttons.forEach((btn, idx) => {
-      btn.disabled = true;
-      if (idx === correctIdx) {
-        btn.classList.add("correct");
-      } else if (idx === selectedIdx) {
-        btn.classList.add("wrong");
-      }
-    });
+    revealCardDetails();
 
-    if (selectedIdx === correctIdx) {
-      statusMessage.textContent = "正解！";
-      statusMessage.classList.add("correct-text");
+    const statusMsg = document.getElementById("status-message");
+    if (isCorrect) {
+      statusMsg.textContent = "正解！";
+      statusMsg.className = "status-message correct-text";
+      if (btnObj) btnObj.classList.add("correct");
     } else {
-      statusMessage.textContent = "不正解...";
-      statusMessage.classList.add("wrong-text");
+      statusMsg.textContent = "不正解...";
+      statusMsg.className = "status-message wrong-text";
+      if (btnObj) btnObj.classList.add("wrong");
     }
 
-    nextBtn.style.display = "block";
+    document.querySelectorAll(".option-btn").forEach(b => b.disabled = true);
+    document.getElementById("next-btn").style.display = "block";
   }
 
+  // タイムアウト処理
   function handleTimeout() {
     if (isAnswered) return;
     isAnswered = true;
 
-    const correctIdx = parseInt(optionsContainer.dataset.correctIndex, 10);
-    const buttons = optionsContainer.querySelectorAll(".option-btn");
+    const item = activeQueue[currentSessionIdx];
+    updateWordProgress(item.id, false); // 間違えた扱い（覚えてない側）
 
-    buttons.forEach((btn, idx) => {
-      btn.disabled = true;
-      if (idx === correctIdx) {
-        btn.classList.add("correct");
-      }
-    });
+    revealCardDetails();
 
-    statusMessage.textContent = "時間切れ！自動で正解を表示します";
-    statusMessage.classList.add("timeout");
-    nextBtn.style.display = "block";
+    const statusMsg = document.getElementById("status-message");
+    statusMsg.textContent = "時間切れ！自動で正解・例文を表示します";
+    statusMsg.className = "status-message timeout";
+
+    document.querySelectorAll(".option-btn").forEach(b => b.disabled = true);
+    document.getElementById("next-btn").style.display = "block";
+  }
+
+  // フラッシュカード判定
+  function processResult(isOk) {
+    const item = activeQueue[currentSessionIdx];
+    updateWordProgress(item.id, isOk);
+    nextQuestion();
   }
 
   function nextQuestion() {
-    currentIdx = (currentIdx + 1) % fullVocabulary.length;
+    currentSessionIdx++;
     loadQuestion();
   }
 
-  // 初回起動
-  loadQuestion();
+  // --- スワイプ判定 (フラッシュカード時) ---
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const cardBox = document.getElementById("card-box");
+
+  cardBox.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  cardBox.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (mode === 'flash') {
+      if (touchStartX - touchEndX > 50) {
+        processResult(false); // 左スワイプ -> 覚えてない
+      } else if (touchEndX - touchStartX > 50) {
+        processResult(true);  // 右スワイプ -> 覚えた
+      }
+    }
+  });
+
+  // --- 単語一覧の描画 ---
+  function renderWordList() {
+    const container = document.getElementById("list-container");
+    container.innerHTML = "";
+
+    fullVocabulary.forEach(w => {
+      const st = getWordState(w.id);
+      const div = document.createElement("div");
+      div.className = "list-item";
+
+      let badgeTxt = "未習得";
+      let badgeClass = "status-0";
+      if (st.status === 2) {
+        badgeTxt = "完璧 (5回連勝)";
+        badgeClass = "status-2";
+      } else if (st.status === 1) {
+        badgeTxt = "覚えた (3回連勝)";
+        badgeClass = "status-1";
+      }
+
+      div.innerHTML = `
+        <div class="word-info">
+          <div><span class="word-en">No.${w.id} ${w.word}</span> <small>${w.ipa}</small></div>
+          <div class="word-ja">${w.meaning}</div>
+        </div>
+        <span class="status-badge ${badgeClass}">${badgeTxt}</span>
+      `;
+      container.appendChild(div);
+    });
+  }
 </script>
 </body>
 </html>
